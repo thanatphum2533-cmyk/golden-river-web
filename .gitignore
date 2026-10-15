@@ -1,0 +1,12 @@
+﻿node_modules/
+.next/
+out/
+build/
+*.log
+.DS_Store
+
+*.tsbuildinfo
+test.txt
+inject_csr.js
+make_admin.js
+writer.js

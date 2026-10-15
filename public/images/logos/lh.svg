@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+    <rect x="10" y="14" width="42" height="42" rx="6" fill="#C59F6D"/>
+    <path d="M22 44V26L31 19L40 26V44H34V32H28V44H22Z" fill="#161141"/>
+    <text x="64" y="35" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif" font-size="17" font-weight="800" fill="#161141" letter-spacing="0.5">LAND &amp; HOUSES</text>
+    <text x="64" y="50" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif" font-size="10" font-weight="700" fill="#C59F6D" letter-spacing="3">SINCE 1973</text>
+  </svg>

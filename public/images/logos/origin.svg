@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+    <rect x="8" y="12" width="46" height="46" rx="10" fill="#F94700"/>
+    <circle cx="31" cy="35" r="14" stroke="white" stroke-width="5" fill="none"/>
+    <text x="64" y="38" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif" font-size="22" font-weight="800" fill="#001E42" letter-spacing="1">ORIGIN</text>
+    <text x="64" y="52" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif" font-size="11" font-weight="600" fill="#F94700" letter-spacing="2">PROPERTY</text>
+  </svg>

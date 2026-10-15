@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+    <circle cx="32" cy="35" r="22" fill="#0053B5"/>
+    <path d="M32 20L44 44H38.5L35.5 38H28.5L25.5 44H20L32 20ZM32 27L29.5 34H34.5L32 27Z" fill="white"/>
+    <text x="64" y="37" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif" font-size="20" font-weight="800" fill="#0053B5" letter-spacing="1.5">ANANDA</text>
+    <text x="64" y="51" font-family="'Plus Jakarta Sans', 'Prompt', sans-serif" font-size="10" font-weight="600" fill="#475467" letter-spacing="2">DEVELOPMENT</text>
+  </svg>

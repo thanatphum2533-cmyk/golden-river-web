@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 70" fill="none">
+    <path d="M12 18H32C40 18 46 24 46 32C46 40 40 46 32 46H12V18Z" fill="#003168"/>
+    <path d="M22 28H30C33 28 35 30 35 32C35 34 33 36 30 36H22V28Z" fill="white"/>
+    <text x="58" y="37" font-family="'Plus Jakarta Sans', sans-serif" font-size="21" font-weight="800" fill="#003168" letter-spacing="1">SC ASSET</text>
+    <text x="58" y="51" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="600" fill="#0053B5" letter-spacing="2">FOR GOOD MORNINGS</text>
+  </svg>
