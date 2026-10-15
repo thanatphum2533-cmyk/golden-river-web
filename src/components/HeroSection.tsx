@@ -55,7 +55,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
     {
       id: 'slide-garden',
       tag: '🌿 บริการดูแลสวน & ภูมิทัศน์โครงการ',
-      title: 'ดูแล ตัดแต่ง และฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียมและหมู่บ้าน',
+      title: 'ดูแล ตัดแต่ง และฟื้นฟู\nพื้นที่สีเขียวคอนโดมิเนียมและหมู่บ้าน',
       subtitle: 'ยกระดับความร่มรื่น เพิ่มมูลค่าให้โครงการ ด้วยทีมรุกขกรและช่างสวนมืออาชีพกว่า 5 ปี',
       image: '/images/hero-garden-desktop-1920x720.jpg',
       desktopImage: '/images/hero-garden-desktop-1920x720.jpg',
