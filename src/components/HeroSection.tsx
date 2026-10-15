@@ -175,23 +175,10 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.15rem] font-bold text-white tracking-normal leading-[1.48] sm:leading-[1.42] mb-3 drop-shadow-md [text-wrap:pretty]"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.15rem] font-bold text-white tracking-normal mb-4 drop-shadow-md whitespace-pre-line"
+              style={{ lineHeight: '1.55' }}
             >
-              {activeSlide.title.includes('\n') ? (
-                activeSlide.title.split('\n').map((line, lIdx) => (
-                  <span key={lIdx} className="block py-0.5 sm:py-1">
-                    {line}
-                  </span>
-                ))
-              ) : activeSlide.title.includes(' ') ? (
-                activeSlide.title.split(' ').map((phrase, pIdx) => (
-                  <span key={pIdx} className="inline-block mr-2.5 last:mr-0 py-0.5">
-                    {phrase}
-                  </span>
-                ))
-              ) : (
-                activeSlide.title
-              )}
+              {activeSlide.title}
             </motion.h1>
 
             {/* Subtitle Description */}

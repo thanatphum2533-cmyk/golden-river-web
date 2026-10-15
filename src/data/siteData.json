@@ -649,21 +649,21 @@
       {
         "id": "slide-cleaning",
         "tag": " บริการแม่บ้านทำความสะอาด",
-        "title": "บริการแม่บ้านทำความสะอาด ประจำโครงการ",
+        "title": "บริการแม่บ้านทำความสะอาด\nประจำโครงการ",
         "subtitle": "ทีมงานแม่บ้านมืออาชีพ ผ่านการตรวจประวัติ 100% พร้อมอุปกรณ์และน้ำยาเฉพาะทาง",
         "image": "/uploads/img-1792079172241-4rk7yg.jfif",
-        "desktopImage": "/images/hero-cleaning-desktop-fullscreen.jpg",
-        "mobileImage": "/images/hero-cleaning-mobile-1080x1920.jpg",
+        "desktopImage": "/uploads/img-1792079172241-4rk7yg.jfif",
+        "mobileImage": "/uploads/img-1792079172241-4rk7yg.jfif",
         "badge": "ทีมงานมืออาชีพ ตรวจประวัติ 100%"
       },
       {
         "id": "slide-garden",
         "tag": " บริการดูแลสวน ปรับภูมิทัศน์โครงการ",
-        "title": "ดูแล ตัดแต่ง และฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียมและหมู่บ้าน",
+        "title": "ดูแล ตัดแต่ง และฟื้นฟู\nพื้นที่สีเขียวคอนโดมิเนียมและหมู่บ้าน",
         "subtitle": "ยกระดับความร่มรื่น เพิ่มมูลค่าให้โครงการ ด้วยทีมรุกขกรและช่างสวนมืออาชีพกว่า 5 ปี",
         "image": "/uploads/img-1792079785531-bm4zzi.jfif",
-        "desktopImage": "/images/hero-garden-desktop-1920x720.jpg",
-        "mobileImage": "/images/hero-garden-mobile-1080x1920.jpg",
+        "desktopImage": "/uploads/img-1792079785531-bm4zzi.jfif",
+        "mobileImage": "/uploads/img-1792079785531-bm4zzi.jfif",
         "badge": "30+ โครงการชั้นนำ ไว้วางใจ"
       }
     ]
