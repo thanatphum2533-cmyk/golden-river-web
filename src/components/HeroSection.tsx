@@ -6,9 +6,9 @@ import {
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
-  Search,
-  ArrowUpRight,
-  Sparkles,
+  Building2,
+  Trees,
+  ArrowRight,
   ChevronDown
 } from 'lucide-react';
 
@@ -70,7 +70,6 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
 
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<string>('');
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
@@ -107,22 +106,6 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
   }, [isPaused, slides.length]);
 
   const activeSlide = slides[currentSlide] || slides[0];
-
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!searchQuery.trim()) return;
-    const q = searchQuery.toLowerCase();
-    if (q.includes('สวน') || q.includes('ต้นไม้') || q.includes('หญ้า') || q.includes('ตัด')) {
-      const el = document.getElementById('services');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else if (q.includes('โครงการ') || q.includes('คอนโด') || q.includes('ผลงาน')) {
-      const el = document.getElementById('projects');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      const el = document.getElementById('services');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section
@@ -221,8 +204,8 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
           </>
         )}
 
-        {/* Sansiri Slide Counter Indicator (01 / 03) */}
-        <div className="absolute bottom-28 sm:bottom-24 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
+        {/* Sansiri Slide Counter Indicator (01 / 02) */}
+        <div className="absolute bottom-20 sm:bottom-24 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
           <span>0{currentSlide + 1}</span>
           <span className="text-white/40">/</span>
           <span className="text-white/60">0{slides.length}</span>
@@ -241,56 +224,50 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
         </div>
 
         {/* ========================================================= */}
-        {/* 2. SANSIRI FLOATING QUICKSEARCH BAR (PINNED AT BOTTOM)    */}
+        {/* LUXURY GLASSMORPHISM SERVICE DOCK (SANSIRI / APPLE STYLE) */}
         {/* ========================================================= */}
-        <div id="QuickSearch" className="absolute bottom-0 inset-x-0 z-20 pb-4 sm:pb-6 px-4 sm:px-6 pointer-events-auto">
-          <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-xl border border-slate-200 rounded-2xl md:rounded-full p-2.5 sm:p-3 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-3">
+        <div id="ServiceDock" className="absolute bottom-5 sm:bottom-8 inset-x-0 z-20 px-3 sm:px-6 pointer-events-auto flex justify-center">
+          <div className="w-full max-w-3xl bg-slate-950/60 hover:bg-slate-950/70 backdrop-blur-2xl border border-white/20 rounded-full p-1.5 sm:p-2 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between gap-1.5 sm:gap-4 transition-all duration-300">
             
-            {/* Sansiri-Style Shortcut Menu Group */}
-            <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0 scrollbar-none">
-              {slides.map((s, idx) => (
-                <button
-                  key={s.id || idx}
-                  onClick={() => setCurrentSlide(idx)}
-                  className={'flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap shrink-0 cursor-pointer ' + (
-                    currentSlide === idx
-                      ? 'bg-[#0053b5] text-white shadow-md'
-                      : 'text-slate-600 hover:text-[#0053b5] hover:bg-[#f0f5fc] border border-transparent'
-                  )}
-                >
-                  {idx === 0 && <span>🧹 แม่บ้านทำความสะอาด</span>}
-                  {idx === 1 && <span>🌿 บริการดูแลสวน</span>}
-                  {idx > 1 && <span>{s.tag}</span>}
-                </button>
-              ))}
+            {/* Service Segmented Tabs (No Emojis) */}
+            <div className="flex items-center gap-1 sm:gap-2 flex-1 sm:flex-none">
+              {slides.map((s, idx) => {
+                const isActive = currentSlide === idx;
+                return (
+                  <button
+                    key={s.id || idx}
+                    onClick={() => setCurrentSlide(idx)}
+                    className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
+                      isActive
+                        ? 'bg-white text-slate-900 shadow-md font-semibold'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                    }`}
+                  >
+                    {idx === 0 ? (
+                      <>
+                        <Building2 className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-[#0053b5]' : 'text-white/70'}`} />
+                        <span>งานแม่บ้านอาคาร</span>
+                      </>
+                    ) : idx === 1 ? (
+                      <>
+                        <Trees className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-emerald-600' : 'text-white/70'}`} />
+                        <span>งานดูแลสวน</span>
+                      </>
+                    ) : (
+                      <span>{s.tag?.replace(/^[^\w\u0E00-\u0E7F]+/, '') || s.title}</span>
+                    )}
+                  </button>
+                );
+              })}
             </div>
 
-            {/* Quick Search Input */}
-            <form onSubmit={handleSearchSubmit} className="w-full md:flex-1 max-w-md relative flex items-center">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="ค้นหาบริการ เช่น แม่บ้านทำความสะอาด, ตัดแต่งสวน..."
-                className="w-full h-10 sm:h-11 pl-4 pr-10 text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:border-[#0053b5] focus:bg-white text-slate-800 placeholder-slate-400 transition-all"
-              />
-              <button
-                type="submit"
-                className="absolute right-1.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0053b5] hover:bg-[#003168] text-white flex items-center justify-center transition-colors cursor-pointer"
-                aria-label="Search"
-              >
-                <Search className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-              </button>
-            </form>
-
-            {/* Direct Quotation CTA Button */}
+            {/* Direct Quotation CTA Button (No AI Sparkles) */}
             <a
               href="#contact"
-              className="w-full md:w-auto px-5 py-2.5 rounded-full bg-[#0053b5] hover:bg-[#003168] text-white text-xs font-bold transition-all flex items-center justify-center gap-1.5 shrink-0 shadow-md hover:shadow-lg cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0053b5] to-[#003c82] hover:from-[#0062d6] hover:to-[#00479e] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-md hover:shadow-lg transition-all active:scale-[0.98] shrink-0 cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-white" />
-              <span>นัดประเมินราคาฟรี</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-white" />
+              <span>ขอใบเสนอราคา</span>
+              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
         </div>
