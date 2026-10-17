@@ -58,6 +58,15 @@ export default function AdminPage() {
   const [showSmtpPassword, setShowSmtpPassword] = useState(false);
   const lineQrFileInputRef = useRef<HTMLInputElement>(null);
 
+  // New Guarantee Form (Max 5 items)
+  const [newGuarantee, setNewGuarantee] = useState({
+    title: '',
+    subtitle: '',
+    desc: '',
+    image: '',
+  });
+  const guaranteeFileInputRef = useRef<HTMLInputElement>(null);
+
   // New Project Form with 10 Photos Support
   const [newProject, setNewProject] = useState<{
     title: string;
@@ -790,6 +799,76 @@ export default function AdminPage() {
     }
   };
 
+  // Handlers for Guarantees (Max 5 items)
+  const handleNewGuaranteeImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = await uploadFile(e.target.files[0]);
+      if (url) {
+        setNewGuarantee(prev => ({ ...prev, image: url }));
+      }
+    }
+  };
+
+  const handleAddGuarantee = (e: React.FormEvent) => {
+    e.preventDefault();
+    const currentList = data.guarantees || [];
+    if (currentList.length >= 5) {
+      alert('สามารถเพิ่มมาตรฐานความมั่นใจได้สูงสุด 5 รายการครับ');
+      return;
+    }
+    if (!newGuarantee.title.trim()) {
+      alert('กรุณากรอกหัวข้อหลัก');
+      return;
+    }
+
+    const item = {
+      id: 'guar-' + Date.now(),
+      title: newGuarantee.title.trim(),
+      subtitle: newGuarantee.subtitle.trim() || 'Company Standard',
+      desc: newGuarantee.desc.trim(),
+      image: newGuarantee.image || '',
+    };
+
+    setData({
+      ...data,
+      guarantees: [...currentList, item].slice(0, 5),
+    });
+
+    setNewGuarantee({
+      title: '',
+      subtitle: '',
+      desc: '',
+      image: '',
+    });
+  };
+
+  const handleDeleteGuarantee = (index: number) => {
+    if (confirm('ยืนยันการลบรายการมาตรฐานนี้?')) {
+      const currentList = data.guarantees || [];
+      const updated = currentList.filter((_: any, idx: number) => idx !== index);
+      setData({ ...data, guarantees: updated });
+    }
+  };
+
+  const handleMoveGuarantee = (index: number, direction: 'up' | 'down') => {
+    const list = [...(data.guarantees || [])];
+    const target = direction === 'up' ? index - 1 : index + 1;
+    if (target < 0 || target >= list.length) return;
+    const temp = list[index];
+    list[index] = list[target];
+    list[target] = temp;
+    setData({ ...data, guarantees: list });
+  };
+
+  const handleGuaranteeItemImageUpload = async (index: number, file: File) => {
+    const url = await uploadFile(file);
+    if (url) {
+      const updated = [...(data.guarantees || [])];
+      updated[index] = { ...updated[index], image: url };
+      setData({ ...data, guarantees: updated });
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
@@ -865,7 +944,7 @@ export default function AdminPage() {
       items: [
         { id: 'beforeAfter' as TabType, label: 'เปรียบเทียบผลงาน ก่อน-หลัง', icon: MoveHorizontal, count: data.beforeAfter?.items?.length },
         { id: 'projects' as TabType, label: 'โครงการและผลงาน (Portfolio)', icon: Building, count: data.projects?.length },
-        { id: 'guarantees' as TabType, label: 'มาตรฐานและการรับประกัน', icon: Award },
+        { id: 'guarantees' as TabType, label: 'มาตรฐานและการรับประกัน', icon: Award, count: data.guarantees?.length },
       ]
     },
     {
@@ -2727,55 +2806,316 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {/* TAB 6: CORPORATE GUARANTEES */}
         {/* ========================================================= */}
+        {/* ========================================================= */}
+        {/* TAB 6: CORPORATE GUARANTEES (MAX 5 ITEMS WITH IMAGES)     */}
+        {/* ========================================================= */}
         {activeTab === 'guarantees' && (
-          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
-            <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2">แก้ไขมาตรฐานความมั่นใจระดับองค์กร (4 เสาหลัก)</h3>
-            <p className="text-slate-500">ปรับแก้ข้อความการันตีความปลอดภัยและมาตรฐานที่สร้างความไว้วางใจให้นิติบุคคล</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-              {data.guarantees?.map((guar: any, gIdx: number) => (
-                <div key={gIdx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                  <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#0f172a] text-white font-bold flex items-center justify-center text-xs">{gIdx + 1}</span>
-                    <input
-                      type="text"
-                      placeholder="หัวข้อย่อยอังกฤษ..."
-                      value={guar.subtitle}
-                      onChange={(e) => {
-                        const updated = [...data.guarantees];
-                        updated[gIdx].subtitle = e.target.value;
-                        setData({ ...data, guarantees: updated });
-                      }}
-                      className="px-2 py-1 border border-slate-200 rounded text-[11px] text-[#0053b5] font-semibold"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] text-slate-400 font-semibold mb-0.5">หัวข้อหลัก</label>
-                    <input
-                      type="text"
-                      value={guar.title}
-                      onChange={(e) => {
-                        const updated = [...data.guarantees];
-                        updated[gIdx].title = e.target.value;
-                        setData({ ...data, guarantees: updated });
-                      }}
-                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold text-[#0f172a] text-xs"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-[10px] text-slate-400 font-semibold mb-0.5">คำอธิบายรายละเอียด</label>
-                    <textarea
-                      rows={3}
-                      value={guar.desc}
-                      onChange={(e) => {
-                        const updated = [...data.guarantees];
-                        updated[gIdx].desc = e.target.value;
-                        setData({ ...data, guarantees: updated });
-                      }}
-                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg text-[11px] text-slate-600 leading-relaxed"
-                    />
-                  </div>
+          <div className="space-y-6 text-xs">
+            {/* ADD NEW GUARANTEE FORM (IF LESS THAN 5) */}
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-2">
+                <div>
+                  <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
+                    <Award className="w-5 h-5 text-[#0053b5]" />
+                    <span>มาตรฐานความปลอดภัยและความมั่นใจระดับองค์กร</span>
+                  </h3>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    การ์ดจุดเด่นมาตรฐานความปลอดภัยบนหน้าแรก สามารถเพิ่มรูปภาพ จัดลำดับ และเพิ่ม-ลดได้สูงสุด 5 รายการ
+                  </p>
                 </div>
-              ))}
+                <div className="flex items-center gap-1.5 self-start sm:self-center">
+                  <span className="text-[11px] font-semibold text-slate-600 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                    จำนวนปัจจุบัน: <strong className="text-[#0053b5]">{(data.guarantees || []).length}</strong> / 5 รายการ
+                  </span>
+                </div>
+              </div>
+
+              {(data.guarantees || []).length < 5 ? (
+                <form onSubmit={handleAddGuarantee} className="space-y-4 pt-1">
+                  <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
+                    <Plus className="w-4 h-4 text-[#0053b5]" />
+                    <span>เพิ่มการ์ดมาตรฐานใหม่ (Add New Standard)</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-medium text-slate-700 mb-1">
+                        หัวข้อย่อยภาษาอังกฤษ (English Subtitle)
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="เช่น Public Liability Insurance, Certified Arborists"
+                        value={newGuarantee.subtitle}
+                        onChange={(e) => setNewGuarantee({ ...newGuarantee, subtitle: e.target.value })}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-medium text-slate-700 mb-1">
+                        หัวข้อหลัก (Headline Title) <span className="text-rose-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="เช่น ประกันภัยคุ้มครอง 5,000,000 บาท"
+                        value={newGuarantee.title}
+                        onChange={(e) => setNewGuarantee({ ...newGuarantee, title: e.target.value })}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 font-semibold"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block font-medium text-slate-700 mb-1">
+                        คำอธิบายรายละเอียด (Description)
+                      </label>
+                      <textarea
+                        rows={2}
+                        placeholder="อธิบายรายละเอียดการรับประกันหรือมาตรฐานการปฏิบัติงาน..."
+                        value={newGuarantee.desc}
+                        onChange={(e) => setNewGuarantee({ ...newGuarantee, desc: e.target.value })}
+                        className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 leading-relaxed"
+                      />
+                    </div>
+
+                    {/* Image Upload for New Guarantee */}
+                    <div className="sm:col-span-2">
+                      <label className="block font-medium text-slate-700 mb-1">
+                        รูปภาพประกอบการ์ด (ใส่รูปได้ หรือเว้นว่างเพื่อใช้ไอคอนมาตรฐาน)
+                      </label>
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                        <div className="w-20 h-14 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
+                          {newGuarantee.image ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={newGuarantee.image} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <ImageIcon className="w-5 h-5 text-slate-400" />
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="URL รูปภาพ หรือกดปุ่มอัปโหลดรูปภาพ"
+                          value={newGuarantee.image}
+                          onChange={(e) => setNewGuarantee({ ...newGuarantee, image: e.target.value })}
+                          className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 w-full"
+                        />
+                        <input
+                          type="file"
+                          ref={guaranteeFileInputRef}
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleNewGuaranteeImageUpload}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => guaranteeFileInputRef.current?.click()}
+                          disabled={uploading}
+                          className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg font-medium shrink-0 flex items-center gap-1 border border-slate-300 shadow-2xs cursor-pointer"
+                        >
+                          {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                          <span>อัปโหลดรูป</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      className="px-5 py-2 bg-[#0053b5] hover:bg-[#004293] text-white rounded-lg font-semibold flex items-center gap-1.5 shadow-xs cursor-pointer"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span>เพิ่มรายการนี้</span>
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-amber-600" />
+                  <span>
+                    ปัจจุบันมีครบ <strong>5 รายการตามโควตาสูงสุด</strong> แล้วครับ หากต้องการเพิ่มรายการใหม่ กรุณากดปุ่มลบรายการที่ไม่ต้องการด้านล่างออกก่อน
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {/* LIST OF EXISTING GUARANTEES */}
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <h4 className="font-bold text-sm text-[#0f172a] flex items-center gap-2">
+                  <span>รายการมาตรฐานที่มีอยู่ในระบบ ({(data.guarantees || []).length} / 5 รายการ)</span>
+                </h4>
+                <p className="text-[11px] text-slate-500">สามารถแก้ไขข้อความ สลับลำดับ ขึ้น/ลง หรือลบรายการได้</p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {(data.guarantees || []).map((guar: any, gIdx: number) => {
+                  const itemFileInputId = `guar-file-upload-${gIdx}`;
+                  const total = (data.guarantees || []).length;
+                  return (
+                    <div
+                      key={guar.id || gIdx}
+                      className="p-4 rounded-xl bg-slate-50 border border-slate-200 flex flex-col justify-between gap-3 hover:border-slate-300 transition-colors shadow-2xs"
+                    >
+                      <div className="space-y-3">
+                        {/* Header with order and action buttons */}
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-200">
+                          <span className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                            <span className="w-5 h-5 rounded-md bg-[#003168] text-white flex items-center justify-center text-[10px]">
+                              {gIdx + 1}
+                            </span>
+                            <span>{guar.title || `มาตรฐานลำดับที่ ${gIdx + 1}`}</span>
+                          </span>
+
+                          <div className="flex items-center gap-1">
+                            {/* Reorder Up */}
+                            <button
+                              type="button"
+                              onClick={() => handleMoveGuarantee(gIdx, 'up')}
+                              disabled={gIdx === 0}
+                              className={`p-1 rounded-md border text-slate-600 transition-colors ${
+                                gIdx === 0
+                                  ? 'opacity-30 cursor-not-allowed border-slate-200 bg-white'
+                                  : 'hover:bg-slate-200 border-slate-300 bg-white cursor-pointer'
+                              }`}
+                              title="เลื่อนขึ้น"
+                            >
+                              <ChevronUp className="w-3.5 h-3.5" />
+                            </button>
+
+                            {/* Reorder Down */}
+                            <button
+                              type="button"
+                              onClick={() => handleMoveGuarantee(gIdx, 'down')}
+                              disabled={gIdx === total - 1}
+                              className={`p-1 rounded-md border text-slate-600 transition-colors ${
+                                gIdx === total - 1
+                                  ? 'opacity-30 cursor-not-allowed border-slate-200 bg-white'
+                                  : 'hover:bg-slate-200 border-slate-300 bg-white cursor-pointer'
+                              }`}
+                              title="เลื่อนลง"
+                            >
+                              <ChevronDown className="w-3.5 h-3.5" />
+                            </button>
+
+                            {/* Delete */}
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteGuarantee(gIdx)}
+                              className="p-1 rounded-md border border-rose-200 bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors cursor-pointer ml-1"
+                              title="ลบรายการนี้"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Image Preview & Upload for this item */}
+                        <div>
+                          <label className="block text-[10px] text-slate-500 font-semibold mb-1">
+                            รูปภาพประกอบการ์ด (เว้นว่างหากต้องการใช้ไอคอนมาตรฐาน)
+                          </label>
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 h-12 rounded-lg bg-slate-200 border border-slate-300 overflow-hidden shrink-0 flex items-center justify-center">
+                              {guar.image ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img src={guar.image} alt="" className="w-full h-full object-cover" />
+                              ) : (
+                                <ImageIcon className="w-4 h-4 text-slate-400" />
+                              )}
+                            </div>
+                            <input
+                              type="text"
+                              value={guar.image || ''}
+                              onChange={(e) => {
+                                const updated = [...data.guarantees];
+                                updated[gIdx].image = e.target.value;
+                                setData({ ...data, guarantees: updated });
+                              }}
+                              placeholder="URL รูปภาพ หรือกดอัปโหลด"
+                              className="flex-1 px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                            />
+                            <input
+                              id={itemFileInputId}
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                if (e.target.files && e.target.files[0]) {
+                                  handleGuaranteeItemImageUpload(gIdx, e.target.files[0]);
+                                }
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const el = document.getElementById(itemFileInputId);
+                                if (el) el.click();
+                              }}
+                              disabled={uploading}
+                              className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 rounded-lg text-xs font-medium border border-slate-300 shadow-2xs shrink-0 cursor-pointer"
+                            >
+                              {uploading ? <Loader2 className="w-3 h-3 animate-spin" /> : <Upload className="w-3 h-3" />}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Subtitle & Title */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          <div>
+                            <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">
+                              หัวข้อย่อยอังกฤษ
+                            </label>
+                            <input
+                              type="text"
+                              value={guar.subtitle || ''}
+                              onChange={(e) => {
+                                const updated = [...data.guarantees];
+                                updated[gIdx].subtitle = e.target.value;
+                                setData({ ...data, guarantees: updated });
+                              }}
+                              className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-[11px] text-[#0053b5] font-semibold bg-white"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">
+                              หัวข้อหลักภาษาไทย *
+                            </label>
+                            <input
+                              type="text"
+                              value={guar.title || ''}
+                              onChange={(e) => {
+                                const updated = [...data.guarantees];
+                                updated[gIdx].title = e.target.value;
+                                setData({ ...data, guarantees: updated });
+                              }}
+                              className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-xs font-bold text-slate-900 bg-white"
+                            />
+                          </div>
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                          <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">
+                            คำอธิบายรายละเอียด
+                          </label>
+                          <textarea
+                            rows={3}
+                            value={guar.desc || ''}
+                            onChange={(e) => {
+                              const updated = [...data.guarantees];
+                              updated[gIdx].desc = e.target.value;
+                              setData({ ...data, guarantees: updated });
+                            }}
+                            className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg text-[11px] text-slate-700 leading-relaxed bg-white"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}

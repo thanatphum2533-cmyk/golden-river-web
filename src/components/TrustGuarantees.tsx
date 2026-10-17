@@ -2,13 +2,14 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldAlert, UserCheck, Award, FileCheck2 } from 'lucide-react';
+import { ShieldAlert, UserCheck, Award, FileCheck2, CheckCircle2 } from 'lucide-react';
 
-interface GuaranteeItem {
+export interface GuaranteeItem {
   id?: string;
   title: string;
   subtitle: string;
   desc: string;
+  image?: string;
 }
 
 interface TrustGuaranteesProps {
@@ -16,7 +17,7 @@ interface TrustGuaranteesProps {
 }
 
 export default function TrustGuarantees({ guarantees: propGuarantees }: TrustGuaranteesProps) {
-  const fallbackIcons = [ShieldAlert, UserCheck, Award, FileCheck2];
+  const fallbackIcons = [ShieldAlert, UserCheck, Award, FileCheck2, CheckCircle2];
 
   const fallbackGuarantees: GuaranteeItem[] = [
     {
@@ -41,7 +42,17 @@ export default function TrustGuarantees({ guarantees: propGuarantees }: TrustGua
     }
   ];
 
-  const guarantees = (propGuarantees && propGuarantees.length > 0) ? propGuarantees : fallbackGuarantees;
+  // Up to maximum 5 items
+  const rawList = (propGuarantees && propGuarantees.length > 0) ? propGuarantees : fallbackGuarantees;
+  const guarantees = rawList.slice(0, 5);
+
+  const getGridCols = (count: number) => {
+    if (count === 5) return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5';
+    if (count === 4) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6';
+    if (count === 3) return 'grid-cols-1 md:grid-cols-3 gap-6';
+    if (count === 2) return 'grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto';
+    return 'grid-cols-1 max-w-md mx-auto';
+  };
 
   return (
     <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -54,33 +65,50 @@ export default function TrustGuarantees({ guarantees: propGuarantees }: TrustGua
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className={`grid ${getGridCols(guarantees.length)}`}>
         {guarantees.map((item, idx) => {
           const Icon = fallbackIcons[idx % fallbackIcons.length];
           return (
             <motion.div
-              key={item.title}
+              key={item.id || item.title || idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="bg-white/90 backdrop-blur-md border border-slate-200 rounded-2xl p-6 shadow-xs hover:shadow-lg hover:border-[#0053b5]/60 transition-all flex flex-col justify-between group"
+              transition={{ duration: 0.4, delay: idx * 0.08 }}
+              className="bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl p-5 sm:p-6 shadow-xs hover:shadow-lg hover:border-[#0053b5]/60 transition-all flex flex-col justify-between group"
             >
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-[#003168] text-white flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-[#0053b5] group-hover:text-white transition-all shadow-xs">
-                  <Icon className="w-6 h-6" />
-                </div>
+                {/* Optional Image Support */}
+                {item.image ? (
+                  <div className="w-full h-36 sm:h-40 rounded-xl overflow-hidden mb-4 border border-slate-200/80 bg-slate-100 relative group/img shadow-2xs">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-2.5 left-2.5 w-8 h-8 rounded-lg bg-[#003168]/90 backdrop-blur-xs text-white flex items-center justify-center shadow-xs">
+                      <Icon className="w-4 h-4" />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 rounded-2xl bg-[#003168] text-white flex items-center justify-center mb-5 group-hover:scale-110 group-hover:bg-[#0053b5] group-hover:text-white transition-all shadow-xs">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                )}
+
                 <div className="text-[11px] font-semibold text-[#0053b5] mb-1">
                   {item.subtitle}
                 </div>
-                <h3 className="text-base font-bold text-[#003168] mb-3 leading-snug">
+                <h3 className="text-base font-bold text-[#003168] mb-2.5 leading-snug">
                   {item.title}
                 </h3>
                 <p className="text-xs text-slate-600 leading-relaxed font-normal">
                   {item.desc}
                 </p>
               </div>
-              <div className="pt-4 mt-4 border-t border-slate-100 flex items-center gap-1 text-[11px] font-bold text-emerald-700">
+
+              <div className="pt-3.5 mt-4 border-t border-slate-100 flex items-center gap-1 text-[11px] font-bold text-emerald-700">
                 <span>✓ มาตรฐานพร้อมตรวจสอบ</span>
               </div>
             </motion.div>
