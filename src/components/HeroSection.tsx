@@ -8,6 +8,7 @@ import {
   ShieldCheck,
   Building2,
   Trees,
+  Search,
   ArrowRight,
   ChevronDown
 } from 'lucide-react';
@@ -70,8 +71,25 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
 
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchQuery.trim()) return;
+    const q = searchQuery.toLowerCase();
+    if (q.includes('สวน') || q.includes('ต้นไม้') || q.includes('หญ้า') || q.includes('ตัด')) {
+      const el = document.getElementById('services');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (q.includes('โครงการ') || q.includes('คอนโด') || q.includes('ผลงาน')) {
+      const el = document.getElementById('projects');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      const el = document.getElementById('services');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const minSwipeDistance = 40;
 
@@ -150,7 +168,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
         </AnimatePresence>
 
         {/* Hero Overlay Content Container */}
-        <div className="relative max-w-7xl mx-auto h-full px-8 sm:px-10 lg:px-8 flex flex-col justify-center sm:justify-end pb-36 sm:pb-36 md:pb-40 pt-16 sm:pt-20 z-10">
+        <div className="relative max-w-7xl mx-auto h-full px-6 sm:px-10 lg:px-8 flex flex-col justify-center sm:justify-end pb-44 sm:pb-36 md:pb-40 pt-16 sm:pt-20 z-10">
           <div className="max-w-3xl mx-auto sm:mx-0 text-center sm:text-left">
             {/* Main Sansiri-Style Headline */}
             <motion.h1
@@ -205,7 +223,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
         )}
 
         {/* Sansiri Slide Counter Indicator (01 / 02) */}
-        <div className="absolute bottom-20 sm:bottom-24 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
+        <div className="absolute bottom-36 sm:bottom-24 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
           <span>0{currentSlide + 1}</span>
           <span className="text-white/40">/</span>
           <span className="text-white/60">0{slides.length}</span>
@@ -224,33 +242,33 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
         </div>
 
         {/* ========================================================= */}
-        {/* LUXURY GLASSMORPHISM SERVICE DOCK (SANSIRI / APPLE STYLE) */}
+        {/* SANSIRI-STYLE LUXURY SEARCH & SERVICE DOCK                */}
         {/* ========================================================= */}
-        <div id="ServiceDock" className="absolute bottom-5 sm:bottom-8 inset-x-0 z-20 px-3 sm:px-6 pointer-events-auto flex justify-center">
-          <div className="w-full max-w-3xl bg-slate-950/60 hover:bg-slate-950/70 backdrop-blur-2xl border border-white/20 rounded-full p-1.5 sm:p-2 shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between gap-1.5 sm:gap-4 transition-all duration-300">
+        <div id="QuickSearch" className="absolute bottom-3 sm:bottom-6 inset-x-0 z-20 px-3 sm:px-6 pointer-events-auto">
+          <div className="max-w-5xl mx-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl md:rounded-full p-2 sm:p-2.5 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-3">
             
-            {/* Service Segmented Tabs (No Emojis) */}
-            <div className="flex items-center gap-1 sm:gap-2 flex-1 sm:flex-none">
+            {/* Service Category Switchers (No Emojis) */}
+            <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-0.5 md:pb-0 scrollbar-none justify-center md:justify-start">
               {slides.map((s, idx) => {
                 const isActive = currentSlide === idx;
                 return (
                   <button
                     key={s.id || idx}
                     onClick={() => setCurrentSlide(idx)}
-                    className={`flex items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                       isActive
-                        ? 'bg-white text-slate-900 shadow-md font-semibold'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                        ? 'bg-[#0053b5] text-white shadow-md'
+                        : 'text-slate-600 hover:text-[#0053b5] hover:bg-slate-100 border border-transparent'
                     }`}
                   >
                     {idx === 0 ? (
                       <>
-                        <Building2 className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-[#0053b5]' : 'text-white/70'}`} />
+                        <Building2 className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#0053b5]'}`} />
                         <span>งานแม่บ้านอาคาร</span>
                       </>
                     ) : idx === 1 ? (
                       <>
-                        <Trees className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-emerald-600' : 'text-white/70'}`} />
+                        <Trees className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
                         <span>งานดูแลสวน</span>
                       </>
                     ) : (
@@ -261,10 +279,28 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
               })}
             </div>
 
+            {/* Minimalist Luxury Search Field */}
+            <form onSubmit={handleSearchSubmit} className="w-full md:flex-1 max-w-md relative flex items-center">
+              <Search className="absolute left-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ค้นหาบริการ เช่น แม่บ้านคอนโด, ตัดแต่งสวน..."
+                className="w-full h-9 sm:h-11 pl-10 pr-16 text-xs sm:text-sm bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-full focus:outline-none focus:border-[#0053b5] text-slate-800 placeholder-slate-400 transition-all"
+              />
+              <button
+                type="submit"
+                className="absolute right-1 px-3 py-1 rounded-full bg-slate-200/80 hover:bg-[#0053b5] hover:text-white text-slate-700 text-xs font-semibold transition-all cursor-pointer"
+              >
+                ค้นหา
+              </button>
+            </form>
+
             {/* Direct Quotation CTA Button (No AI Sparkles) */}
             <a
               href="#contact"
-              className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0053b5] to-[#003c82] hover:from-[#0062d6] hover:to-[#00479e] text-white text-xs sm:text-sm font-semibold tracking-wide shadow-md hover:shadow-lg transition-all active:scale-[0.98] shrink-0 cursor-pointer"
+              className="w-full md:w-auto px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0053b5] to-[#003c82] hover:from-[#0062d6] hover:to-[#00479e] text-white text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg transition-all active:scale-[0.98] shrink-0 cursor-pointer"
             >
               <span>ขอใบเสนอราคา</span>
               <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
