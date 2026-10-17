@@ -607,32 +607,32 @@ export default function AdminPage() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-[#0d0a26] flex items-center justify-center p-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(118,83,33,0.2),transparent_50%)]" />
-        <div className="max-w-md w-full bg-white/95 backdrop-blur-md rounded-3xl p-8 border border-gold-300/40 shadow-2xl relative z-10">
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <div className="max-w-sm w-full bg-white rounded-2xl p-8 border border-slate-200 shadow-sm">
           <div className="text-center mb-6">
-            <div className="w-16 h-16 rounded-2xl bg-[#161141] text-gold-300 flex items-center justify-center mx-auto mb-3 shadow-md border border-gold-400/30">
-              <Lock className="w-8 h-8" />
+            <div className="w-12 h-12 rounded-xl bg-slate-900 text-white flex items-center justify-center mx-auto mb-3 shadow-xs font-bold text-base tracking-wider">
+              GR
             </div>
-            <h1 className="text-2xl font-black text-[#161141] tracking-tight">GR Group Backoffice</h1>
-            <p className="text-xs text-slate-500 mt-1">ระบบบริหารจัดการเนื้อหาเว็บไซต์ครบวงจร 100%</p>
+            <h1 className="text-lg font-bold text-slate-900 tracking-tight">Golden River CMS</h1>
+            <p className="text-xs text-slate-500 mt-1">ระบบบริหารจัดการเนื้อหาเว็บไซต์</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                กรุณาระบุรหัส PIN เพื่อเข้าสู่ระบบ
+              <label className="block text-xs font-medium text-slate-700 mb-1.5 text-center">
+                กรุณาระบุรหัส PIN เพื่อเข้าใช้งาน
               </label>
               <input
                 type="password"
                 maxLength={8}
-                placeholder="ระบุรหัส PIN (ค่าเริ่มต้น: 8888)"
+                placeholder="ระบุรหัส PIN"
                 value={pin}
                 onChange={(e) => { setPin(e.target.value); setPinError(false); }}
-                className="w-full px-4 py-3 rounded-xl border border-gold-200 focus:outline-[#765321] text-center text-lg tracking-widest font-mono bg-gold-50/30"
+                className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-slate-900 focus:border-slate-900 text-center text-lg tracking-widest font-mono bg-white"
+                autoFocus
               />
               {pinError && (
-                <p className="text-xs text-rose-500 mt-1.5 text-center font-medium">
+                <p className="text-xs text-rose-500 mt-2 text-center font-medium">
                   รหัส PIN ไม่ถูกต้อง (ทดลองใช้ 8888 หรือ admin123)
                 </p>
               )}
@@ -640,15 +640,15 @@ export default function AdminPage() {
 
             <button
               type="submit"
-              className="w-full py-3 rounded-xl bg-[#161141] hover:bg-[#765321] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+              className="w-full py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium text-xs shadow-xs transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
-              <ShieldCheck className="w-4 h-4 text-gold-300" />
-              <span>เข้าสู่ระบบหลังบ้าน</span>
+              <ShieldCheck className="w-4 h-4" />
+              <span>เข้าสู่ระบบ</span>
             </button>
           </form>
 
-          <div className="mt-6 pt-4 border-t border-gold-100 text-center">
-            <Link href="/" className="text-xs text-[#765321] hover:underline inline-flex items-center gap-1 font-semibold">
+          <div className="mt-6 pt-4 border-t border-slate-100 text-center">
+            <Link href="/" className="text-xs text-slate-500 hover:text-slate-900 inline-flex items-center gap-1 font-medium transition-colors">
               <ArrowLeft className="w-3.5 h-3.5" /> กลับสู่หน้าแรกของเว็บไซต์
             </Link>
           </div>
@@ -659,62 +659,67 @@ export default function AdminPage() {
 
   const navGroups = [
     {
-      title: 'ข้อมูลติดต่อ & คำขอ',
+      title: 'ข้อมูลองค์กรและการติดต่อ',
       items: [
-        { id: 'inquiries' as TabType, label: 'คำขอราคา', icon: Inbox, count: inquiries.length },
-        { id: 'company' as TabType, label: 'ข้อมูลบริษัท & ติดต่อ', icon: Settings },
+        { id: 'inquiries' as TabType, label: 'คำขอใบเสนอราคา', icon: Inbox, count: inquiries.length },
+        { id: 'company' as TabType, label: 'ข้อมูลบริษัทและการติดต่อ', icon: Settings },
       ]
     },
     {
-      title: 'หน้าแรก & บริการ',
+      title: 'เนื้อหาหน้าแรกและบริการ',
       items: [
-        { id: 'hero' as TabType, label: 'ส่วนหัวเว็บ & สถิติ', icon: Sparkles },
+        { id: 'hero' as TabType, label: 'แบนเนอร์หน้าแรกและสถิติ', icon: Sparkles },
         { id: 'services' as TabType, label: 'บริการหลัก (แม่บ้าน/สวน)', icon: Briefcase, count: data.services?.length },
-        { id: 'clients' as TabType, label: 'แบรนด์ลูกค้า (แถบเลื่อน)', icon: Building2, count: data.clients?.length },
-        { id: 'background' as TabType, label: 'ภาพพื้นหลังเว็บ', icon: ImageIcon },
+        { id: 'clients' as TabType, label: 'แบรนด์ผู้พัฒนาโครงการ', icon: Building2, count: data.clients?.length },
+        { id: 'background' as TabType, label: 'ภาพพื้นหลังเว็บไซต์', icon: ImageIcon },
       ]
     },
     {
-      title: 'ผลงาน & การันตี',
+      title: 'ผลงานและการรับประกัน',
       items: [
-        { id: 'beforeAfter' as TabType, label: 'ผลงาน ก่อน-หลัง', icon: MoveHorizontal, count: data.beforeAfter?.items?.length },
-        { id: 'projects' as TabType, label: 'ผลงานโครงการ', icon: Building, count: data.projects?.length },
-        { id: 'guarantees' as TabType, label: 'มาตรฐาน & การรับประกัน', icon: Award },
+        { id: 'beforeAfter' as TabType, label: 'เปรียบเทียบผลงาน ก่อน-หลัง', icon: MoveHorizontal, count: data.beforeAfter?.items?.length },
+        { id: 'projects' as TabType, label: 'โครงการและผลงาน (Portfolio)', icon: Building, count: data.projects?.length },
+        { id: 'guarantees' as TabType, label: 'มาตรฐานและการรับประกัน', icon: Award },
       ]
     },
     {
-      title: 'บทความ & เพื่อสังคม',
+      title: 'บทความและกิจกรรมเพื่อสังคม',
       items: [
-        { id: 'articles' as TabType, label: 'คำแนะนำและบทความ', icon: BookOpen, count: data.articles?.length },
-        { id: 'csr' as TabType, label: 'กิจกรรม CSR เพื่อสังคม', icon: Heart, count: data.csr?.length },
+        { id: 'articles' as TabType, label: 'บทความและสาระน่ารู้', icon: BookOpen, count: data.articles?.length },
+        { id: 'csr' as TabType, label: 'กิจกรรมเพื่อสังคม (CSR)', icon: Heart, count: data.csr?.length },
       ]
     }
   ];
 
   return (
-    <div className="min-h-screen bg-slate-100/70 font-sans text-slate-800 flex flex-col">
-      {/* Top Navbar */}
-      <header className="bg-[#161141] text-white sticky top-0 z-40 border-b border-gold-500/30 shadow-md">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col">
+      {/* Top Navbar - Clean White Enterprise Design */}
+      <header className="bg-white text-slate-800 sticky top-0 z-40 border-b border-slate-200 shadow-2xs">
         <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             {/* Hamburger Button for Mobile */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gold-300 transition-colors"
+              className="lg:hidden p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors cursor-pointer"
               aria-label="เปิดเมนู"
             >
               <Menu className="w-5 h-5" />
             </button>
 
-            <div className="w-10 h-10 rounded-xl bg-white/10 border border-gold-400/40 flex items-center justify-center font-black text-gold-300 shadow-inner">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-xs sm:text-sm tracking-wider shadow-xs">
               GR
             </div>
             <div>
-              <h1 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                <span>ระบบจัดการเว็บไซต์ GR Group</span>
-              </h1>
-              <p className="text-[11px] text-slate-300 hidden sm:block">แก้ไขข้อมูลหน้าบ้านได้ทุกส่วน ไม่ต้องแก้โค้ด</p>
+              <div className="flex items-center gap-2">
+                <h1 className="text-sm sm:text-base font-bold text-slate-900">
+                  Golden River CMS
+                </h1>
+                <span className="hidden sm:inline-block text-[10px] font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded-md border border-slate-200">
+                  ระบบจัดการหลังบ้าน
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 hidden sm:block">บริหารจัดการเนื้อหาและรูปภาพเว็บไซต์ Golden River Service</p>
             </div>
           </div>
 
@@ -722,17 +727,17 @@ export default function AdminPage() {
             <Link
               href="/"
               target="_blank"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gold-300 border border-gold-400/30 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-xs font-medium text-slate-700 border border-slate-200 transition-all shadow-2xs"
             >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">เปิดดูหน้าเว็บจริง</span>
+              <ExternalLink className="w-3.5 h-3.5 text-slate-500" />
+              <span className="hidden sm:inline">ดูหน้าเว็บจริง</span>
               <span className="sm:hidden">ดูเว็บ</span>
             </Link>
 
             <button
               onClick={handleSaveData}
               disabled={loading}
-              className="px-3.5 sm:px-5 py-2 rounded-xl bg-[#765321] hover:bg-[#9b743a] text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
+              className="px-4 sm:px-5 py-2 rounded-lg bg-[#0053b5] hover:bg-[#004293] text-white text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-all cursor-pointer"
             >
               {loading ? (
                 <>
@@ -746,8 +751,8 @@ export default function AdminPage() {
                 </>
               ) : (
                 <>
-                  <Save className="w-4 h-4 text-gold-300" />
-                  <span className="hidden sm:inline">บันทึกการเปลี่ยนแปลงทั้งหมด</span>
+                  <Save className="w-4 h-4" />
+                  <span className="hidden sm:inline">บันทึกข้อมูล</span>
                   <span className="sm:hidden">บันทึก</span>
                 </>
               )}
@@ -761,16 +766,16 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {/* LEFT SIDEBAR (DESKTOP)                                    */}
         {/* ========================================================= */}
-        <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 bg-[#120d36] text-white border-r border-gold-500/20 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto p-4 space-y-6 select-none shadow-sm">
-          <div className="text-[11px] font-bold tracking-wider uppercase text-gold-400/80 px-2 pb-1 border-b border-white/10 flex items-center justify-between">
-            <span>เมนูระบบจัดการ</span>
-            <span className="text-[10px] bg-white/10 text-slate-300 px-2 py-0.5 rounded-full font-normal">11 หมวดหมู่</span>
+        <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 bg-slate-900 text-slate-300 border-r border-slate-800 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto p-4 space-y-6 select-none shadow-xs">
+          <div className="text-[11px] font-semibold tracking-wider uppercase text-slate-400 px-2 pb-1 border-b border-slate-800 flex items-center justify-between">
+            <span>หมวดหมู่เนื้อหา</span>
+            <span className="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-normal">11 ส่วน</span>
           </div>
 
           <div className="space-y-5">
             {navGroups.map((group, gIdx) => (
               <div key={gIdx} className="space-y-1">
-                <div className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase px-2 mb-1.5">
+                <div className="text-[10px] font-semibold tracking-wider text-slate-500 uppercase px-2 mb-1.5">
                   {group.title}
                 </div>
                 {group.items.map((item) => {
@@ -781,25 +786,25 @@ export default function AdminPage() {
                       key={item.id}
                       onClick={() => setActiveTab(item.id)}
                       className={
-                        'w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left group ' +
+                        'w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all text-left group cursor-pointer ' +
                         (isActive
-                          ? 'bg-gradient-to-r from-[#1f1754] to-[#281e6a] text-gold-300 font-bold shadow-sm border-l-4 border-gold-400 pl-2.5'
-                          : 'text-slate-300 hover:text-white hover:bg-white/5')
+                          ? 'bg-slate-800 text-white font-semibold shadow-xs border-l-2 border-[#0053b5] pl-2.5'
+                          : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/60')
                       }
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <Icon className={'w-4 h-4 shrink-0 transition-colors ' + (isActive ? 'text-gold-300' : 'text-slate-400 group-hover:text-gold-300')} />
+                        <Icon className={'w-4 h-4 shrink-0 transition-colors ' + (isActive ? 'text-[#3b82f6]' : 'text-slate-500 group-hover:text-slate-300')} />
                         <span className="truncate">{item.label}</span>
                       </div>
                       {typeof item.count === 'number' && item.count > 0 && (
                         <span
                           className={
-                            'text-[10px] px-1.5 py-0.5 rounded-full font-bold shrink-0 ml-1.5 ' +
+                            'text-[10px] px-2 py-0.5 rounded-full font-semibold shrink-0 ml-1.5 ' +
                             (item.id === 'inquiries'
-                              ? 'bg-rose-500 text-white animate-pulse'
+                              ? 'bg-rose-500 text-white'
                               : isActive
-                              ? 'bg-gold-400/20 text-gold-300 border border-gold-400/30'
-                              : 'bg-white/10 text-slate-400')
+                              ? 'bg-slate-700 text-white'
+                              : 'bg-slate-800 text-slate-400 border border-slate-700')
                           }
                         >
                           {item.count}
@@ -822,16 +827,16 @@ export default function AdminPage() {
               className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
               onClick={() => setMobileMenuOpen(false)}
             />
-            <aside className="fixed inset-y-0 left-0 w-72 bg-[#120d36] text-white shadow-2xl z-50 p-4 overflow-y-auto flex flex-col space-y-6">
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <div className="flex items-center gap-2 font-bold text-sm text-gold-300">
-                  <ShieldCheck className="w-5 h-5 text-gold-400" />
+            <aside className="fixed inset-y-0 left-0 w-72 bg-slate-900 text-slate-200 shadow-2xl z-50 p-4 overflow-y-auto flex flex-col space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div className="flex items-center gap-2 font-bold text-sm text-white">
+                  <ShieldCheck className="w-5 h-5 text-slate-400" />
                   <span>เมนูระบบจัดการ</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -840,7 +845,7 @@ export default function AdminPage() {
               <div className="space-y-5">
                 {navGroups.map((group, gIdx) => (
                   <div key={gIdx} className="space-y-1">
-                    <div className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase px-2 mb-1.5">
+                    <div className="text-[10px] font-semibold tracking-wider text-slate-500 uppercase px-2 mb-1.5">
                       {group.title}
                     </div>
                     {group.items.map((item) => {
@@ -854,18 +859,18 @@ export default function AdminPage() {
                             setMobileMenuOpen(false);
                           }}
                           className={
-                            'w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left ' +
+                            'w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all text-left ' +
                             (isActive
-                              ? 'bg-[#1f1754] text-gold-300 font-bold border-l-4 border-gold-400 pl-2.5'
-                              : 'text-slate-300 hover:text-white hover:bg-white/5')
+                              ? 'bg-slate-800 text-white font-semibold border-l-2 border-[#0053b5] pl-2.5'
+                              : 'text-slate-400 hover:text-white hover:bg-slate-800/60')
                           }
                         >
                           <div className="flex items-center gap-2.5 min-w-0">
-                            <Icon className={'w-4 h-4 shrink-0 ' + (isActive ? 'text-gold-300' : 'text-slate-400')} />
+                            <Icon className={'w-4 h-4 shrink-0 ' + (isActive ? 'text-[#3b82f6]' : 'text-slate-500')} />
                             <span className="truncate">{item.label}</span>
                           </div>
                           {typeof item.count === 'number' && item.count > 0 && (
-                            <span className={'text-[10px] px-1.5 py-0.5 rounded-full font-bold ' + (item.id === 'inquiries' ? 'bg-rose-500 text-white' : 'bg-white/10 text-slate-400')}>
+                            <span className={'text-[10px] px-2 py-0.5 rounded-full font-semibold ' + (item.id === 'inquiries' ? 'bg-rose-500 text-white' : 'bg-slate-800 text-slate-400 border border-slate-700')}>
                               {item.count}
                             </span>
                           )}
@@ -889,13 +894,13 @@ export default function AdminPage() {
         {/* TAB 1: INQUIRIES */}
         {/* ========================================================= */}
         {activeTab === 'inquiries' && (
-          <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
-            <h2 className="text-lg font-bold text-[#161141] mb-1">รายการขอใบเสนอราคาจากหน้าเว็บ</h2>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
+            <h2 className="text-lg font-bold text-[#0f172a] mb-1">รายการขอใบเสนอราคาจากหน้าเว็บ</h2>
             <p className="text-xs text-slate-500 mb-4">ข้อมูลลูกค้าและนิติบุคคลที่กรอกแบบฟอร์มเข้ามา (พร้อมภาพถ่ายหน้างานที่แนบมา)</p>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs border-collapse">
                 <thead>
-                  <tr className="border-b border-gold-200 text-[#161141] font-semibold bg-gold-50/50">
+                  <tr className="border-b border-slate-200 text-[#0f172a] font-semibold bg-slate-50">
                     <th className="p-3">วันที่</th>
                     <th className="p-3">ชื่อผู้ติดต่อ</th>
                     <th className="p-3">เบอร์โทรศัพท์</th>
@@ -908,23 +913,23 @@ export default function AdminPage() {
                   {inquiries.length === 0 ? (
                     <tr><td colSpan={6} className="p-6 text-center text-slate-400">ยังไม่มีรายการขอใบเสนอราคา</td></tr>
                   ) : inquiries.map((inq: any) => (
-                    <tr key={inq.id} className="hover:bg-gold-50/30">
+                    <tr key={inq.id} className="hover:bg-slate-50">
                       <td className="p-3 text-slate-400 whitespace-nowrap">
                         {inq.createdAt ? new Date(inq.createdAt).toLocaleDateString('th-TH') : '-'}
                       </td>
-                      <td className="p-3 font-bold text-[#161141]">
+                      <td className="p-3 font-bold text-[#0f172a]">
                         {inq.name}
                         {inq.projectName && <div className="text-[11px] font-normal text-slate-400">({inq.projectName})</div>}
                       </td>
-                      <td className="p-3 text-[#765321] font-semibold">{inq.phone}</td>
-                      <td className="p-3"><span className="bg-gold-50 text-[#765321] border border-gold-200 px-2 py-0.5 rounded font-medium">{inq.service}</span></td>
+                      <td className="p-3 text-[#0053b5] font-semibold">{inq.phone}</td>
+                      <td className="p-3"><span className="bg-slate-50 text-[#0053b5] border border-slate-200 px-2 py-0.5 rounded font-medium">{inq.service}</span></td>
                       <td className="p-3 max-w-xs">
                         <div className="text-slate-600 line-clamp-2">{inq.message || '-'}</div>
                         {inq.images && inq.images.length > 0 && (
                           <button
                             type="button"
                             onClick={() => setViewingInquiryPhotos(inq.images)}
-                            className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 bg-gold-100 hover:bg-gold-200 text-[#765321] rounded-md font-bold text-[11px] border border-gold-300/60 shadow-2xs"
+                            className="mt-1.5 inline-flex items-center gap-1 px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-[#0053b5] rounded-md font-bold text-[11px] border border-slate-300 shadow-2xs"
                           >
                             <ImageIcon className="w-3.5 h-3.5" />
                             <span>ดูภาพหน้างาน ({inq.images.length} รูป)</span>
@@ -932,7 +937,7 @@ export default function AdminPage() {
                         )}
                       </td>
                       <td className="p-3">
-                        <select value={inq.status || 'pending'} onChange={(e) => handleUpdateInquiryStatus(inq.id, e.target.value)} className="border border-gold-200 rounded-lg px-2 py-1 bg-white text-slate-700 text-xs">
+                        <select value={inq.status || 'pending'} onChange={(e) => handleUpdateInquiryStatus(inq.id, e.target.value)} className="border border-slate-200 rounded-lg px-2 py-1 bg-white text-slate-700 text-xs">
                           <option value="pending">รอดำเนินการ</option>
                           <option value="contacted">ติดต่อแล้ว</option>
                           <option value="completed">ปิดงานแล้ว</option>
@@ -949,22 +954,22 @@ export default function AdminPage() {
         {/* Modal for viewing customer attached photos */}
         {viewingInquiryPhotos && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs">
-            <div className="bg-white rounded-3xl max-w-3xl w-full p-6 relative max-h-[85vh] overflow-y-auto border border-gold-300 shadow-2xl">
+            <div className="bg-white rounded-xl max-w-3xl w-full p-6 relative max-h-[85vh] overflow-y-auto border border-slate-300 shadow-2xl">
               <button
                 onClick={() => setViewingInquiryPhotos(null)}
                 className="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center"
               >
                 <X className="w-4 h-4" />
               </button>
-              <h3 className="font-bold text-base text-[#161141] mb-1 flex items-center gap-2">
-                <ImageIcon className="w-4 h-4 text-[#765321]" />
+              <h3 className="font-bold text-base text-[#0f172a] mb-1 flex items-center gap-2">
+                <ImageIcon className="w-4 h-4 text-[#0053b5]" />
                 <span>ภาพถ่ายหน้างานที่ลูกค้าแนบมา ({viewingInquiryPhotos.length} รูป)</span>
               </h3>
               <p className="text-xs text-slate-500 mb-4">คลิกที่รูปเพื่อเปิดดูขนาดใหญ่ในแท็บใหม่</p>
 
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {viewingInquiryPhotos.map((url, uIdx) => (
-                  <a key={uIdx} href={url} target="_blank" rel="noreferrer" className="aspect-[4/3] rounded-xl overflow-hidden border border-gold-200 block group relative bg-slate-100">
+                  <a key={uIdx} href={url} target="_blank" rel="noreferrer" className="aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 block group relative bg-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-semibold transition-opacity gap-1">
@@ -982,20 +987,20 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {activeTab === 'hero' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 space-y-4 text-xs">
-              <h3 className="font-bold text-base text-[#161141] border-b border-gold-100 pb-2">แก้ไขข้อความแบนเนอร์หลัก (Hero Section)</h3>
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
+              <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2">แก้ไขข้อความแบนเนอร์หลัก (Hero Section)</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">หัวข้อหลัก (Headline Title)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">หัวข้อหลัก (Headline Title)</label>
                   <input
                     type="text"
                     value={data.hero?.title || ''}
                     onChange={(e) => setData({ ...data, hero: { ...data.hero, title: e.target.value } })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl font-bold text-[#161141]"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-[#0f172a]"
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">คำบรรยายหลัก (Subtitle Description)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">คำบรรยายหลัก (Subtitle Description)</label>
                   <textarea
                     rows={3}
                     value={data.hero?.subtitle || data.company?.description || ''}
@@ -1004,67 +1009,67 @@ export default function AdminPage() {
                       hero: { ...data.hero, subtitle: e.target.value },
                       company: { ...data.company, description: e.target.value }
                     })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl leading-relaxed"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl leading-relaxed"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">ข้อความปุ่มกดหลัก (Primary CTA)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">ข้อความปุ่มกดหลัก (Primary CTA)</label>
                   <input
                     type="text"
                     value={data.hero?.ctaText || 'ขอใบเสนอราคาด่วน'}
                     onChange={(e) => setData({ ...data, hero: { ...data.hero, ctaText: e.target.value } })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">ข้อความปุ่มกดรอง (Secondary CTA)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">ข้อความปุ่มกดรอง (Secondary CTA)</label>
                   <input
                     type="text"
                     value={data.hero?.secondaryCtaText || 'ดูผลงานโครงการจริง'}
                     onChange={(e) => setData({ ...data, hero: { ...data.hero, secondaryCtaText: e.target.value } })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
               </div>
             </div>
 
             {/* HERO BANNER SLIDES EDITING */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 space-y-4 text-xs">
-              <div className="flex items-center justify-between border-b border-gold-100 pb-2">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                 <div>
-                  <h3 className="font-bold text-base text-[#161141] flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-[#765321]" />
+                  <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
+                    <ImageIcon className="w-4 h-4 text-[#0053b5]" />
                     <span>จัดการภาพแบนเนอร์ไฮไลท์ (Hero Visual Showcase Card)</span>
                   </h3>
                   <p className="text-[11px] text-slate-500 mt-0.5">
                     ภาพแบนเนอร์สไลด์ไฮไลท์ 3 บริการหลักที่แสดงอยู่คู่กับข้อความส่วนบนสุดของหน้าเว็บ
                   </p>
                 </div>
-                <span className="text-[10px] font-bold text-[#765321] bg-gold-100 px-2.5 py-1 rounded-full border border-gold-300">
+                <span className="text-[10px] font-bold text-[#0053b5] bg-slate-100 px-2.5 py-1 rounded-full border border-slate-300">
                   3 สไลด์หลัก
                 </span>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                 {(data.hero?.bannerSlides || [
-                  { id: 'slide-cleaning', tag: '🧹 แม่บ้านทำความสะอาด', title: 'บริการแม่บ้านทำความสะอาดอาคารและเช็ดกระจกสูง', image: '/images/hero-cleaning-desktop-fullscreen.jpg', badge: 'ทีมงานมืออาชีพผ่านการตรวจประวัติ' },
-                  { id: 'slide-garden', tag: '🌿 งานดูแลสวน & ภูมิทัศน์', title: 'ดูแลและฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียม', image: '/images/garden.jpg', badge: '30+ โครงการชั้นนำ ไว้วางใจ' }
+                  { id: 'slide-cleaning', tag: ' แม่บ้านทำความสะอาด', title: 'บริการแม่บ้านทำความสะอาดอาคารและเช็ดกระจกสูง', image: '/images/hero-cleaning-desktop-fullscreen.jpg', badge: 'ทีมงานมืออาชีพผ่านการตรวจประวัติ' },
+                  { id: 'slide-garden', tag: ' งานดูแลสวน & ภูมิทัศน์', title: 'ดูแลและฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียม', image: '/images/garden.jpg', badge: '30+ โครงการชั้นนำ ไว้วางใจ' }
                 ]).map((slide: any, bIdx: number) => {
                   const heroBannerInputId = `hero-banner-file-${bIdx}`;
                   return (
                     <div
                       key={slide.id || bIdx}
-                      className="p-3.5 bg-gold-50/20 border border-gold-200 rounded-2xl flex flex-col justify-between gap-3 hover:border-[#765321]/50 transition-colors"
+                      className="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col justify-between gap-3 hover:border-[#0053b5]/50 transition-colors"
                     >
                       <div className="space-y-2.5">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-[#161141] text-xs">
+                          <span className="font-bold text-[#0f172a] text-xs">
                             สไลด์ที่ {bIdx + 1}: {slide.tag}
                           </span>
                         </div>
 
                         {/* Image Preview & Upload Overlay */}
-                        <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-gold-200 bg-slate-900 group">
+                        <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 bg-slate-900 group">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={slide.image}
@@ -1078,7 +1083,7 @@ export default function AdminPage() {
                             htmlFor={heroBannerInputId}
                             className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity text-white text-[11px] font-semibold gap-1"
                           >
-                            <Upload className="w-4 h-4 text-gold-300" />
+                            <Upload className="w-4 h-4 text-white" />
                             <span>คลิกเปลี่ยนรูปภาพ</span>
                           </label>
                           <input
@@ -1091,8 +1096,8 @@ export default function AdminPage() {
                                 const url = await uploadFile(e.target.files[0]);
                                 if (url) {
                                   const defaultSlides = [
-                                    { id: 'slide-cleaning', tag: '🧹 แม่บ้านทำความสะอาด', title: 'บริการแม่บ้านทำความสะอาดอาคารและเช็ดกระจกสูง', image: '/images/hero-cleaning-desktop-fullscreen.jpg', badge: 'ทีมงานมืออาชีพผ่านการตรวจประวัติ' },
-                                    { id: 'slide-garden', tag: '🌿 งานดูแลสวน & ภูมิทัศน์', title: 'ดูแลและฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียม', image: '/images/garden.jpg', badge: '30+ โครงการชั้นนำ ไว้วางใจ' }
+                                    { id: 'slide-cleaning', tag: ' แม่บ้านทำความสะอาด', title: 'บริการแม่บ้านทำความสะอาดอาคารและเช็ดกระจกสูง', image: '/images/hero-cleaning-desktop-fullscreen.jpg', badge: 'ทีมงานมืออาชีพผ่านการตรวจประวัติ' },
+                                    { id: 'slide-garden', tag: ' งานดูแลสวน & ภูมิทัศน์', title: 'ดูแลและฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียม', image: '/images/garden.jpg', badge: '30+ โครงการชั้นนำ ไว้วางใจ' }
                                   ];
                                   const currentSlides = [...(data.hero?.bannerSlides || defaultSlides)];
                                   if (!currentSlides[bIdx]) currentSlides[bIdx] = { ...slide };
@@ -1123,12 +1128,12 @@ export default function AdminPage() {
                               currentSlides[bIdx].desktopImage = e.target.value;
                               setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                             }}
-                            className="flex-1 px-2 py-1 border border-gold-200 rounded-lg text-[10px] bg-white text-slate-600"
+                            className="flex-1 px-2 py-1 border border-slate-200 rounded-lg text-[10px] bg-white text-slate-600"
                             placeholder="URL รูปภาพ"
                           />
                           <label
                             htmlFor={heroBannerInputId}
-                            className="px-2 py-1 bg-gold-100 hover:bg-gold-200 text-[#765321] rounded-lg font-semibold text-[10px] cursor-pointer shrink-0 transition-colors"
+                            className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-[#0053b5] rounded-lg font-semibold text-[10px] cursor-pointer shrink-0 transition-colors"
                           >
                             เลือกไฟล์
                           </label>
@@ -1149,7 +1154,7 @@ export default function AdminPage() {
                                 currentSlides[bIdx].tag = e.target.value;
                                 setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                               }}
-                              className="w-full px-2 py-1 border border-gold-200 rounded-lg bg-white font-medium text-[#161141] text-xs"
+                              className="w-full px-2 py-1 border border-slate-200 rounded-lg bg-white font-medium text-[#0f172a] text-xs"
                             />
                           </div>
                           <div>
@@ -1165,7 +1170,7 @@ export default function AdminPage() {
                                 currentSlides[bIdx].title = e.target.value;
                                 setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                               }}
-                              className="w-full px-2 py-1.5 border border-gold-200 rounded-lg bg-white text-slate-700 text-xs font-semibold"
+                              className="w-full px-2 py-1.5 border border-slate-200 rounded-lg bg-white text-slate-700 text-xs font-semibold"
                             />
                           </div>
                           <div>
@@ -1182,7 +1187,7 @@ export default function AdminPage() {
                                 setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                               }}
                               placeholder="เช่น ทีมงานแม่บ้านและช่างเช็ดกระจกมืออาชีพ ผ่านการตรวจประวัติ 100%..."
-                              className="w-full px-2 py-1.5 border border-gold-200 rounded-lg bg-white text-slate-700 text-xs leading-relaxed"
+                              className="w-full px-2 py-1.5 border border-slate-200 rounded-lg bg-white text-slate-700 text-xs leading-relaxed"
                             />
                           </div>
                         </div>
@@ -1194,12 +1199,12 @@ export default function AdminPage() {
             </div>
 
             {/* 4 STATS EDITING */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 text-xs">
-              <h3 className="font-bold text-base text-[#161141] border-b border-gold-100 pb-2 mb-4">แก้ไข 4 ตัวเลขสถิติความสำเร็จ (Company Stats)</h3>
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 text-xs">
+              <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2 mb-4">แก้ไข 4 ตัวเลขสถิติความสำเร็จ (Company Stats)</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {data.company?.stats?.map((st: any, sIdx: number) => (
-                  <div key={sIdx} className="p-4 rounded-2xl bg-gold-50/30 border border-gold-200 space-y-2">
-                    <span className="font-bold text-[#765321]">สถิติที่ {sIdx + 1}</span>
+                  <div key={sIdx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                    <span className="font-bold text-[#0053b5]">สถิติที่ {sIdx + 1}</span>
                     <div>
                       <label className="block text-[10px] text-slate-400 font-semibold mb-0.5">ตัวเลข (Value)</label>
                       <input
@@ -1210,7 +1215,7 @@ export default function AdminPage() {
                           updated[sIdx].value = e.target.value;
                           setData({ ...data, company: { ...data.company, stats: updated } });
                         }}
-                        className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg font-extrabold text-[#161141] text-sm"
+                        className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-extrabold text-[#0f172a] text-sm"
                       />
                     </div>
                     <div>
@@ -1223,7 +1228,7 @@ export default function AdminPage() {
                           updated[sIdx].label = e.target.value;
                           setData({ ...data, company: { ...data.company, stats: updated } });
                         }}
-                        className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg text-xs"
+                        className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg text-xs"
                       />
                     </div>
                     <div>
@@ -1236,7 +1241,7 @@ export default function AdminPage() {
                           updated[sIdx].detail = e.target.value;
                           setData({ ...data, company: { ...data.company, stats: updated } });
                         }}
-                        className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg text-[11px] text-slate-500"
+                        className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg text-[11px] text-slate-500"
                       />
                     </div>
                   </div>
@@ -1251,17 +1256,17 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {activeTab === 'services' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 space-y-6 text-xs">
-              <h3 className="font-bold text-base text-[#161141] border-b border-gold-100 pb-2">แก้ไขบริการหลักทั้ง 3 บริการ (พร้อมอัปโหลดภาพและรายการขอบเขตงาน)</h3>
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-6 text-xs">
+              <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2">แก้ไขบริการหลักทั้ง 3 บริการ (พร้อมอัปโหลดภาพและรายการขอบเขตงาน)</h3>
               {data.services?.map((svc: any, idx: number) => (
-                <div key={svc.id} className="p-5 border border-gold-200 rounded-2xl bg-gold-50/20 space-y-4">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-gold-200/60 pb-3">
-                    <span className="font-extrabold text-sm text-[#161141] flex items-center gap-2">
-                      <span className="w-6 h-6 rounded-full bg-[#161141] text-gold-300 text-xs flex items-center justify-center">{idx + 1}</span>
+                <div key={svc.id} className="p-5 border border-slate-200 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-200 pb-3">
+                    <span className="font-extrabold text-sm text-[#0f172a] flex items-center gap-2">
+                      <span className="w-6 h-6 rounded-full bg-[#0f172a] text-white text-xs flex items-center justify-center">{idx + 1}</span>
                       <span>{svc.title} ({svc.id})</span>
                     </span>
                     <div className="flex items-center gap-2">
-                      <label className="text-[11px] font-semibold text-[#765321]">Badge:</label>
+                      <label className="text-[11px] font-semibold text-[#0053b5]">Badge:</label>
                       <input
                         type="text"
                         value={svc.badge || ''}
@@ -1270,7 +1275,7 @@ export default function AdminPage() {
                           updated[idx].badge = e.target.value;
                           setData({ ...data, services: updated });
                         }}
-                        className="px-2.5 py-1 border border-gold-200 rounded-lg bg-white text-xs"
+                        className="px-2.5 py-1 border border-slate-200 rounded-lg bg-white text-xs"
                       />
                     </div>
                   </div>
@@ -1279,7 +1284,7 @@ export default function AdminPage() {
                     {/* Left: Text Details */}
                     <div className="lg:col-span-8 space-y-3">
                       <div>
-                        <label className="block font-medium text-[#161141] mb-1">ชื่อบริการภาษาไทย</label>
+                        <label className="block font-medium text-[#0f172a] mb-1">ชื่อบริการภาษาไทย</label>
                         <input
                           type="text"
                           value={svc.title}
@@ -1288,11 +1293,11 @@ export default function AdminPage() {
                             updated[idx].title = e.target.value;
                             setData({ ...data, services: updated });
                           }}
-                          className="w-full px-3 py-1.5 border border-gold-200 rounded-lg font-bold text-[#161141]"
+                          className="w-full px-3 py-1.5 border border-slate-200 rounded-lg font-bold text-[#0f172a]"
                         />
                       </div>
                       <div>
-                        <label className="block font-medium text-[#161141] mb-1">คำอธิบายย่อ (Short Description)</label>
+                        <label className="block font-medium text-[#0f172a] mb-1">คำอธิบายย่อ (Short Description)</label>
                         <input
                           type="text"
                           value={svc.shortDesc || ''}
@@ -1301,11 +1306,11 @@ export default function AdminPage() {
                             updated[idx].shortDesc = e.target.value;
                             setData({ ...data, services: updated });
                           }}
-                          className="w-full px-3 py-1.5 border border-gold-200 rounded-lg"
+                          className="w-full px-3 py-1.5 border border-slate-200 rounded-lg"
                         />
                       </div>
                       <div>
-                        <label className="block font-medium text-[#161141] mb-1">คำอธิบายฉบับเต็ม (Full Description)</label>
+                        <label className="block font-medium text-[#0f172a] mb-1">คำอธิบายฉบับเต็ม (Full Description)</label>
                         <textarea
                           rows={3}
                           value={svc.fullDesc || ''}
@@ -1314,22 +1319,22 @@ export default function AdminPage() {
                             updated[idx].fullDesc = e.target.value;
                             setData({ ...data, services: updated });
                           }}
-                          className="w-full px-3 py-1.5 border border-gold-200 rounded-lg leading-relaxed"
+                          className="w-full px-3 py-1.5 border border-slate-200 rounded-lg leading-relaxed"
                         />
                       </div>
                     </div>
 
                     {/* Right: Service Image with Upload */}
-                    <div className="lg:col-span-4 bg-white p-3.5 rounded-xl border border-gold-200 space-y-2 flex flex-col justify-between">
+                    <div className="lg:col-span-4 bg-white p-3.5 rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between">
                       <div>
-                        <label className="block font-semibold text-[#161141] mb-1.5">📷 รูปภาพบริการ</label>
-                        <div className="aspect-[16/10] rounded-lg overflow-hidden bg-slate-100 border border-gold-200 relative group">
+                        <label className="block font-semibold text-[#0f172a] mb-1.5"> รูปภาพบริการ</label>
+                        <div className="aspect-[16/10] rounded-lg overflow-hidden bg-slate-100 border border-slate-200 relative group">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={svc.image} alt={svc.title} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = '/images/garden.jpg'; }} />
                         </div>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="cursor-pointer block text-center py-2 px-3 bg-[#765321] hover:bg-[#9b743a] text-white rounded-lg font-semibold transition-colors">
+                        <label className="cursor-pointer block text-center py-2 px-3 bg-[#0053b5] hover:bg-[#004293] text-white rounded-lg font-semibold transition-colors">
                           <Upload className="w-3.5 h-3.5 inline mr-1" />
                           <span>เปลี่ยนรูปบริการนี้</span>
                           <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
@@ -1352,18 +1357,18 @@ export default function AdminPage() {
                             updated[idx].image = e.target.value;
                             setData({ ...data, services: updated });
                           }}
-                          className="w-full px-2 py-1 border border-gold-200 rounded text-[11px] bg-slate-50"
+                          className="w-full px-2 py-1 border border-slate-200 rounded text-[11px] bg-slate-50"
                         />
                       </div>
                     </div>
                   </div>
 
                   {/* Subservices Checklist */}
-                  <div className="pt-3 border-t border-gold-200/60">
-                    <label className="block font-bold text-[#765321] mb-2">ขอบเขตงานย่อย 5 รายการ (Scope of Work)</label>
+                  <div className="pt-3 border-t border-slate-200">
+                    <label className="block font-bold text-[#0053b5] mb-2">ขอบเขตงานย่อย 5 รายการ (Scope of Work)</label>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                       {svc.subServices?.map((sub: any, sIdx: number) => (
-                        <div key={sIdx} className="p-2.5 bg-white rounded-xl border border-gold-200 space-y-1">
+                        <div key={sIdx} className="p-2.5 bg-white rounded-xl border border-slate-200 space-y-1">
                           <input
                             type="text"
                             value={sub.name}
@@ -1372,7 +1377,7 @@ export default function AdminPage() {
                               updated[idx].subServices[sIdx].name = e.target.value;
                               setData({ ...data, services: updated });
                             }}
-                            className="w-full px-2 py-1 border border-gold-200 rounded font-semibold text-xs text-[#161141]"
+                            className="w-full px-2 py-1 border border-slate-200 rounded font-semibold text-xs text-[#0f172a]"
                           />
                           <input
                             type="text"
@@ -1382,7 +1387,7 @@ export default function AdminPage() {
                               updated[idx].subServices[sIdx].desc = e.target.value;
                               setData({ ...data, services: updated });
                             }}
-                            className="w-full px-2 py-0.5 border border-gold-200 rounded text-[11px] text-slate-500"
+                            className="w-full px-2 py-0.5 border border-slate-200 rounded text-[11px] text-slate-500"
                           />
                         </div>
                       ))}
@@ -1398,25 +1403,25 @@ export default function AdminPage() {
         {/* TAB 4: BEFORE & AFTER */}
         {/* ========================================================= */}
         {activeTab === 'beforeAfter' && (
-          <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 space-y-6 text-xs">
-            <h3 className="font-bold text-base text-[#161141] border-b border-gold-100 pb-2">แก้ไขส่วนเปรียบเทียบผลงาน ก่อน-หลัง (Before & After)</h3>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-6 text-xs">
+            <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2">แก้ไขส่วนเปรียบเทียบผลงาน ก่อน-หลัง (Before & After)</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block font-medium text-[#161141] mb-1">หัวข้อหลัก (Title)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">หัวข้อหลัก (Title)</label>
                 <input
                   type="text"
                   value={data.beforeAfter?.title || 'เปรียบเทียบผลลัพธ์ ก่อน และ หลัง'}
                   onChange={(e) => setData({ ...data, beforeAfter: { ...data.beforeAfter, title: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl font-bold text-[#161141]"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-[#0f172a]"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">คำบรรยายย่อ (Subtitle)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">คำบรรยายย่อ (Subtitle)</label>
                 <input
                   type="text"
                   value={data.beforeAfter?.subtitle || ''}
                   onChange={(e) => setData({ ...data, beforeAfter: { ...data.beforeAfter, subtitle: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
               </div>
             </div>
@@ -1424,17 +1429,17 @@ export default function AdminPage() {
             {/* Before and After Image Uploads */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
               {/* BEFORE IMAGE */}
-              <div className="p-4 bg-gold-50/30 border border-gold-200 rounded-2xl space-y-3">
+              <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-700">📷 รูปก่อนดูแล (Before Image)</span>
+                  <span className="font-bold text-slate-700"> รูปก่อนดูแล (Before Image)</span>
                   <input
                     type="text"
                     value={data.beforeAfter?.beforeLabel || 'ก่อนเข้าดูแล'}
                     onChange={(e) => setData({ ...data, beforeAfter: { ...data.beforeAfter, beforeLabel: e.target.value } })}
-                    className="px-2 py-0.5 border border-gold-200 rounded text-[11px] font-semibold text-slate-600 bg-white"
+                    className="px-2 py-0.5 border border-slate-200 rounded text-[11px] font-semibold text-slate-600 bg-white"
                   />
                 </div>
-                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-200 border border-gold-200">
+                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-200 border border-slate-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={data.beforeAfter?.beforeImage} alt="Before" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = '/images/garden-before.jpg'; }} />
                 </div>
@@ -1444,7 +1449,7 @@ export default function AdminPage() {
                     if (url) setData({ ...data, beforeAfter: { ...data.beforeAfter, beforeImage: url } });
                   }
                 }} />
-                <button type="button" onClick={() => beforeImgInputRef.current?.click()} className="w-full py-2 bg-[#765321] hover:bg-[#9b743a] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                <button type="button" onClick={() => beforeImgInputRef.current?.click()} className="w-full py-2 bg-[#0053b5] hover:bg-[#004293] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-colors">
                   <Upload className="w-3.5 h-3.5" /> <span>อัปโหลดรูปภาพ Before จากเครื่อง</span>
                 </button>
                 <input
@@ -1452,22 +1457,22 @@ export default function AdminPage() {
                   placeholder="หรือใส่ลิงก์รูปภาพ Before โดยตรง..."
                   value={data.beforeAfter?.beforeImage || ''}
                   onChange={(e) => setData({ ...data, beforeAfter: { ...data.beforeAfter, beforeImage: e.target.value } })}
-                  className="w-full px-2.5 py-1 border border-gold-200 rounded-lg text-[11px] bg-white text-slate-600"
+                  className="w-full px-2.5 py-1 border border-slate-200 rounded-lg text-[11px] bg-white text-slate-600"
                 />
               </div>
 
               {/* AFTER IMAGE */}
-              <div className="p-4 bg-gold-50/30 border border-gold-200 rounded-2xl space-y-3">
+              <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#765321]">✨ รูปหลังดูแล (After Image)</span>
+                  <span className="font-bold text-[#0053b5]"> รูปหลังดูแล (After Image)</span>
                   <input
                     type="text"
                     value={data.beforeAfter?.afterLabel || 'หลังปรับปรุงโดย GR Group'}
                     onChange={(e) => setData({ ...data, beforeAfter: { ...data.beforeAfter, afterLabel: e.target.value } })}
-                    className="px-2 py-0.5 border border-gold-200 rounded text-[11px] font-semibold text-[#765321] bg-white"
+                    className="px-2 py-0.5 border border-slate-200 rounded text-[11px] font-semibold text-[#0053b5] bg-white"
                   />
                 </div>
-                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-200 border border-gold-200">
+                <div className="aspect-[16/10] rounded-xl overflow-hidden bg-slate-200 border border-slate-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={data.beforeAfter?.afterImage} alt="After" className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = '/images/garden-after.jpg'; }} />
                 </div>
@@ -1477,24 +1482,24 @@ export default function AdminPage() {
                     if (url) setData({ ...data, beforeAfter: { ...data.beforeAfter, afterImage: url } });
                   }
                 }} />
-                <button type="button" onClick={() => afterImgInputRef.current?.click()} className="w-full py-2 bg-[#161141] hover:bg-[#765321] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-colors">
-                  <Upload className="w-3.5 h-3.5 text-gold-300" /> <span>อัปโหลดรูปภาพ After จากเครื่อง</span>
+                <button type="button" onClick={() => afterImgInputRef.current?.click()} className="w-full py-2 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-colors">
+                  <Upload className="w-3.5 h-3.5 text-white" /> <span>อัปโหลดรูปภาพ After จากเครื่อง</span>
                 </button>
                 <input
                   type="text"
                   placeholder="หรือใส่ลิงก์รูปภาพ After โดยตรง..."
                   value={data.beforeAfter?.afterImage || ''}
                   onChange={(e) => setData({ ...data, beforeAfter: { ...data.beforeAfter, afterImage: e.target.value } })}
-                  className="w-full px-2.5 py-1 border border-gold-200 rounded-lg text-[11px] bg-white text-slate-600"
+                  className="w-full px-2.5 py-1 border border-slate-200 rounded-lg text-[11px] bg-white text-slate-600"
                 />
               </div>
             </div>
 
             {/* 3 Feature Highlights Editing (กล่องจุดเด่น 3 กล่องด้านล่าง) */}
-            <div className="pt-4 border-t border-gold-200/70 space-y-3">
+            <div className="pt-4 border-t border-slate-200 space-y-3">
               <div className="flex items-center justify-between">
-                <h4 className="font-bold text-sm text-[#161141] flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-[#765321]" />
+                <h4 className="font-bold text-sm text-[#0f172a] flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-[#0053b5]" />
                   <span>แก้ไขข้อความจุดเด่น 3 กล่องด้านล่าง (Key Highlights)</span>
                 </h4>
                 <span className="text-[11px] text-slate-500">แสดงผลด้านล่างของแถบสไลเดอร์เปรียบเทียบ</span>
@@ -1506,12 +1511,12 @@ export default function AdminPage() {
                   { title: 'ตัดแต่งทรงพุ่มตามหลักรุกขกรรม', desc: 'เปิดทัศนียภาพ รับแสงแดด และเพิ่มความปลอดภัย' },
                   { title: 'เพิ่มมูลค่าให้โครงการระยะยาว', desc: 'พื้นที่ส่วนกลางน่าอยู่ สะอาด และสร้างความประทับใจ' }
                 ]).map((feat: any, fIdx: number) => (
-                  <div key={fIdx} className="p-3.5 bg-gold-50/40 rounded-xl border border-gold-200 space-y-2">
+                  <div key={fIdx} className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-[#161141] text-gold-300 font-bold flex items-center justify-center text-[10px]">
+                      <span className="w-5 h-5 rounded-full bg-[#0f172a] text-white font-bold flex items-center justify-center text-[10px]">
                         {fIdx + 1}
                       </span>
-                      <span className="font-bold text-[#765321] text-xs">กล่องจุดเด่นที่ {fIdx + 1}</span>
+                      <span className="font-bold text-[#0053b5] text-xs">กล่องจุดเด่นที่ {fIdx + 1}</span>
                     </div>
                     <div>
                       <label className="block text-[10px] text-slate-500 font-semibold mb-0.5">หัวข้อจุดเด่น</label>
@@ -1530,7 +1535,7 @@ export default function AdminPage() {
                             beforeAfter: { ...data.beforeAfter, features: currentFeats }
                           });
                         }}
-                        className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg font-bold text-[#161141] text-xs bg-white"
+                        className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold text-[#0f172a] text-xs bg-white"
                         placeholder="เช่น ฟื้นฟูสภาพดินและสนามหญ้า"
                       />
                     </div>
@@ -1551,7 +1556,7 @@ export default function AdminPage() {
                             beforeAfter: { ...data.beforeAfter, features: currentFeats }
                           });
                         }}
-                        className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg text-[11px] text-slate-600 bg-white"
+                        className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg text-[11px] text-slate-600 bg-white"
                         placeholder="เช่น แก้ปัญหาหญ้าตาย ดินแน่น..."
                       />
                     </div>
@@ -1568,23 +1573,23 @@ export default function AdminPage() {
         {activeTab === 'projects' && (
           <div className="space-y-6">
             {/* Add Project Form with up to 10 photos */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-1">
-                <h3 className="font-bold text-base text-[#161141]">+ เพิ่มโครงการใหม่เข้าระบบ</h3>
-                <span className="text-[11px] font-bold text-[#765321] bg-gold-100 px-3 py-1 rounded-full border border-gold-300">
-                  📷 ใส่รูปได้สูงสุด 10 รูปต่อโครงการ
+                <h3 className="font-bold text-base text-[#0f172a]">+ เพิ่มโครงการใหม่เข้าระบบ</h3>
+                <span className="text-[11px] font-bold text-[#0053b5] bg-slate-100 px-3 py-1 rounded-full border border-slate-300">
+                   ใส่รูปได้สูงสุด 10 รูปต่อโครงการ
                 </span>
               </div>
               <p className="text-xs text-slate-500 mb-4">กรอกข้อมูลและเลือกรูปภาพผลงานโครงการจริงได้สูงสุด 10 รูป (คลิกเลือกพร้อมกันได้หลายรูป)</p>
 
               <form onSubmit={handleAddProject} className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">ชื่อโครงการ *</label>
-                  <input type="text" required placeholder="เช่น เดอะ รูม สุขุมวิท 69" value={newProject.title} onChange={(e) => setNewProject({ ...newProject, title: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">ชื่อโครงการ *</label>
+                  <input type="text" required placeholder="เช่น เดอะ รูม สุขุมวิท 69" value={newProject.title} onChange={(e) => setNewProject({ ...newProject, title: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">หมวดหมู่โครงการ</label>
-                  <select value={newProject.category} onChange={(e) => setNewProject({ ...newProject, category: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl bg-white">
+                  <label className="block font-medium text-[#0f172a] mb-1">หมวดหมู่โครงการ</label>
+                  <select value={newProject.category} onChange={(e) => setNewProject({ ...newProject, category: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl bg-white">
                     <option value="condo">คอนโดมิเนียม</option>
                     <option value="luxury">คอนโดระดับลักชัวรี</option>
                     <option value="housing">หมู่บ้านจัดสรร</option>
@@ -1592,26 +1597,26 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">ทำเล / ที่ตั้ง</label>
-                  <input type="text" placeholder="เช่น สุขุมวิท 69 ติด BTS พระโขนง" value={newProject.location} onChange={(e) => setNewProject({ ...newProject, location: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">ทำเล / ที่ตั้ง</label>
+                  <input type="text" placeholder="เช่น สุขุมวิท 69 ติด BTS พระโขนง" value={newProject.location} onChange={(e) => setNewProject({ ...newProject, location: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">บริการที่เข้าดูแล (คั่นด้วยจุลภาค , )</label>
-                  <input type="text" placeholder="เช่น ดูแลสวน, ดูแลสระว่ายน้ำ" value={newProject.services} onChange={(e) => setNewProject({ ...newProject, services: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">บริการที่เข้าดูแล (คั่นด้วยจุลภาค , )</label>
+                  <input type="text" placeholder="เช่น ดูแลสวน, ดูแลสระว่ายน้ำ" value={newProject.services} onChange={(e) => setNewProject({ ...newProject, services: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">จุดเด่นโครงการ (Highlight)</label>
-                  <input type="text" placeholder="เช่น คอนโดมิเนียมระดับพรีเมียมใจกลางเมือง..." value={newProject.highlight} onChange={(e) => setNewProject({ ...newProject, highlight: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">จุดเด่นโครงการ (Highlight)</label>
+                  <input type="text" placeholder="เช่น คอนโดมิเนียมระดับพรีเมียมใจกลางเมือง..." value={newProject.highlight} onChange={(e) => setNewProject({ ...newProject, highlight: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
 
                 {/* 10 Photos Multi-Upload Box */}
-                <div className="sm:col-span-2 bg-gold-50/40 p-4 rounded-2xl border border-dashed border-gold-300 space-y-3">
+                <div className="sm:col-span-2 bg-slate-50 p-4 rounded-2xl border border-dashed border-slate-300 space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="font-semibold text-[#161141] flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-[#765321]" />
+                    <label className="font-semibold text-[#0f172a] flex items-center gap-1.5">
+                      <ImageIcon className="w-4 h-4 text-[#0053b5]" />
                       <span>รูปภาพโครงการ (ใส่ได้สูงสุด 10 รูป)</span>
                     </label>
-                    <span className="text-[11px] font-bold text-[#765321] bg-white px-2.5 py-0.5 rounded-full border border-gold-200">
+                    <span className="text-[11px] font-bold text-[#0053b5] bg-white px-2.5 py-0.5 rounded-full border border-slate-200">
                       {newProject.images.length} / 10 รูป
                     </span>
                   </div>
@@ -1619,18 +1624,18 @@ export default function AdminPage() {
                   {/* Thumbnail gallery preview with cover indicator and delete */}
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                     {newProject.images.map((imgUrl, imgIdx) => (
-                      <div key={imgIdx} className="aspect-[4/3] rounded-xl overflow-hidden relative border-2 border-gold-200 group bg-slate-100">
+                      <div key={imgIdx} className="aspect-[4/3] rounded-xl overflow-hidden relative border-2 border-slate-200 group bg-slate-100">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={imgUrl} alt="" className="w-full h-full object-cover" />
                         {imgIdx === 0 ? (
-                          <div className="absolute top-1.5 left-1.5 bg-[#765321] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded shadow-xs flex items-center gap-0.5">
+                          <div className="absolute top-1.5 left-1.5 bg-[#0053b5] text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded shadow-xs flex items-center gap-0.5">
                             <Star className="w-2.5 h-2.5 fill-current" /> หน้าปก
                           </div>
                         ) : (
                           <button
                             type="button"
                             onClick={() => handleSetNewProjectCover(imgIdx)}
-                            className="absolute top-1.5 left-1.5 bg-black/60 hover:bg-[#765321] text-white text-[9px] font-semibold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute top-1.5 left-1.5 bg-black/60 hover:bg-[#0053b5] text-white text-[9px] font-semibold px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
                             title="คลิกเพื่อตั้งเป็นรูปหน้าปก"
                           >
                             ตั้งเป็นหน้าปก
@@ -1666,7 +1671,7 @@ export default function AdminPage() {
                         type="button"
                         disabled={uploading}
                         onClick={() => projectFileInputRef.current?.click()}
-                        className="px-4 py-2 bg-[#765321] hover:bg-[#9b743a] disabled:bg-slate-300 text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-all text-xs"
+                        className="px-4 py-2 bg-[#0053b5] hover:bg-[#004293] disabled:bg-slate-300 text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-all text-xs"
                       >
                         {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
                         <span>{uploading ? 'กำลังอัปโหลด...' : '+ เพิ่มรูปภาพโครงการ (เลือกได้หลายรูป)'}</span>
@@ -1677,8 +1682,8 @@ export default function AdminPage() {
                 </div>
 
                 <div className="sm:col-span-2 flex justify-end">
-                  <button type="submit" className="px-5 py-2.5 bg-[#161141] hover:bg-[#765321] text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-colors">
-                    <Plus className="w-3.5 h-3.5 text-gold-300" />
+                  <button type="submit" className="px-5 py-2.5 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-colors">
+                    <Plus className="w-3.5 h-3.5 text-white" />
                     <span>เพิ่มโครงการเข้าสู่เว็บไซต์</span>
                   </button>
                 </div>
@@ -1686,9 +1691,9 @@ export default function AdminPage() {
             </div>
 
             {/* Existing Projects List with Full 10-Photo Gallery Manager */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-base text-[#161141]">รายการโครงการทั้งหมดในระบบ ({data.projects?.length})</h3>
+                <h3 className="font-bold text-base text-[#0f172a]">รายการโครงการทั้งหมดในระบบ ({data.projects?.length})</h3>
                 <span className="text-xs text-slate-500">สามารถเพิ่ม/ลบรูปในแต่ละโครงการได้สูงสุด 10 รูป</span>
               </div>
 
@@ -1696,16 +1701,16 @@ export default function AdminPage() {
                 {data.projects?.map((proj: any, pIdx: number) => {
                   const galleryList: string[] = (proj.gallery && proj.gallery.length > 0) ? proj.gallery : [proj.image];
                   return (
-                    <div key={proj.id} className="p-4 border border-gold-200/80 rounded-2xl flex flex-col justify-between bg-gold-50/20 hover:bg-white transition-all space-y-3 shadow-2xs">
+                    <div key={proj.id} className="p-4 border border-slate-200 rounded-2xl flex flex-col justify-between bg-slate-50 hover:bg-white transition-all space-y-3 shadow-2xs">
                       <div>
                         {/* Header info */}
                         <div className="flex items-center justify-between gap-2 mb-2">
-                          <span className="text-[10px] text-[#765321] font-bold bg-gold-100 px-2 py-0.5 rounded border border-gold-300/60">
+                          <span className="text-[10px] text-[#0053b5] font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-300">
                             {proj.categoryName}
                           </span>
                           <div className="flex items-center gap-1.5">
                             <span className="text-[10px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
-                              📷 {galleryList.length}/10 รูป
+                               {galleryList.length}/10 รูป
                             </span>
                             <button onClick={() => handleDeleteProject(proj.id)} className="text-slate-400 hover:text-rose-600 p-1" title="ลบโครงการ">
                               <Trash2 className="w-3.5 h-3.5" />
@@ -1714,22 +1719,22 @@ export default function AdminPage() {
                         </div>
 
                         {/* Main Cover Image */}
-                        <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-slate-100 relative group border border-gold-200">
+                        <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-slate-100 relative group border border-slate-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={proj.image} alt={proj.title} className="w-full h-full object-cover" onError={(e) => { (e.target as HTMLImageElement).src = '/images/garden.jpg'; }} />
-                          <div className="absolute top-2 left-2 bg-[#161141]/85 text-gold-300 text-[10px] font-semibold px-2 py-0.5 rounded flex items-center gap-1">
+                          <div className="absolute top-2 left-2 bg-[#0f172a]/85 text-white text-[10px] font-semibold px-2 py-0.5 rounded flex items-center gap-1">
                             <Star className="w-3 h-3 fill-gold-400" /> รูปหน้าปก
                           </div>
                         </div>
 
                         {/* Gallery Thumbnails Strip (Up to 10 photos) */}
-                        <div className="space-y-1.5 mb-3 bg-white p-2.5 rounded-xl border border-gold-200/60">
+                        <div className="space-y-1.5 mb-3 bg-white p-2.5 rounded-xl border border-slate-200">
                           <div className="flex items-center justify-between text-[11px]">
                             <span className="font-semibold text-slate-700 flex items-center gap-1">
-                              <ImageIcon className="w-3 h-3 text-[#765321]" /> แกลเลอรีภาพ ({galleryList.length} รูป):
+                              <ImageIcon className="w-3 h-3 text-[#0053b5]" /> แกลเลอรีภาพ ({galleryList.length} รูป):
                             </span>
                             {galleryList.length < 10 && (
-                              <label className="cursor-pointer text-[10px] font-bold text-[#765321] hover:underline flex items-center gap-0.5">
+                              <label className="cursor-pointer text-[10px] font-bold text-[#0053b5] hover:underline flex items-center gap-0.5">
                                 <Plus className="w-3 h-3" /> เพิ่มรูป
                                 <input
                                   type="file"
@@ -1748,11 +1753,11 @@ export default function AdminPage() {
 
                           <div className="grid grid-cols-5 gap-1.5 pt-1">
                             {galleryList.map((photo: string, phIdx: number) => (
-                              <div key={phIdx} className="aspect-square rounded-lg overflow-hidden relative border border-gold-200 group bg-slate-100">
+                              <div key={phIdx} className="aspect-square rounded-lg overflow-hidden relative border border-slate-200 group bg-slate-100">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={photo} alt="" className="w-full h-full object-cover" />
                                 {phIdx === 0 ? (
-                                  <div className="absolute inset-0 border-2 border-[#765321] pointer-events-none" />
+                                  <div className="absolute inset-0 border-2 border-[#0053b5] pointer-events-none" />
                                 ) : (
                                   <button
                                     type="button"
@@ -1788,7 +1793,7 @@ export default function AdminPage() {
                               updated[pIdx].title = e.target.value;
                               setData({ ...data, projects: updated });
                             }}
-                            className="w-full px-2.5 py-1 border border-gold-200 rounded-lg font-bold text-[#161141] text-xs"
+                            className="w-full px-2.5 py-1 border border-slate-200 rounded-lg font-bold text-[#0f172a] text-xs"
                             placeholder="ชื่อโครงการ"
                           />
                           <input
@@ -1799,7 +1804,7 @@ export default function AdminPage() {
                               updated[pIdx].location = e.target.value;
                               setData({ ...data, projects: updated });
                             }}
-                            className="w-full px-2.5 py-1 border border-gold-200 rounded-lg text-[11px] text-slate-500"
+                            className="w-full px-2.5 py-1 border border-slate-200 rounded-lg text-[11px] text-slate-500"
                             placeholder="ทำเล/ที่ตั้ง"
                           />
                         </div>
@@ -1816,14 +1821,14 @@ export default function AdminPage() {
         {/* TAB 6: CORPORATE GUARANTEES */}
         {/* ========================================================= */}
         {activeTab === 'guarantees' && (
-          <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 space-y-4 text-xs">
-            <h3 className="font-bold text-base text-[#161141] border-b border-gold-100 pb-2">แก้ไขมาตรฐานความมั่นใจระดับองค์กร (4 เสาหลัก)</h3>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
+            <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2">แก้ไขมาตรฐานความมั่นใจระดับองค์กร (4 เสาหลัก)</h3>
             <p className="text-slate-500">ปรับแก้ข้อความการันตีความปลอดภัยและมาตรฐานที่สร้างความไว้วางใจให้นิติบุคคล</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               {data.guarantees?.map((guar: any, gIdx: number) => (
-                <div key={gIdx} className="p-4 rounded-2xl bg-gold-50/30 border border-gold-200 space-y-2.5">
+                <div key={gIdx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
                   <div className="flex items-center gap-2">
-                    <span className="w-6 h-6 rounded-full bg-[#161141] text-gold-300 font-bold flex items-center justify-center text-xs">{gIdx + 1}</span>
+                    <span className="w-6 h-6 rounded-full bg-[#0f172a] text-white font-bold flex items-center justify-center text-xs">{gIdx + 1}</span>
                     <input
                       type="text"
                       placeholder="หัวข้อย่อยอังกฤษ..."
@@ -1833,7 +1838,7 @@ export default function AdminPage() {
                         updated[gIdx].subtitle = e.target.value;
                         setData({ ...data, guarantees: updated });
                       }}
-                      className="px-2 py-1 border border-gold-200 rounded text-[11px] text-[#765321] font-semibold"
+                      className="px-2 py-1 border border-slate-200 rounded text-[11px] text-[#0053b5] font-semibold"
                     />
                   </div>
                   <div>
@@ -1846,7 +1851,7 @@ export default function AdminPage() {
                         updated[gIdx].title = e.target.value;
                         setData({ ...data, guarantees: updated });
                       }}
-                      className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg font-bold text-[#161141] text-xs"
+                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold text-[#0f172a] text-xs"
                     />
                   </div>
                   <div>
@@ -1859,7 +1864,7 @@ export default function AdminPage() {
                         updated[gIdx].desc = e.target.value;
                         setData({ ...data, guarantees: updated });
                       }}
-                      className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg text-[11px] text-slate-600 leading-relaxed"
+                      className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg text-[11px] text-slate-600 leading-relaxed"
                     />
                   </div>
                 </div>
@@ -1873,11 +1878,11 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {activeTab === 'clients' && (
           <div className="space-y-6 text-xs">
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
               <div className="flex items-center justify-between mb-1">
-                <h3 className="font-bold text-base text-[#161141]">+ เพิ่มแบรนด์ผู้พัฒนา / โครงการในแถบเลื่อน</h3>
-                <span className="text-[11px] font-bold text-[#765321] bg-gold-100 px-3 py-1 rounded-full border border-gold-300">
-                  🖼️ รองรับรูปภาพ / โลโก้
+                <h3 className="font-bold text-base text-[#0f172a]">+ เพิ่มแบรนด์ผู้พัฒนา / โครงการในแถบเลื่อน</h3>
+                <span className="text-[11px] font-bold text-[#0053b5] bg-slate-100 px-3 py-1 rounded-full border border-slate-300">
+                  ️ รองรับรูปภาพ / โลโก้
                 </span>
               </div>
               <p className="text-slate-500 mb-4">ชื่อแบรนด์ รูปภาพ หรือโลโก้โครงการที่แสดงในแถบวิ่งวนลูปอัตโนมัติใต้ Hero Section</p>
@@ -1885,47 +1890,47 @@ export default function AdminPage() {
               <form onSubmit={handleAddClient} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-semibold text-[#161141] mb-1">ชื่อแบรนด์ *</label>
+                    <label className="block font-semibold text-[#0f172a] mb-1">ชื่อแบรนด์ *</label>
                     <input
                       type="text"
                       required
                       placeholder="เช่น Land & Houses, Noble Development"
                       value={newClient.name}
                       onChange={(e) => setNewClient({ ...newClient, name: e.target.value })}
-                      className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                      className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                     />
                   </div>
                   <div>
-                    <label className="block font-semibold text-[#161141] mb-1">ชื่อโครงการ หรือบทบาท</label>
+                    <label className="block font-semibold text-[#0f172a] mb-1">ชื่อโครงการ หรือบทบาท</label>
                     <input
                       type="text"
                       placeholder="เช่น เดอะ รูม สุขุมวิท 69 หรือ คอนโดมิเนียม"
                       value={newClient.role}
                       onChange={(e) => setNewClient({ ...newClient, role: e.target.value })}
-                      className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                      className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                     />
                   </div>
                 </div>
 
                 {/* Client Photo Upload */}
-                <div className="p-3.5 bg-gold-50/40 rounded-2xl border border-dashed border-gold-300 flex flex-col sm:flex-row items-center gap-4">
-                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-white border border-gold-200 shrink-0 shadow-xs flex items-center justify-center">
+                <div className="p-3.5 bg-slate-50 rounded-2xl border border-dashed border-slate-300 flex flex-col sm:flex-row items-center gap-4">
+                  <div className="w-14 h-14 rounded-xl overflow-hidden bg-white border border-slate-200 shrink-0 shadow-xs flex items-center justify-center">
                     {newClient.image ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={newClient.image} alt="Preview" className="w-full h-full object-cover" />
                     ) : (
-                      <ImageIcon className="w-6 h-6 text-gold-400" />
+                      <ImageIcon className="w-6 h-6 text-slate-400" />
                     )}
                   </div>
                   <div className="flex-1 space-y-1.5 w-full">
-                    <label className="block font-semibold text-[#161141]">รูปภาพโครงการ / โลโก้แบรนด์</label>
+                    <label className="block font-semibold text-[#0f172a]">รูปภาพโครงการ / โลโก้แบรนด์</label>
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         placeholder="URL รูปภาพ เช่น /images/projects/photo.jpg"
                         value={newClient.image}
                         onChange={(e) => setNewClient({ ...newClient, image: e.target.value })}
-                        className="flex-1 px-3 py-1.5 border border-gold-200 rounded-lg text-xs bg-white"
+                        className="flex-1 px-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-white"
                       />
                       <input
                         type="file"
@@ -1938,7 +1943,7 @@ export default function AdminPage() {
                         type="button"
                         onClick={() => clientFileInputRef.current?.click()}
                         disabled={uploading}
-                        className="px-3 py-1.5 bg-gold-100 hover:bg-gold-200 text-[#765321] rounded-lg font-medium shrink-0 flex items-center gap-1 transition-colors"
+                        className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-[#0053b5] rounded-lg font-medium shrink-0 flex items-center gap-1 transition-colors"
                       >
                         {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
                         <span>อัปโหลดรูป</span>
@@ -1947,9 +1952,9 @@ export default function AdminPage() {
                   </div>
                   <button
                     type="submit"
-                    className="w-full sm:w-auto px-6 py-2.5 bg-[#161141] hover:bg-[#765321] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-sm"
+                    className="w-full sm:w-auto px-6 py-2.5 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-sm"
                   >
-                    <Plus className="w-4 h-4 text-gold-300" />
+                    <Plus className="w-4 h-4 text-white" />
                     <span>เพิ่มลูกค้า</span>
                   </button>
                 </div>
@@ -1957,11 +1962,11 @@ export default function AdminPage() {
             </div>
 
             {/* Existing Clients List */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-gold-100">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-100">
                 <div>
-                  <h3 className="font-bold text-base text-[#161141] flex items-center gap-2">
-                    <Building2 className="w-5 h-5 text-[#765321]" />
+                  <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-[#0053b5]" />
                     <span>รายชื่อแบรนด์ทั้งหมดในแถบเลื่อน ({data.clients?.length || 0})</span>
                   </h3>
                   <span className="text-slate-500 text-xs">ระบบจะแบ่งแสดงผลเป็น 2 แถววิ่งวนลูปอัตโนมัติบนหน้าแรก</span>
@@ -1969,7 +1974,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={handleResetDefaultClients}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gold-100 hover:bg-gold-200 text-[#765321] text-xs font-bold transition-all border border-gold-300 self-start sm:self-auto cursor-pointer shadow-2xs"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0053b5] text-xs font-bold transition-all border border-slate-300 self-start sm:self-auto cursor-pointer shadow-2xs"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>คืนค่า 20 แบรนด์ดังเริ่มต้น</span>
@@ -1982,7 +1987,7 @@ export default function AdminPage() {
                   return (
                     <div
                       key={cIdx}
-                      className="p-3.5 bg-gold-50/20 border border-gold-200 rounded-2xl flex flex-col gap-2.5 hover:border-gold-300 transition-colors"
+                      className="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col gap-2.5 hover:border-slate-300 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         {/* Thumbnail & Change Photo */}
@@ -1999,7 +2004,7 @@ export default function AdminPage() {
                                 }}
                               />
                             ) : (
-                              <Building2 className="w-6 h-6 text-gold-400" />
+                              <Building2 className="w-6 h-6 text-slate-400" />
                             )}
                           </div>
                           <label
@@ -2037,7 +2042,7 @@ export default function AdminPage() {
                               updated[cIdx].name = e.target.value;
                               setData({ ...data, clients: updated });
                             }}
-                            className="w-full px-2 py-1 border border-gold-200 rounded-lg font-bold text-[#161141] text-xs bg-white focus:outline-none focus:border-[#765321]"
+                            className="w-full px-2 py-1 border border-slate-200 rounded-lg font-bold text-[#0f172a] text-xs bg-white focus:outline-none focus:border-[#0053b5]"
                             placeholder="ชื่อแบรนด์"
                           />
                           <input
@@ -2048,7 +2053,7 @@ export default function AdminPage() {
                               updated[cIdx].role = e.target.value;
                               setData({ ...data, clients: updated });
                             }}
-                            className="w-full px-2 py-0.5 border border-gold-200 rounded-md text-[10px] text-slate-600 bg-white focus:outline-none focus:border-[#765321]"
+                            className="w-full px-2 py-0.5 border border-slate-200 rounded-md text-[10px] text-slate-600 bg-white focus:outline-none focus:border-[#0053b5]"
                             placeholder="ชื่อโครงการ / บทบาท"
                           />
                         </div>
@@ -2065,7 +2070,7 @@ export default function AdminPage() {
                       </div>
 
                       {/* Direct URL input for image */}
-                      <div className="flex items-center gap-1.5 pt-1 border-t border-gold-100 text-[10px]">
+                      <div className="flex items-center gap-1.5 pt-1 border-t border-slate-100 text-[10px]">
                         <span className="text-slate-400 shrink-0">รูป:</span>
                         <input
                           type="text"
@@ -2076,11 +2081,11 @@ export default function AdminPage() {
                             setData({ ...data, clients: updated });
                           }}
                           placeholder="URL รูปภาพ"
-                          className="flex-1 px-1.5 py-0.5 border border-gold-100 rounded text-[10px] text-slate-500 bg-white/80 focus:bg-white focus:outline-none focus:border-gold-300"
+                          className="flex-1 px-1.5 py-0.5 border border-slate-100 rounded text-[10px] text-slate-500 bg-white/80 focus:bg-white focus:outline-none focus:border-slate-300"
                         />
                         <label
                           htmlFor={clientInputId}
-                          className="cursor-pointer px-2 py-0.5 bg-gold-100 hover:bg-gold-200 text-[#765321] rounded text-[9px] font-medium shrink-0 transition-colors"
+                          className="cursor-pointer px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-[#0053b5] rounded text-[9px] font-medium shrink-0 transition-colors"
                         >
                           เปลี่ยนรูป
                         </label>
@@ -2098,27 +2103,27 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {activeTab === 'csr' && (
           <div className="space-y-6">
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
               <div className="flex items-center justify-between mb-1">
-                <h3 className="font-bold text-base text-[#161141]">+ เพิ่มกิจกรรมเพื่อสังคม (CSR) ใหม่</h3>
-                <span className="text-[11px] font-bold text-[#765321] bg-gold-100 px-3 py-1 rounded-full border border-gold-300">
-                  📷 ใส่รูปได้สูงสุด 10 รูป
+                <h3 className="font-bold text-base text-[#0f172a]">+ เพิ่มกิจกรรมเพื่อสังคม (CSR) ใหม่</h3>
+                <span className="text-[11px] font-bold text-[#0053b5] bg-slate-100 px-3 py-1 rounded-full border border-slate-300">
+                   ใส่รูปได้สูงสุด 10 รูป
                 </span>
               </div>
               <p className="text-xs text-slate-500 mb-4">อัปโหลดรูปภาพกิจกรรมจริงได้สูงสุด 10 รูป และกรอกรายละเอียด</p>
 
               <form onSubmit={handleAddCsr} className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">ชื่อกิจกรรม *</label>
-                  <input type="text" required placeholder="เช่น กิจกรรมปลูกป่าเพื่อชุมชน" value={newCsr.title} onChange={(e) => setNewCsr({ ...newCsr, title: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">ชื่อกิจกรรม *</label>
+                  <input type="text" required placeholder="เช่น กิจกรรมปลูกป่าเพื่อชุมชน" value={newCsr.title} onChange={(e) => setNewCsr({ ...newCsr, title: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">วันที่จัดกิจกรรม *</label>
-                  <input type="text" required placeholder="เช่น 20 สิงหาคม 2568" value={newCsr.date} onChange={(e) => setNewCsr({ ...newCsr, date: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">วันที่จัดกิจกรรม *</label>
+                  <input type="text" required placeholder="เช่น 20 สิงหาคม 2568" value={newCsr.date} onChange={(e) => setNewCsr({ ...newCsr, date: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">หมวดหมู่กิจกรรม</label>
-                  <select value={newCsr.category} onChange={(e) => setNewCsr({ ...newCsr, category: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl bg-white">
+                  <label className="block font-medium text-[#0f172a] mb-1">หมวดหมู่กิจกรรม</label>
+                  <select value={newCsr.category} onChange={(e) => setNewCsr({ ...newCsr, category: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl bg-white">
                     <option value="การศึกษาและเยาวชน">การศึกษาและเยาวชน</option>
                     <option value="ช่วยเหลือสังคม">ช่วยเหลือสังคม</option>
                     <option value="พัฒนาคุณภาพชีวิต">พัฒนาคุณภาพชีวิต</option>
@@ -2126,29 +2131,29 @@ export default function AdminPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">สถานที่จัดกิจกรรม</label>
-                  <input type="text" placeholder="เช่น โรงเรียนวันเสาร์, นนทบุรี" value={newCsr.location} onChange={(e) => setNewCsr({ ...newCsr, location: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl" />
+                  <label className="block font-medium text-[#0f172a] mb-1">สถานที่จัดกิจกรรม</label>
+                  <input type="text" placeholder="เช่น โรงเรียนวันเสาร์, นนทบุรี" value={newCsr.location} onChange={(e) => setNewCsr({ ...newCsr, location: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl" />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">รายละเอียดกิจกรรม</label>
-                  <textarea rows={3} placeholder="คำบรรยายเรื่องราวกิจกรรม..." value={newCsr.desc} onChange={(e) => setNewCsr({ ...newCsr, desc: e.target.value })} className="w-full px-3 py-2 border border-gold-200 rounded-xl leading-relaxed" />
+                  <label className="block font-medium text-[#0f172a] mb-1">รายละเอียดกิจกรรม</label>
+                  <textarea rows={3} placeholder="คำบรรยายเรื่องราวกิจกรรม..." value={newCsr.desc} onChange={(e) => setNewCsr({ ...newCsr, desc: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-xl leading-relaxed" />
                 </div>
 
                 {/* CSR 10 Photos Upload Box */}
-                <div className="sm:col-span-2 bg-gold-50/40 p-4 rounded-2xl border border-dashed border-gold-300 space-y-3">
+                <div className="sm:col-span-2 bg-slate-50 p-4 rounded-2xl border border-dashed border-slate-300 space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="font-semibold text-[#161141] flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-[#765321]" />
+                    <label className="font-semibold text-[#0f172a] flex items-center gap-1.5">
+                      <ImageIcon className="w-4 h-4 text-[#0053b5]" />
                       <span>รูปภาพกิจกรรม CSR (ใส่ได้สูงสุด 10 รูป)</span>
                     </label>
-                    <span className="text-[11px] font-bold text-[#765321] bg-white px-2.5 py-0.5 rounded-full border border-gold-200">
+                    <span className="text-[11px] font-bold text-[#0053b5] bg-white px-2.5 py-0.5 rounded-full border border-slate-200">
                       {newCsr.images.length} / 10 รูป
                     </span>
                   </div>
 
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                     {newCsr.images.map((imgUrl, imgIdx) => (
-                      <div key={imgIdx} className="aspect-[4/3] rounded-xl overflow-hidden relative border-2 border-gold-200 group bg-slate-100">
+                      <div key={imgIdx} className="aspect-[4/3] rounded-xl overflow-hidden relative border-2 border-slate-200 group bg-slate-100">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={imgUrl} alt="" className="w-full h-full object-cover" />
                         <button
@@ -2186,7 +2191,7 @@ export default function AdminPage() {
                         type="button"
                         disabled={uploading}
                         onClick={() => csrFileInputRef.current?.click()}
-                        className="px-4 py-2 bg-[#765321] hover:bg-[#9b743a] disabled:bg-slate-300 text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-all text-xs"
+                        className="px-4 py-2 bg-[#0053b5] hover:bg-[#004293] disabled:bg-slate-300 text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-all text-xs"
                       >
                         {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
                         <span>+ เพิ่มรูปภาพกิจกรรม (เลือกได้หลายรูป)</span>
@@ -2196,8 +2201,8 @@ export default function AdminPage() {
                 </div>
 
                 <div className="sm:col-span-2 flex justify-end">
-                  <button type="submit" className="px-5 py-2.5 bg-[#161141] hover:bg-[#765321] text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-colors">
-                    <Plus className="w-3.5 h-3.5 text-gold-300" />
+                  <button type="submit" className="px-5 py-2.5 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-xs transition-colors">
+                    <Plus className="w-3.5 h-3.5 text-white" />
                     <span>เพิ่มกิจกรรม CSR</span>
                   </button>
                 </div>
@@ -2205,19 +2210,19 @@ export default function AdminPage() {
             </div>
 
             {/* Existing CSR List */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
-              <h3 className="font-bold text-base text-[#161141] mb-4">รายการกิจกรรม CSR ในระบบ ({data.csr?.length})</h3>
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
+              <h3 className="font-bold text-base text-[#0f172a] mb-4">รายการกิจกรรม CSR ในระบบ ({data.csr?.length})</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-xs">
                 {data.csr?.map((c: any, cIdx: number) => {
                   const galleryList: string[] = (c.gallery && c.gallery.length > 0) ? c.gallery : (c.images && c.images.length > 0 ? c.images : [c.image]);
                   return (
-                    <div key={c.id} className="p-4 border border-gold-200 rounded-2xl flex flex-col justify-between bg-gold-50/20 hover:bg-white transition-all space-y-3 shadow-2xs">
+                    <div key={c.id} className="p-4 border border-slate-200 rounded-2xl flex flex-col justify-between bg-slate-50 hover:bg-white transition-all space-y-3 shadow-2xs">
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
-                          <span className="text-[10px] text-[#765321] font-bold bg-gold-100 px-2 py-0.5 rounded border border-gold-300/60">{c.category}</span>
+                          <span className="text-[10px] text-[#0053b5] font-bold bg-slate-100 px-2 py-0.5 rounded border border-slate-300">{c.category}</span>
                           <div className="flex items-center gap-1.5">
                             <span className="text-[10px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded border border-slate-200">
-                              📷 {galleryList.length}/10 รูป
+                               {galleryList.length}/10 รูป
                             </span>
                             <button onClick={() => handleDeleteCsr(c.id)} className="text-slate-400 hover:text-rose-600 p-1">
                               <Trash2 className="w-3.5 h-3.5" />
@@ -2225,17 +2230,17 @@ export default function AdminPage() {
                           </div>
                         </div>
 
-                        <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-slate-100 relative group border border-gold-200">
+                        <div className="aspect-[16/10] rounded-xl overflow-hidden mb-2.5 bg-slate-100 relative group border border-slate-200">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={c.image} alt={c.title} className="w-full h-full object-cover" />
                         </div>
 
                         {/* Gallery strip */}
-                        <div className="space-y-1 mb-3 bg-white p-2 rounded-xl border border-gold-200/60">
+                        <div className="space-y-1 mb-3 bg-white p-2 rounded-xl border border-slate-200">
                           <div className="flex items-center justify-between text-[11px]">
                             <span className="font-semibold text-slate-700">ภาพกิจกรรม ({galleryList.length} รูป):</span>
                             {galleryList.length < 10 && (
-                              <label className="cursor-pointer text-[10px] font-bold text-[#765321] hover:underline flex items-center gap-0.5">
+                              <label className="cursor-pointer text-[10px] font-bold text-[#0053b5] hover:underline flex items-center gap-0.5">
                                 <Plus className="w-3 h-3" /> เพิ่มรูป
                                 <input
                                   type="file"
@@ -2253,7 +2258,7 @@ export default function AdminPage() {
                           </div>
                           <div className="grid grid-cols-5 gap-1.5 pt-1">
                             {galleryList.map((photo: string, phIdx: number) => (
-                              <div key={phIdx} className="aspect-square rounded-lg overflow-hidden relative border border-gold-200 group bg-slate-100">
+                              <div key={phIdx} className="aspect-square rounded-lg overflow-hidden relative border border-slate-200 group bg-slate-100">
                                 {/* eslint-disable-next-line @next/next/no-img-element */}
                                 <img src={photo} alt="" className="w-full h-full object-cover" />
                                 {galleryList.length > 1 && (
@@ -2278,7 +2283,7 @@ export default function AdminPage() {
                             updated[cIdx].title = e.target.value;
                             setData({ ...data, csr: updated });
                           }}
-                          className="w-full px-2.5 py-1 border border-gold-200 rounded-lg font-bold text-[#161141] text-xs"
+                          className="w-full px-2.5 py-1 border border-slate-200 rounded-lg font-bold text-[#0f172a] text-xs"
                         />
                       </div>
                     </div>
@@ -2294,75 +2299,75 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {activeTab === 'articles' && (
           <div className="space-y-6 text-xs">
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
               <div className="flex items-center justify-between mb-1">
-                <h3 className="font-bold text-base text-[#161141]">+ สร้างบทความสาระน่ารู้ใหม่</h3>
-                <span className="text-[11px] font-bold text-[#765321] bg-gold-100 px-3 py-1 rounded-full border border-gold-300">
-                  📷 ใส่รูปได้สูงสุด 10 รูป
+                <h3 className="font-bold text-base text-[#0f172a]">+ สร้างบทความสาระน่ารู้ใหม่</h3>
+                <span className="text-[11px] font-bold text-[#0053b5] bg-slate-100 px-3 py-1 rounded-full border border-slate-300">
+                   ใส่รูปได้สูงสุด 10 รูป
                 </span>
               </div>
               <p className="text-slate-500 mb-4">เพิ่มบทความพร้อมเนื้อหาฉบับเต็มและอัปโหลดรูปภาพประกอบได้สูงสุด 10 รูป</p>
 
               <form onSubmit={handleAddArticle} className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">หัวข้อบทความ *</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">หัวข้อบทความ *</label>
                   <input
                     type="text"
                     required
                     placeholder="เช่น 5 เทคนิคดูแลสนามหญ้าในฤดูฝน..."
                     value={newArticle.title}
                     onChange={(e) => setNewArticle({ ...newArticle, title: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl font-bold"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">ชื่อผู้เขียน</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">ชื่อผู้เขียน</label>
                   <input
                     type="text"
                     value={newArticle.author}
                     onChange={(e) => setNewArticle({ ...newArticle, author: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">วันที่เผยแพร่</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">วันที่เผยแพร่</label>
                   <input
                     type="text"
                     value={newArticle.date}
                     placeholder="เช่น 12 กันยายน 2568"
                     onChange={(e) => setNewArticle({ ...newArticle, date: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">เวลาอ่านโดยประมาณ</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">เวลาอ่านโดยประมาณ</label>
                   <input
                     type="text"
                     value={newArticle.readTime}
                     placeholder="เช่น 4 นาที"
                     onChange={(e) => setNewArticle({ ...newArticle, readTime: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
                 <div>
-                  <label className="block font-medium text-[#161141] mb-1">แท็กหมวดหมู่ (คั่นด้วยจุลภาค)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">แท็กหมวดหมู่ (คั่นด้วยจุลภาค)</label>
                   <input
                     type="text"
                     value={newArticle.tags}
                     placeholder="เช่น ดูแลสวน, สาระน่ารู้, สนามหญ้า"
                     onChange={(e) => setNewArticle({ ...newArticle, tags: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
 
                 {/* Article 10 Photos Upload Box */}
-                <div className="sm:col-span-2 bg-gold-50/40 p-4 rounded-2xl border border-dashed border-gold-300 space-y-3">
+                <div className="sm:col-span-2 bg-slate-50 p-4 rounded-2xl border border-dashed border-slate-300 space-y-3">
                   <div className="flex items-center justify-between">
-                    <label className="font-semibold text-[#161141] flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-[#765321]" />
+                    <label className="font-semibold text-[#0f172a] flex items-center gap-1.5">
+                      <ImageIcon className="w-4 h-4 text-[#0053b5]" />
                       <span>รูปภาพประกอบบทความ (ใส่ได้สูงสุด 10 รูป รูปแรกจะเป็นภาพปก)</span>
                     </label>
-                    <span className="text-[11px] font-bold text-[#765321] bg-white px-2.5 py-0.5 rounded-full border border-gold-200">
+                    <span className="text-[11px] font-bold text-[#0053b5] bg-white px-2.5 py-0.5 rounded-full border border-slate-200">
                       {newArticle.images.length} / 10 รูป
                     </span>
                   </div>
@@ -2384,9 +2389,9 @@ export default function AdminPage() {
                       type="button"
                       disabled={uploading || newArticle.images.length >= 10}
                       onClick={() => articleFileInputRef.current?.click()}
-                      className="px-4 py-2 bg-[#161141] hover:bg-[#765321] text-white rounded-xl font-medium flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
+                      className="px-4 py-2 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-medium flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
                     >
-                      {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 text-gold-300" />}
+                      {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5 text-white" />}
                       <span>+ เลือกรูปภาพจากเครื่อง (เลือกได้หลายรูป)</span>
                     </button>
                     <span className="text-[11px] text-slate-500">รองรับ PNG, JPG, WebP</span>
@@ -2395,20 +2400,20 @@ export default function AdminPage() {
                   {/* Uploaded Thumbnails Grid */}
                   <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
                     {newArticle.images.map((imgUrl, idx) => (
-                      <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden relative border-2 border-gold-200 group bg-slate-100 shadow-2xs">
+                      <div key={idx} className="aspect-[4/3] rounded-xl overflow-hidden relative border-2 border-slate-200 group bg-slate-100 shadow-2xs">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={imgUrl} alt={`Upload ${idx + 1}`} className="w-full h-full object-cover" />
                         
                         {/* Badge for Cover */}
                         {idx === 0 ? (
-                          <div className="absolute top-1.5 left-1.5 bg-[#161141] text-gold-300 font-bold text-[9px] px-2 py-0.5 rounded-full shadow-xs">
+                          <div className="absolute top-1.5 left-1.5 bg-[#0f172a] text-white font-bold text-[9px] px-2 py-0.5 rounded-full shadow-xs">
                             ภาพปก
                           </div>
                         ) : (
                           <button
                             type="button"
                             onClick={() => handleSetNewArticleCover(idx)}
-                            className="absolute bottom-1.5 left-1.5 bg-black/70 hover:bg-[#765321] text-white text-[9px] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                            className="absolute bottom-1.5 left-1.5 bg-black/70 hover:bg-[#0053b5] text-white text-[9px] px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
                           >
                             ตั้งเป็นภาพปก
                           </button>
@@ -2431,31 +2436,31 @@ export default function AdminPage() {
                 </div>
 
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">คำบรรยายย่อ (Summary ที่แสดงบนการ์ด)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">คำบรรยายย่อ (Summary ที่แสดงบนการ์ด)</label>
                   <textarea
                     rows={2}
                     placeholder="สรุปเนื้อหาบทความแบบสั้น เพื่อดึงดูดผู้อ่าน..."
                     value={newArticle.summary}
                     onChange={(e) => setNewArticle({ ...newArticle, summary: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <label className="block font-medium text-[#161141] mb-1">เนื้อหาบทความฉบับเต็ม (Full Content ในหน้าต่างอ่านต่อ)</label>
+                  <label className="block font-medium text-[#0f172a] mb-1">เนื้อหาบทความฉบับเต็ม (Full Content ในหน้าต่างอ่านต่อ)</label>
                   <textarea
                     rows={7}
                     placeholder="พิมพ์เนื้อหาฉบับเต็ม ย่อหน้า หรือรายการข้อ (เช่น 1. การเตรียมดิน... • ใส่ปุ๋ยหมัก...)..."
                     value={newArticle.content}
                     onChange={(e) => setNewArticle({ ...newArticle, content: e.target.value })}
-                    className="w-full px-3 py-2 border border-gold-200 rounded-xl leading-relaxed"
+                    className="w-full px-3 py-2 border border-slate-200 rounded-xl leading-relaxed"
                   />
                 </div>
                 <div className="sm:col-span-2 flex justify-end">
                   <button
                     type="submit"
-                    className="px-6 py-2.5 bg-[#161141] hover:bg-[#765321] text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
+                    className="px-6 py-2.5 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-semibold flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
                   >
-                    <Plus className="w-4 h-4 text-gold-300" />
+                    <Plus className="w-4 h-4 text-white" />
                     <span>เผยแพร่บทความ</span>
                   </button>
                 </div>
@@ -2463,8 +2468,8 @@ export default function AdminPage() {
             </div>
 
             {/* Existing Articles List */}
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
-              <h3 className="font-bold text-base text-[#161141] mb-4">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
+              <h3 className="font-bold text-base text-[#0f172a] mb-4">
                 บทความทั้งหมดในระบบ ({data.articles?.length || 0})
               </h3>
               <div className="space-y-5 text-xs">
@@ -2475,12 +2480,12 @@ export default function AdminPage() {
                   const artFileInputId = `art-file-input-${art.id}`;
 
                   return (
-                    <div key={art.id} className="p-4 border border-gold-200 rounded-2xl bg-gold-50/20 space-y-4">
+                    <div key={art.id} className="p-4 border border-slate-200 rounded-2xl bg-slate-50 space-y-4">
                       <div className="flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-bold text-[#161141] text-sm">{art.title}</span>
-                          <span className="text-[10px] font-bold text-[#765321] bg-gold-100 px-2 py-0.5 rounded-full border border-gold-200">
-                            📷 {artGal.length} รูป
+                          <span className="font-bold text-[#0f172a] text-sm">{art.title}</span>
+                          <span className="text-[10px] font-bold text-[#0053b5] bg-slate-100 px-2 py-0.5 rounded-full border border-slate-200">
+                             {artGal.length} รูป
                           </span>
                         </div>
                         <button
@@ -2493,10 +2498,10 @@ export default function AdminPage() {
                       </div>
 
                       {/* Photo Gallery Manager for Existing Article */}
-                      <div className="bg-white p-3 rounded-xl border border-gold-200 space-y-2.5">
+                      <div className="bg-white p-3 rounded-xl border border-slate-200 space-y-2.5">
                         <div className="flex items-center justify-between">
                           <span className="font-semibold text-slate-700 text-[11px] flex items-center gap-1">
-                            <ImageIcon className="w-3.5 h-3.5 text-[#765321]" />
+                            <ImageIcon className="w-3.5 h-3.5 text-[#0053b5]" />
                             <span>รูปภาพของบทความนี้ ({artGal.length}/10 รูป)</span>
                           </span>
                           {artGal.length < 10 && (
@@ -2515,7 +2520,7 @@ export default function AdminPage() {
                               />
                               <label
                                 htmlFor={artFileInputId}
-                                className="cursor-pointer text-[10px] font-bold text-[#765321] bg-gold-50 hover:bg-gold-100 px-2.5 py-1 rounded-lg border border-gold-200 flex items-center gap-1 transition-colors"
+                                className="cursor-pointer text-[10px] font-bold text-[#0053b5] bg-slate-50 hover:bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-200 flex items-center gap-1 transition-colors"
                               >
                                 <Upload className="w-3 h-3" />
                                 <span>+ เพิ่มรูป</span>
@@ -2526,18 +2531,18 @@ export default function AdminPage() {
 
                         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
                           {artGal.map((photo: string, phIdx: number) => (
-                            <div key={phIdx} className="aspect-[4/3] rounded-lg overflow-hidden relative border border-gold-200 group bg-slate-100">
+                            <div key={phIdx} className="aspect-[4/3] rounded-lg overflow-hidden relative border border-slate-200 group bg-slate-100">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img src={photo} alt="" className="w-full h-full object-cover" />
                               {phIdx === 0 ? (
-                                <span className="absolute top-1 left-1 bg-[#161141] text-gold-300 text-[8px] font-bold px-1.5 py-0.5 rounded">
+                                <span className="absolute top-1 left-1 bg-[#0f172a] text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
                                   ภาพปก
                                 </span>
                               ) : (
                                 <button
                                   type="button"
                                   onClick={() => handleSetExistingArticleCover(art.id, phIdx)}
-                                  className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#765321] text-white text-[8px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                                  className="absolute bottom-1 left-1 bg-black/70 hover:bg-[#0053b5] text-white text-[8px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity"
                                 >
                                   ตั้งเป็นปก
                                 </button>
@@ -2568,7 +2573,7 @@ export default function AdminPage() {
                               updated[aIdx].title = e.target.value;
                               setData({ ...data, articles: updated });
                             }}
-                            className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg font-bold bg-white"
+                            className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg font-bold bg-white"
                           />
                         </div>
                         <div>
@@ -2581,7 +2586,7 @@ export default function AdminPage() {
                               updated[aIdx].author = e.target.value;
                               setData({ ...data, articles: updated });
                             }}
-                            className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg bg-white"
+                            className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white"
                           />
                         </div>
                         <div className="sm:col-span-2">
@@ -2594,7 +2599,7 @@ export default function AdminPage() {
                               updated[aIdx].summary = e.target.value;
                               setData({ ...data, articles: updated });
                             }}
-                            className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg bg-white leading-relaxed"
+                            className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white leading-relaxed"
                           />
                         </div>
                         <div className="sm:col-span-2">
@@ -2607,7 +2612,7 @@ export default function AdminPage() {
                               updated[aIdx].content = e.target.value;
                               setData({ ...data, articles: updated });
                             }}
-                            className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg leading-relaxed bg-white"
+                            className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg leading-relaxed bg-white"
                           />
                         </div>
                       </div>
@@ -2623,88 +2628,88 @@ export default function AdminPage() {
         {/* TAB 10: COMPANY SETTINGS & CONTACT */}
         {/* ========================================================= */}
         {activeTab === 'company' && (
-          <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6 space-y-4 text-xs">
-            <h3 className="font-bold text-base text-[#161141] border-b border-gold-100 pb-2">ข้อมูลบริษัทและช่องทางติดต่อ (Company Information)</h3>
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
+            <h3 className="font-bold text-base text-[#0f172a] border-b border-slate-100 pb-2">ข้อมูลบริษัทและช่องทางติดต่อ (Company Information)</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
               <div>
-                <label className="block font-medium text-[#161141] mb-1">ชื่อแบรนด์บริษัท (Company Name)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">ชื่อแบรนด์บริษัท (Company Name)</label>
                 <input
                   type="text"
                   value={data.company?.name || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, name: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl font-bold text-[#161141]"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl font-bold text-[#0f172a]"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">สโลแกน (Slogan / Tagline)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">สโลแกน (Slogan / Tagline)</label>
                 <input
                   type="text"
                   value={data.company?.tagline || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, tagline: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">เบอร์โทรศัพท์ติดต่อ (Phone)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">เบอร์โทรศัพท์ติดต่อ (Phone)</label>
                 <input
                   type="text"
                   value={data.company?.phone || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, phone: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl font-semibold text-[#765321]"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold text-[#0053b5]"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">เบอร์ที่แสดงบนหน้าเว็บ (Phone Display)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">เบอร์ที่แสดงบนหน้าเว็บ (Phone Display)</label>
                 <input
                   type="text"
                   value={data.company?.phoneDisplay || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, phoneDisplay: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl font-semibold text-[#765321]"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl font-semibold text-[#0053b5]"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">LINE Official ID</label>
+                <label className="block font-medium text-[#0f172a] mb-1">LINE Official ID</label>
                 <input
                   type="text"
                   value={data.company?.lineId || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, lineId: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">อีเมลทางการ (Email)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">อีเมลทางการ (Email)</label>
                 <input
                   type="email"
                   value={data.company?.email || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, email: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">เวลาทำการ (Working Hours)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">เวลาทำการ (Working Hours)</label>
                 <input
                   type="text"
                   value={data.company?.workingHours || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, workingHours: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
               </div>
               <div>
-                <label className="block font-medium text-[#161141] mb-1">เลขประจำตัวผู้เสียภาษี (Tax ID)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">เลขประจำตัวผู้เสียภาษี (Tax ID)</label>
                 <input
                   type="text"
                   value={data.company?.taxId || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, taxId: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="block font-medium text-[#161141] mb-1">ที่ตั้งสำนักงาน (Office Address)</label>
+                <label className="block font-medium text-[#0f172a] mb-1">ที่ตั้งสำนักงาน (Office Address)</label>
                 <textarea
                   rows={2}
                   value={data.company?.address || ''}
                   onChange={(e) => setData({ ...data, company: { ...data.company, address: e.target.value } })}
-                  className="w-full px-3 py-2 border border-gold-200 rounded-xl leading-relaxed"
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl leading-relaxed"
                 />
               </div>
             </div>
@@ -2716,13 +2721,13 @@ export default function AdminPage() {
         {/* ========================================================= */}
         {activeTab === 'background' && (
           <div className="space-y-6 text-xs">
-            <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="font-bold text-base text-[#161141] flex items-center gap-2">
-                  <ImageIcon className="w-4 h-4 text-[#765321]" />
+                <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-[#0053b5]" />
                   <span>จัดการภาพพื้นหลังเปลี่ยนฉากตามการเลื่อนหน้าจอ (Dynamic Story Scroll)</span>
                 </h3>
-                <span className="text-[11px] font-bold text-[#765321] bg-gold-100 px-3 py-1 rounded-full border border-gold-300">
+                <span className="text-[11px] font-bold text-[#0053b5] bg-slate-100 px-3 py-1 rounded-full border border-slate-300">
                   4 ฉากเรื่องราว
                 </span>
               </div>
@@ -2741,20 +2746,20 @@ export default function AdminPage() {
                   return (
                     <div
                       key={scene.id || sIdx}
-                      className="p-4 bg-gold-50/20 border border-gold-200 rounded-2xl flex flex-col justify-between gap-4 hover:border-[#765321]/50 transition-colors"
+                      className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col justify-between gap-4 hover:border-[#0053b5]/50 transition-colors"
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <span className="font-bold text-[#161141] text-xs">
+                          <span className="font-bold text-[#0f172a] text-xs">
                             {scene.name || `ฉากที่ ${sIdx + 1}`}
                           </span>
-                          <span className="text-[10px] font-semibold text-[#765321] bg-white px-2 py-0.5 rounded-full border border-gold-200">
+                          <span className="text-[10px] font-semibold text-[#0053b5] bg-white px-2 py-0.5 rounded-full border border-slate-200">
                             Scene {sIdx + 1}
                           </span>
                         </div>
 
                         {/* Image Preview & Upload Button */}
-                        <div className="aspect-[16/9] rounded-xl overflow-hidden relative border border-gold-200 bg-slate-900 group">
+                        <div className="aspect-[16/9] rounded-xl overflow-hidden relative border border-slate-200 bg-slate-900 group">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={scene.image}
@@ -2768,7 +2773,7 @@ export default function AdminPage() {
                             htmlFor={bgInputId}
                             className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity text-white text-xs font-semibold gap-1"
                           >
-                            <Upload className="w-5 h-5 text-gold-300" />
+                            <Upload className="w-5 h-5 text-white" />
                             <span>คลิกเพื่ออัปโหลดเปลี่ยนภาพฉากนี้</span>
                           </label>
                           <input
@@ -2804,12 +2809,12 @@ export default function AdminPage() {
                               currentScenes[sIdx].image = e.target.value;
                               setData({ ...data, backgroundScenes: currentScenes });
                             }}
-                            className="flex-1 px-2 py-1 border border-gold-200 rounded-lg text-[10px] bg-white text-slate-600"
+                            className="flex-1 px-2 py-1 border border-slate-200 rounded-lg text-[10px] bg-white text-slate-600"
                             placeholder="URL รูปภาพ เช่น /images/garden.jpg"
                           />
                           <label
                             htmlFor={bgInputId}
-                            className="px-2.5 py-1 bg-gold-100 hover:bg-gold-200 text-[#765321] rounded-lg font-semibold text-[10px] cursor-pointer shrink-0 transition-colors"
+                            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-[#0053b5] rounded-lg font-semibold text-[10px] cursor-pointer shrink-0 transition-colors"
                           >
                             เลือกไฟล์
                           </label>
@@ -2830,7 +2835,7 @@ export default function AdminPage() {
                                 currentScenes[sIdx].label = e.target.value;
                                 setData({ ...data, backgroundScenes: currentScenes });
                               }}
-                              className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg bg-white font-medium text-[#161141]"
+                              className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white font-medium text-[#0f172a]"
                             />
                           </div>
                           <div>
@@ -2846,7 +2851,7 @@ export default function AdminPage() {
                                 currentScenes[sIdx].sub = e.target.value;
                                 setData({ ...data, backgroundScenes: currentScenes });
                               }}
-                              className="w-full px-2.5 py-1.5 border border-gold-200 rounded-lg bg-white text-slate-500 text-[11px]"
+                              className="w-full px-2.5 py-1.5 border border-slate-200 rounded-lg bg-white text-slate-500 text-[11px]"
                             />
                           </div>
                         </div>
