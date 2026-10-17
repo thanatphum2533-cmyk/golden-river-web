@@ -57,8 +57,12 @@ export async function POST(req: Request) {
       count: savedUrls.length,
     });
   } catch (error: any) {
+    const isReadOnly = error.code === 'EROFS' || (error.message && error.message.includes('read-only'));
+    const message = isReadOnly
+      ? 'ระบบ Vercel เป็นแบบอ่านอย่างเดียว (ไม่มีฮาร์ดดิสก์เขียนไฟล์ถาวร) กรุณาอัปโหลดรูปผ่านเครื่องคอมพิวเตอร์นี้ (localhost:3000/admin) หรือผ่านลิงก์ Cloudflare Tunnel แล้วกด push_to_github.bat ครับ'
+      : 'เกิดข้อผิดพลาดในการบันทึกรูปภาพ: ' + (error.message || '');
     return NextResponse.json(
-      { error: 'เกิดข้อผิดพลาดในการบันทึกรูปภาพ', details: error.message },
+      { error: message, details: error.message },
       { status: 500 }
     );
   }
