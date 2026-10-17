@@ -7,7 +7,7 @@ import {
   Sparkles, MoveHorizontal, Award, ArrowLeft, CheckCircle2, Plus, Trash2,
   Save, Lock, ExternalLink, Upload, Image as ImageIcon, Loader2, Users,
   Calendar, Building2, Phone, Mail, MapPin, Clock, FileText, CheckSquare,
-  X, Star, Eye, Menu, ChevronRight, RotateCcw
+  X, Star, Eye, Menu, ChevronRight, RotateCcw, ChevronUp, ChevronDown
 } from 'lucide-react';
 import initialData from '@/data/siteData.json';
 
@@ -38,6 +38,16 @@ export default function AdminPage() {
   // Upload States
   const [uploading, setUploading] = useState(false);
   const [viewingInquiryPhotos, setViewingInquiryPhotos] = useState<string[] | null>(null);
+
+  // New Hero Banner Slide Form
+  const [newHeroSlide, setNewHeroSlide] = useState({
+    title: '',
+    subtitle: '',
+    tag: '',
+    badge: '',
+    image: ''
+  });
+  const heroSlideFileInputRef = useRef<HTMLInputElement>(null);
 
   // New Project Form with 10 Photos Support
   const [newProject, setNewProject] = useState<{
@@ -546,6 +556,79 @@ export default function AdminPage() {
     }
   };
 
+  // Handlers for Hero Banner Slides
+  const handleNewHeroSlideUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = await uploadFile(e.target.files[0]);
+      if (url) {
+        setNewHeroSlide(prev => ({ ...prev, image: url }));
+      }
+    }
+  };
+
+  const handleAddHeroSlide = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newHeroSlide.title || !newHeroSlide.image) {
+      alert('กรุณากรอกหัวข้อแบนเนอร์และเลือกรูปภาพ');
+      return;
+    }
+    const item = {
+      id: `slide-${Date.now()}`,
+      tag: newHeroSlide.tag || 'บริการแนะนำ',
+      title: newHeroSlide.title,
+      subtitle: newHeroSlide.subtitle || '',
+      badge: newHeroSlide.badge || '',
+      image: newHeroSlide.image,
+      desktopImage: newHeroSlide.image,
+      mobileImage: newHeroSlide.image
+    };
+    const currentSlides = [...(data.hero?.bannerSlides || [])];
+    const updated = [...currentSlides, item];
+    setData({
+      ...data,
+      hero: {
+        ...(data.hero || {}),
+        bannerSlides: updated
+      }
+    });
+    setNewHeroSlide({ title: '', subtitle: '', tag: '', badge: '', image: '' });
+    alert('เพิ่มภาพแบนเนอร์ใหม่เรียบร้อยแล้ว! อย่าลืมกด "บันทึกข้อมูล"');
+  };
+
+  const handleDeleteHeroSlide = (index: number) => {
+    const currentSlides = data.hero?.bannerSlides || [];
+    if (currentSlides.length <= 1) {
+      alert('ต้องมีภาพแบนเนอร์อย่างน้อย 1 ภาพในหน้าแรก');
+      return;
+    }
+    if (confirm('ยืนยันการลบภาพแบนเนอร์นี้ออกจากหน้าเว็บ?')) {
+      const updated = currentSlides.filter((_: any, idx: number) => idx !== index);
+      setData({
+        ...data,
+        hero: {
+          ...(data.hero || {}),
+          bannerSlides: updated
+        }
+      });
+    }
+  };
+
+  const handleMoveHeroSlide = (index: number, direction: 'up' | 'down') => {
+    const currentSlides = [...(data.hero?.bannerSlides || [])];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= currentSlides.length) return;
+    const temp = currentSlides[index];
+    currentSlides[index] = currentSlides[targetIndex];
+    currentSlides[targetIndex] = temp;
+    setData({
+      ...data,
+      hero: {
+        ...(data.hero || {}),
+        bannerSlides: currentSlides
+      }
+    });
+  };
+
   // Handlers for Clients Marquee
   const handleNewClientUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -1033,43 +1116,181 @@ export default function AdminPage() {
               </div>
             </div>
 
-            {/* HERO BANNER SLIDES EDITING */}
+            {/* ADD NEW HERO BANNER SLIDE FORM */}
             <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
               <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                 <div>
-                  <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
-                    <ImageIcon className="w-4 h-4 text-[#0053b5]" />
-                    <span>จัดการภาพแบนเนอร์ไฮไลท์ (Hero Visual Showcase Card)</span>
+                  <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
+                    <Plus className="w-4 h-4 text-[#0053b5]" />
+                    <span>เพิ่มภาพแบนเนอร์สไลด์ใหม่ (Add Hero Banner)</span>
                   </h3>
                   <p className="text-[11px] text-slate-500 mt-0.5">
-                    ภาพแบนเนอร์สไลด์ไฮไลท์ 3 บริการหลักที่แสดงอยู่คู่กับข้อความส่วนบนสุดของหน้าเว็บ
+                    สามารถเพิ่มภาพแบนเนอร์ได้ตามต้องการ ภาพจะเลื่อนสไลด์อัตโนมัติบนหน้าแรกของเว็บไซต์
                   </p>
                 </div>
-                <span className="text-[10px] font-bold text-[#0053b5] bg-slate-100 px-2.5 py-1 rounded-full border border-slate-300">
-                  3 สไลด์หลัก
-                </span>
+              </div>
+
+              <form onSubmit={handleAddHeroSlide} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block font-medium text-slate-700 mb-1">หัวข้อหลักของแบนเนอร์ *</label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="เช่น บริการทำความสะอาดอาคารสำนักงานและเช็ดกระจกสูง"
+                      value={newHeroSlide.title}
+                      onChange={(e) => setNewHeroSlide({ ...newHeroSlide, title: e.target.value })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-medium text-slate-700 mb-1">ป้ายแท็กบริการ (Tag บนปุ่มล่าง)</label>
+                    <input
+                      type="text"
+                      placeholder="เช่น งานเช็ดกระจกสูง หรือ งานแม่บ้านอาคาร"
+                      value={newHeroSlide.tag}
+                      onChange={(e) => setNewHeroSlide({ ...newHeroSlide, tag: e.target.value })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block font-medium text-slate-700 mb-1">คำบรรยายใต้หัวข้อ (Subtitle)</label>
+                    <textarea
+                      rows={2}
+                      placeholder="เช่น ทีมงานมืออาชีพ ผ่านการตรวจประวัติ 100% พร้อมอุปกรณ์และน้ำยาเฉพาะทาง..."
+                      value={newHeroSlide.subtitle}
+                      onChange={(e) => setNewHeroSlide({ ...newHeroSlide, subtitle: e.target.value })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900 leading-relaxed"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-medium text-slate-700 mb-1">ป้ายกำกับรับประกัน (Badge)</label>
+                    <input
+                      type="text"
+                      placeholder="เช่น ทีมงานมืออาชีพ ตรวจประวัติ 100%"
+                      value={newHeroSlide.badge}
+                      onChange={(e) => setNewHeroSlide({ ...newHeroSlide, badge: e.target.value })}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900 focus:border-slate-900"
+                    />
+                  </div>
+                </div>
+
+                {/* Banner Photo Upload */}
+                <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row items-center gap-4">
+                  <div className="w-24 h-16 rounded-lg overflow-hidden bg-slate-900 border border-slate-200 shrink-0 shadow-xs flex items-center justify-center">
+                    {newHeroSlide.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={newHeroSlide.image} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <ImageIcon className="w-6 h-6 text-slate-400" />
+                    )}
+                  </div>
+                  <div className="flex-1 space-y-1.5 w-full">
+                    <label className="block font-medium text-slate-700">รูปภาพแบนเนอร์ *</label>
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        required
+                        placeholder="URL รูปภาพ หรือกดปุ่มอัปโหลดรูปภาพ"
+                        value={newHeroSlide.image}
+                        onChange={(e) => setNewHeroSlide({ ...newHeroSlide, image: e.target.value })}
+                        className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                      />
+                      <input
+                        type="file"
+                        ref={heroSlideFileInputRef}
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleNewHeroSlideUpload}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => heroSlideFileInputRef.current?.click()}
+                        disabled={uploading}
+                        className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg font-medium shrink-0 flex items-center gap-1 transition-colors border border-slate-300 shadow-2xs cursor-pointer"
+                      >
+                        {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                        <span>อัปโหลดรูป</span>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full sm:w-auto px-5 py-2.5 bg-[#0053b5] hover:bg-[#004293] text-white rounded-lg font-semibold flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-xs cursor-pointer self-end"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>เพิ่มแบนเนอร์นี้</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            {/* EXISTING HERO BANNER SLIDES LIST */}
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-4 text-xs">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-2">
+                <div>
+                  <h3 className="font-bold text-base text-slate-900 flex items-center gap-2">
+                    <ImageIcon className="w-4 h-4 text-[#0053b5]" />
+                    <span>รายการภาพแบนเนอร์ทั้งหมดในระบบ ({(data.hero?.bannerSlides || []).length} ภาพ)</span>
+                  </h3>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    ภาพแบนเนอร์ทั้งหมดจะเลื่อนสไลด์อัตโนมัติบนหน้าแรก สามารถแก้ไขข้อความ เปลี่ยนรูป สลับลำดับ หรือลบได้
+                  </p>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                {(data.hero?.bannerSlides || [
-                  { id: 'slide-cleaning', tag: ' แม่บ้านทำความสะอาด', title: 'บริการแม่บ้านทำความสะอาดอาคารและเช็ดกระจกสูง', image: '/images/hero-cleaning-desktop-fullscreen.jpg', badge: 'ทีมงานมืออาชีพผ่านการตรวจประวัติ' },
-                  { id: 'slide-garden', tag: ' งานดูแลสวน & ภูมิทัศน์', title: 'ดูแลและฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียม', image: '/images/garden.jpg', badge: '30+ โครงการชั้นนำ ไว้วางใจ' }
-                ]).map((slide: any, bIdx: number) => {
+                {(data.hero?.bannerSlides || []).map((slide: any, bIdx: number) => {
                   const heroBannerInputId = `hero-banner-file-${bIdx}`;
+                  const totalSlides = (data.hero?.bannerSlides || []).length;
                   return (
                     <div
                       key={slide.id || bIdx}
-                      className="p-3.5 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col justify-between gap-3 hover:border-[#0053b5]/50 transition-colors"
+                      className="p-4 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between gap-3 hover:border-slate-300 transition-colors shadow-2xs"
                     >
-                      <div className="space-y-2.5">
-                        <div className="flex items-center justify-between">
-                          <span className="font-bold text-[#0f172a] text-xs">
-                            สไลด์ที่ {bIdx + 1}: {slide.tag}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-2 border-b border-slate-200/80">
+                          <span className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                            <span className="w-5 h-5 rounded-md bg-slate-900 text-white flex items-center justify-center text-[10px]">
+                              {bIdx + 1}
+                            </span>
+                            <span>{slide.tag || `สไลด์ที่ ${bIdx + 1}`}</span>
                           </span>
+
+                          <div className="flex items-center gap-1">
+                            {/* Reorder Buttons */}
+                            <button
+                              type="button"
+                              onClick={() => handleMoveHeroSlide(bIdx, 'up')}
+                              disabled={bIdx === 0}
+                              className="p-1 rounded text-slate-400 hover:text-slate-700 disabled:opacity-30 disabled:hover:text-slate-400 hover:bg-slate-200 transition-colors cursor-pointer"
+                              title="เลื่อนขึ้น"
+                            >
+                              <ChevronUp className="w-4 h-4" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleMoveHeroSlide(bIdx, 'down')}
+                              disabled={bIdx === totalSlides - 1}
+                              className="p-1 rounded text-slate-400 hover:text-slate-700 disabled:opacity-30 disabled:hover:text-slate-400 hover:bg-slate-200 transition-colors cursor-pointer"
+                              title="เลื่อนลง"
+                            >
+                              <ChevronDown className="w-4 h-4" />
+                            </button>
+                            {/* Delete Button */}
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteHeroSlide(bIdx)}
+                              className="p-1 rounded text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors ml-1 cursor-pointer"
+                              title="ลบแบนเนอร์นี้"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
                         </div>
 
                         {/* Image Preview & Upload Overlay */}
-                        <div className="relative aspect-[4/3] rounded-xl overflow-hidden border border-slate-200 bg-slate-900 group">
+                        <div className="relative aspect-[16/9] rounded-lg overflow-hidden border border-slate-200 bg-slate-900 group">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={slide.image}
@@ -1081,7 +1302,7 @@ export default function AdminPage() {
                           />
                           <label
                             htmlFor={heroBannerInputId}
-                            className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity text-white text-[11px] font-semibold gap-1"
+                            className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex flex-col items-center justify-center cursor-pointer transition-opacity text-white text-[11px] font-medium gap-1"
                           >
                             <Upload className="w-4 h-4 text-white" />
                             <span>คลิกเปลี่ยนรูปภาพ</span>
@@ -1095,14 +1316,11 @@ export default function AdminPage() {
                               if (e.target.files && e.target.files[0]) {
                                 const url = await uploadFile(e.target.files[0]);
                                 if (url) {
-                                  const defaultSlides = [
-                                    { id: 'slide-cleaning', tag: ' แม่บ้านทำความสะอาด', title: 'บริการแม่บ้านทำความสะอาดอาคารและเช็ดกระจกสูง', image: '/images/hero-cleaning-desktop-fullscreen.jpg', badge: 'ทีมงานมืออาชีพผ่านการตรวจประวัติ' },
-                                    { id: 'slide-garden', tag: ' งานดูแลสวน & ภูมิทัศน์', title: 'ดูแลและฟื้นฟูพื้นที่สีเขียวคอนโดมิเนียม', image: '/images/garden.jpg', badge: '30+ โครงการชั้นนำ ไว้วางใจ' }
-                                  ];
-                                  const currentSlides = [...(data.hero?.bannerSlides || defaultSlides)];
+                                  const currentSlides = [...(data.hero?.bannerSlides || [])];
                                   if (!currentSlides[bIdx]) currentSlides[bIdx] = { ...slide };
                                   currentSlides[bIdx].image = url;
                                   currentSlides[bIdx].desktopImage = url;
+                                  currentSlides[bIdx].mobileImage = url;
                                   setData({
                                     ...data,
                                     hero: {
@@ -1117,7 +1335,7 @@ export default function AdminPage() {
                         </div>
 
                         {/* Image URL & File button */}
-                        <div className="flex items-center gap-1 text-[11px]">
+                        <div className="flex items-center gap-1.5 text-[11px]">
                           <input
                             type="text"
                             value={slide.image}
@@ -1128,21 +1346,21 @@ export default function AdminPage() {
                               currentSlides[bIdx].desktopImage = e.target.value;
                               setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                             }}
-                            className="flex-1 px-2 py-1 border border-slate-200 rounded-lg text-[10px] bg-white text-slate-600"
+                            className="flex-1 px-2.5 py-1.5 border border-slate-300 rounded-lg text-[10px] bg-white text-slate-600 focus:outline-none focus:border-slate-900"
                             placeholder="URL รูปภาพ"
                           />
                           <label
                             htmlFor={heroBannerInputId}
-                            className="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-[#0053b5] rounded-lg font-semibold text-[10px] cursor-pointer shrink-0 transition-colors"
+                            className="px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 rounded-lg font-medium text-[10px] cursor-pointer shrink-0 transition-colors shadow-2xs"
                           >
                             เลือกไฟล์
                           </label>
                         </div>
 
-                        {/* Title & Tag inputs */}
-                        <div className="space-y-1.5 pt-1">
+                        {/* Title, Subtitle, Tag inputs */}
+                        <div className="space-y-2 pt-1">
                           <div>
-                            <label className="block text-[10px] text-slate-400 font-semibold mb-0.5">
+                            <label className="block text-[10px] text-slate-500 font-medium mb-1">
                               ป้ายแท็กบริการ (Tag)
                             </label>
                             <input
@@ -1154,11 +1372,11 @@ export default function AdminPage() {
                                 currentSlides[bIdx].tag = e.target.value;
                                 setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                               }}
-                              className="w-full px-2 py-1 border border-slate-200 rounded-lg bg-white font-medium text-[#0f172a] text-xs"
+                              className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white text-slate-800 text-xs focus:outline-none focus:border-slate-900"
                             />
                           </div>
                           <div>
-                            <label className="block text-[10px] text-slate-500 font-bold mb-0.5">
+                            <label className="block text-[10px] text-slate-500 font-medium mb-1">
                               หัวข้อหลัก (Title)
                             </label>
                             <input
@@ -1170,11 +1388,11 @@ export default function AdminPage() {
                                 currentSlides[bIdx].title = e.target.value;
                                 setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                               }}
-                              className="w-full px-2 py-1.5 border border-slate-200 rounded-lg bg-white text-slate-700 text-xs font-semibold"
+                              className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white text-slate-900 text-xs font-semibold focus:outline-none focus:border-slate-900"
                             />
                           </div>
                           <div>
-                            <label className="block text-[10px] text-slate-600 font-bold mb-0.5">
+                            <label className="block text-[10px] text-slate-500 font-medium mb-1">
                               คำบรรยายใต้หัวข้อ (Subtitle)
                             </label>
                             <textarea
@@ -1186,8 +1404,24 @@ export default function AdminPage() {
                                 currentSlides[bIdx].subtitle = e.target.value;
                                 setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
                               }}
-                              placeholder="เช่น ทีมงานแม่บ้านและช่างเช็ดกระจกมืออาชีพ ผ่านการตรวจประวัติ 100%..."
-                              className="w-full px-2 py-1.5 border border-slate-200 rounded-lg bg-white text-slate-700 text-xs leading-relaxed"
+                              placeholder="คำบรรยายย่อยสำหรับสไลด์นี้..."
+                              className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white text-slate-700 text-xs leading-relaxed focus:outline-none focus:border-slate-900"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-[10px] text-slate-500 font-medium mb-1">
+                              ป้ายกำกับรับประกัน (Badge)
+                            </label>
+                            <input
+                              type="text"
+                              value={slide.badge || ''}
+                              onChange={(e) => {
+                                const currentSlides = [...(data.hero?.bannerSlides || [])];
+                                if (!currentSlides[bIdx]) currentSlides[bIdx] = { ...slide };
+                                currentSlides[bIdx].badge = e.target.value;
+                                setData({ ...data, hero: { ...(data.hero || {}), bannerSlides: currentSlides } });
+                              }}
+                              className="w-full px-2.5 py-1.5 border border-slate-300 rounded-lg bg-white text-slate-800 text-xs focus:outline-none focus:border-slate-900"
                             />
                           </div>
                         </div>

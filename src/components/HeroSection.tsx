@@ -103,6 +103,8 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
   };
 
   const onTouchEnd = () => {
+    // Resume auto-slide after touch swipe
+    setTimeout(() => setIsPaused(false), 2000);
     if (!touchStart || !touchEnd) return;
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
@@ -114,14 +116,14 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
     }
   };
 
-  // Auto-rotate every 6.5s when not hovered
+  // Auto-rotate every 4.5s smoothly when not interacted
   useEffect(() => {
     if (isPaused || slides.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 6500);
+    }, 4500);
     return () => clearInterval(interval);
-  }, [isPaused, slides.length]);
+  }, [isPaused, slides.length, currentSlide]);
 
   const activeSlide = slides[currentSlide] || slides[0];
 
@@ -130,10 +132,13 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
       className="relative w-full h-[100dvh] min-h-[640px] max-h-[1080px] overflow-hidden select-none bg-slate-950 group"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
+      onTouchStart={(e) => {
+        setIsPaused(true);
+        onTouchStart(e);
+      }}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
         {/* Full-Bleed Background Slide Cross-fade */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -233,7 +238,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
                 className={'h-1.5 rounded-full transition-all duration-300 cursor-pointer ' + (
-                  currentSlide === idx ? 'w-4 bg-gold-400' : 'w-1.5 bg-white/40'
+                  currentSlide === idx ? 'w-4 bg-white' : 'w-1.5 bg-white/40'
                 )}
                 aria-label={'Slide ' + (idx + 1)}
               />
