@@ -7,12 +7,14 @@ import {
   Sparkles, MoveHorizontal, Award, ArrowLeft, CheckCircle2, Plus, Trash2,
   Save, Lock, ExternalLink, Upload, Image as ImageIcon, Loader2, Users,
   Calendar, Building2, Phone, Mail, MapPin, Clock, FileText, CheckSquare,
-  X, Star, Eye, Menu, ChevronRight, RotateCcw, ChevronUp, ChevronDown
+  X, Star, Eye, Menu, ChevronRight, RotateCcw, ChevronUp, ChevronDown,
+  Bell, Send, AlertCircle, EyeOff, Check, Copy, MessageSquare
 } from 'lucide-react';
 import initialData from '@/data/siteData.json';
 
 type TabType =
   | 'inquiries'
+  | 'notifications'
   | 'hero'
   | 'services'
   | 'beforeAfter'
@@ -48,6 +50,13 @@ export default function AdminPage() {
     image: ''
   });
   const heroSlideFileInputRef = useRef<HTMLInputElement>(null);
+
+  // Email & LINE Notification States
+  const [testEmailRecipient, setTestEmailRecipient] = useState('');
+  const [testingEmail, setTestingEmail] = useState(false);
+  const [testEmailResult, setTestEmailResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [showSmtpPassword, setShowSmtpPassword] = useState(false);
+  const lineQrFileInputRef = useRef<HTMLInputElement>(null);
 
   // New Project Form with 10 Photos Support
   const [newProject, setNewProject] = useState<{
@@ -688,6 +697,99 @@ export default function AdminPage() {
     }
   };
 
+  // Handlers for Email & LINE Notifications
+  const handleTestEmail = async () => {
+    const defaultRecipient = data.notifications?.email?.recipientEmails
+      ? data.notifications.email.recipientEmails.split(',')[0].trim()
+      : 'goldenriverservice@gmail.com';
+    const recipient = testEmailRecipient.trim() || defaultRecipient;
+
+    if (!recipient) {
+      alert('กรุณาระบุอีเมลผู้รับเพื่อทดสอบ');
+      return;
+    }
+
+    setTestingEmail(true);
+    setTestEmailResult(null);
+
+    try {
+      const res = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          recipient,
+          config: data.notifications?.email,
+        }),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        setTestEmailResult({
+          success: true,
+          message: result.message || 'ส่งอีเมลทดสอบสำเร็จเรียบร้อยแล้ว!',
+        });
+      } else {
+        setTestEmailResult({
+          success: false,
+          message: result.error || 'เกิดข้อผิดพลาดในการส่งอีเมล',
+        });
+      }
+    } catch (err: any) {
+      setTestEmailResult({
+        success: false,
+        message: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์ได้: ' + (err.message || 'Unknown error'),
+      });
+    } finally {
+      setTestingEmail(false);
+    }
+  };
+
+  const handleLineQrUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const url = await uploadFile(e.target.files[0]);
+      if (url) {
+        setData({
+          ...data,
+          company: {
+            ...data.company,
+            lineQrCode: url,
+          },
+        });
+      }
+    }
+  };
+
+  const applySmtpPreset = (preset: 'gmail' | 'outlook') => {
+    const currentEmail = data.notifications?.email || {};
+    if (preset === 'gmail') {
+      setData({
+        ...data,
+        notifications: {
+          ...data.notifications,
+          email: {
+            ...currentEmail,
+            smtpHost: 'smtp.gmail.com',
+            smtpPort: 587,
+            smtpSecure: false,
+          },
+        },
+      });
+    } else if (preset === 'outlook') {
+      setData({
+        ...data,
+        notifications: {
+          ...data.notifications,
+          email: {
+            ...currentEmail,
+            smtpHost: 'smtp.office365.com',
+            smtpPort: 587,
+            smtpSecure: false,
+          },
+        },
+      });
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
@@ -745,6 +847,7 @@ export default function AdminPage() {
       title: 'ข้อมูลองค์กรและการติดต่อ',
       items: [
         { id: 'inquiries' as TabType, label: 'คำขอใบเสนอราคา', icon: Inbox, count: inquiries.length },
+        { id: 'notifications' as TabType, label: 'ระบบแจ้งเตือน (Email / LINE)', icon: Bell },
         { id: 'company' as TabType, label: 'ข้อมูลบริษัทและการติดต่อ', icon: Settings },
       ]
     },
@@ -1060,6 +1163,576 @@ export default function AdminPage() {
                     </div>
                   </a>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* TAB: NOTIFICATIONS (EMAIL & LINE)                         */}
+        {/* ========================================================= */}
+        {activeTab === 'notifications' && (
+          <div className="space-y-6 text-xs">
+            {/* EMAIL NOTIFICATIONS CARD */}
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-3">
+                <div>
+                  <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
+                    <Mail className="w-5 h-5 text-[#0053b5]" />
+                    <span>ระบบแจ้งเตือนผ่านอีเมล (Email Notifications)</span>
+                  </h3>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    เมื่อมีลูกค้าส่งคำขอใบเสนอราคาจากหน้าเว็บ ระบบจะจัดส่งรายละเอียดและรูปภาพเข้าสู่อีเมลทีมงานทันที
+                  </p>
+                </div>
+
+                {/* Enable / Disable Switch */}
+                <div className="flex items-center gap-2 self-start sm:self-center">
+                  <span className="text-xs font-semibold text-slate-700">
+                    {data.notifications?.email?.enabled ? (
+                      <span className="text-emerald-600 flex items-center gap-1 font-bold">
+                        <CheckCircle2 className="w-4 h-4" /> เปิดใช้งาน
+                      </span>
+                    ) : (
+                      <span className="text-slate-400">ปิดใช้งานอยู่</span>
+                    )}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setData({
+                        ...data,
+                        notifications: {
+                          ...(data.notifications || {}),
+                          email: {
+                            ...(data.notifications?.email || {}),
+                            enabled: !data.notifications?.email?.enabled,
+                          },
+                        },
+                      });
+                    }}
+                    className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                      data.notifications?.email?.enabled ? 'bg-[#0053b5]' : 'bg-slate-200'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                        data.notifications?.email?.enabled ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </div>
+              </div>
+
+              {/* Form Content */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="sm:col-span-2">
+                    <label className="block font-medium text-slate-700 mb-1">
+                      อีเมลผู้รับแจ้งเตือน (Recipient Emails) <span className="text-rose-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="goldenriverservice@gmail.com, sale@goldenriver.co.th"
+                      value={data.notifications?.email?.recipientEmails || ''}
+                      onChange={(e) =>
+                        setData({
+                          ...data,
+                          notifications: {
+                            ...(data.notifications || {}),
+                            email: {
+                              ...(data.notifications?.email || {}),
+                              recipientEmails: e.target.value,
+                            },
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 font-medium"
+                    />
+                    <p className="text-[11px] text-slate-500 mt-1">
+                      สามารถระบุได้มากกว่า 1 อีเมล โดยคั่นด้วยเครื่องหมายจุลภาค (,) เช่น info@goldenriver.co.th, sale@goldenriver.co.th
+                    </p>
+                  </div>
+
+                  <div>
+                    <label className="block font-medium text-slate-700 mb-1">
+                      ชื่อผู้ส่งที่แสดง (Sender Display Name)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="GR Group Web Notification"
+                      value={data.notifications?.email?.senderName || 'GR Group Web Notification'}
+                      onChange={(e) =>
+                        setData({
+                          ...data,
+                          notifications: {
+                            ...(data.notifications || {}),
+                            email: {
+                              ...(data.notifications?.email || {}),
+                              senderName: e.target.value,
+                            },
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-medium text-slate-700 mb-1">
+                      รูปแบบหัวข้ออีเมล (Subject Template)
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="[คำขอใบเสนอราคาใหม่] คุณ {name} - โครงการ {projectName}"
+                      value={data.notifications?.email?.subject || '[คำขอใบเสนอราคาใหม่] คุณ {name} - โครงการ {projectName}'}
+                      onChange={(e) =>
+                        setData({
+                          ...data,
+                          notifications: {
+                            ...(data.notifications || {}),
+                            email: {
+                              ...(data.notifications?.email || {}),
+                              subject: e.target.value,
+                            },
+                          },
+                        })
+                      }
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                    />
+                  </div>
+                </div>
+
+                {/* SMTP Configuration Box */}
+                <div className="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 pb-2">
+                    <span className="font-bold text-slate-800 text-xs flex items-center gap-1.5">
+                      <Settings className="w-3.5 h-3.5 text-slate-600" />
+                      <span>การตั้งค่าเซิร์ฟเวอร์ส่งอีเมล (Outgoing Mail Server / SMTP)</span>
+                    </span>
+
+                    {/* Quick Presets */}
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[11px] text-slate-500 font-medium">ค่าเริ่มต้นด่วน:</span>
+                      <button
+                        type="button"
+                        onClick={() => applySmtpPreset('gmail')}
+                        className="px-2 py-0.5 rounded-md bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-semibold text-slate-700 shadow-2xs cursor-pointer"
+                      >
+                        Gmail
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => applySmtpPreset('outlook')}
+                        className="px-2 py-0.5 rounded-md bg-white hover:bg-slate-100 border border-slate-300 text-[11px] font-semibold text-slate-700 shadow-2xs cursor-pointer"
+                      >
+                        Outlook / 365
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block font-medium text-slate-700 mb-1">
+                        SMTP Host *
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="smtp.gmail.com"
+                        value={data.notifications?.email?.smtpHost || 'smtp.gmail.com'}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            notifications: {
+                              ...(data.notifications || {}),
+                              email: {
+                                ...(data.notifications?.email || {}),
+                                smtpHost: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-medium text-slate-700 mb-1">
+                        SMTP Port *
+                      </label>
+                      <input
+                        type="number"
+                        placeholder="587"
+                        value={data.notifications?.email?.smtpPort ?? 587}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            notifications: {
+                              ...(data.notifications || {}),
+                              email: {
+                                ...(data.notifications?.email || {}),
+                                smtpPort: parseInt(e.target.value) || 587,
+                              },
+                            },
+                          })
+                        }
+                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-medium text-slate-700 mb-1">
+                        ความปลอดภัย (Security)
+                      </label>
+                      <select
+                        value={data.notifications?.email?.smtpSecure ? 'ssl' : 'tls'}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            notifications: {
+                              ...(data.notifications || {}),
+                              email: {
+                                ...(data.notifications?.email || {}),
+                                smtpSecure: e.target.value === 'ssl',
+                              },
+                            },
+                          })
+                        }
+                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 cursor-pointer"
+                      >
+                        <option value="tls">STARTTLS (พอร์ต 587 - แนะนำ)</option>
+                        <option value="ssl">SSL / TLS (พอร์ต 465)</option>
+                      </select>
+                    </div>
+
+                    <div className="sm:col-span-1">
+                      <label className="block font-medium text-slate-700 mb-1">
+                        อีเมลบัญชีผู้ส่ง (Username / Email) *
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="your-email@gmail.com"
+                        value={data.notifications?.email?.smtpUser || ''}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            notifications: {
+                              ...(data.notifications || {}),
+                              email: {
+                                ...(data.notifications?.email || {}),
+                                smtpUser: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block font-medium text-slate-700 mb-1">
+                        รหัสผ่านแอป / App Password *
+                      </label>
+                      <div className="relative">
+                        <input
+                          type={showSmtpPassword ? 'text' : 'password'}
+                          placeholder="xxxx xxxx xxxx xxxx"
+                          value={data.notifications?.email?.smtpPass || ''}
+                          onChange={(e) =>
+                            setData({
+                              ...data,
+                              notifications: {
+                                ...(data.notifications || {}),
+                                email: {
+                                  ...(data.notifications?.email || {}),
+                                  smtpPass: e.target.value,
+                                },
+                              },
+                            })
+                          }
+                          className="w-full px-3 py-1.5 pr-10 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 font-mono"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowSmtpPassword(!showSmtpPassword)}
+                          className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                        >
+                          {showSmtpPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                        </button>
+                      </div>
+                      <p className="text-[10.5px] text-slate-500 mt-1">
+                        💡 หากใช้ Gmail ต้องเปิด 2-Step Verification และสร้าง <strong>App Password (รหัสผ่านสำหรับแอป 16 หลัก)</strong> จากบัญชี Google
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* TEST EMAIL TRIGGER BOX */}
+                <div className="p-4 bg-blue-50/60 border border-blue-200/80 rounded-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                      <Send className="w-3.5 h-3.5 text-[#0053b5]" />
+                      <span>ทดสอบการเชื่อมต่อส่งอีเมล (Send Test Email)</span>
+                    </span>
+                    <span className="text-[11px] text-slate-500">ทดสอบส่งจริงเพื่อยืนยันความถูกต้อง</span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center gap-2">
+                    <input
+                      type="email"
+                      placeholder="ระบุอีเมลที่จะให้ส่งข้อความทดสอบไปถึง"
+                      value={testEmailRecipient}
+                      onChange={(e) => setTestEmailRecipient(e.target.value)}
+                      className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 w-full"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleTestEmail}
+                      disabled={testingEmail}
+                      className="w-full sm:w-auto px-4 py-1.5 bg-[#0053b5] hover:bg-[#004293] text-white rounded-lg font-semibold flex items-center justify-center gap-1.5 shrink-0 transition-colors shadow-2xs cursor-pointer"
+                    >
+                      {testingEmail ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>กำลังทดสอบส่ง...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-3.5 h-3.5" />
+                          <span>กดส่งอีเมลทดสอบ</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {testEmailResult && (
+                    <div
+                      className={`p-3 rounded-lg border text-xs flex items-start gap-2 ${
+                        testEmailResult.success
+                          ? 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                          : 'bg-rose-50 text-rose-800 border-rose-200'
+                      }`}
+                    >
+                      {testEmailResult.success ? (
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      ) : (
+                        <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                      )}
+                      <div>
+                        <span className="font-semibold">
+                          {testEmailResult.success ? 'สำเร็จ: ' : 'ไม่สำเร็จ: '}
+                        </span>
+                        <span>{testEmailResult.message}</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* LINE INTEGRATION CARD */}
+            <div className="bg-white rounded-xl border border-slate-200 shadow-xs p-6 space-y-5">
+              <div className="pb-3 border-b border-slate-100">
+                <h3 className="font-bold text-base text-[#0f172a] flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5 text-[#06C755]" />
+                  <span>การเชื่อมต่อระบบ LINE Official Account</span>
+                </h3>
+                <p className="text-[11px] text-slate-500 mt-0.5">
+                  จัดการ LINE ID, ลิงก์ตรงสำหรับเพิ่มเพื่อน, และรูปภาพ QR Code ที่แสดงในการ์ด &quot;สแกน QR Code ขอใบเสนอราคา&quot; หน้าแรกของเว็บไซต์
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">
+                    LINE Official ID *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="@goldenriver"
+                    value={data.company?.lineId || ''}
+                    onChange={(e) =>
+                      setData({
+                        ...data,
+                        company: {
+                          ...data.company,
+                          lineId: e.target.value,
+                        },
+                      })
+                    }
+                    className="w-full px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 font-semibold"
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    เช่น @goldenriver (ระบบจะใส่เครื่องหมาย @ ให้อัตโนมัติหากไม่ได้พิมพ์)
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block font-medium text-slate-700 mb-1">
+                    ลิงก์เพิ่มเพื่อนใน LINE ทันที (Direct LINE URL) *
+                  </label>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="https://line.me/R/ti/p/@goldenriver หรือ https://lin.ee/xxxxx"
+                      value={data.company?.lineUrl || ''}
+                      onChange={(e) =>
+                        setData({
+                          ...data,
+                          company: {
+                            ...data.company,
+                            lineUrl: e.target.value,
+                          },
+                        })
+                      }
+                      className="flex-1 px-3 py-2 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 font-medium"
+                    />
+                    {data.company?.lineUrl && (
+                      <a
+                        href={data.company.lineUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium shrink-0 flex items-center gap-1 transition-colors border border-slate-300 shadow-2xs"
+                      >
+                        <ExternalLink className="w-3.5 h-3.5" />
+                        <span>เปิดดู</span>
+                      </a>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    ลิงก์ตรงสำหรับปุ่ม &quot;กดเพิ่มเพื่อนใน LINE ทันที&quot; และเมื่อผู้ใช้คลิกที่รูป QR Code
+                  </p>
+                </div>
+
+                {/* LINE QR Code Image Upload & Preview */}
+                <div className="sm:col-span-2 pt-2 border-t border-slate-100">
+                  <label className="block font-medium text-slate-700 mb-2">
+                    รูปภาพ LINE QR Code (QR Code Image)
+                  </label>
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                    <div className="w-28 h-28 p-2 rounded-xl border-2 border-slate-200 bg-white shadow-2xs flex items-center justify-center shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={data.company?.lineQrCode || '/images/line-qr-code.svg'}
+                        alt="LINE QR Code Preview"
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-2 w-full">
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          placeholder="/images/line-qr-code.svg หรือ URL รูปภาพ"
+                          value={data.company?.lineQrCode || ''}
+                          onChange={(e) =>
+                            setData({
+                              ...data,
+                              company: {
+                                ...data.company,
+                                lineQrCode: e.target.value,
+                              },
+                            })
+                          }
+                          className="flex-1 px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900"
+                        />
+                        <input
+                          type="file"
+                          ref={lineQrFileInputRef}
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleLineQrUpload}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => lineQrFileInputRef.current?.click()}
+                          disabled={uploading}
+                          className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-lg font-medium shrink-0 flex items-center gap-1 transition-colors border border-slate-300 shadow-2xs cursor-pointer"
+                        >
+                          {uploading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Upload className="w-3.5 h-3.5" />}
+                          <span>อัปโหลดรูป QR Code ใหม่</span>
+                        </button>
+                      </div>
+                      <p className="text-[11px] text-slate-500">
+                        สามารถอัปโหลดไฟล์ภาพ QR Code จริงของ LINE Official Account ทางการของบริษัท (รองรับ .png, .jpg, .svg)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* LINE Notify Token (Optional) */}
+                <div className="sm:col-span-2 pt-3 border-t border-slate-100">
+                  <div className="p-4 bg-emerald-50/50 border border-emerald-200/80 rounded-xl space-y-3">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <span className="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-[#06C755]"></span>
+                          <span>การแจ้งเตือนเข้ากลุ่ม LINE ผ่าน LINE Notify (ทางเลือกเพิ่มเติม)</span>
+                        </span>
+                        <p className="text-[11px] text-slate-500 mt-0.5">
+                          ส่งแจ้งเตือนเข้ากลุ่ม LINE ของทีมงานเมื่อมีคำขอใหม่
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-semibold text-slate-700">
+                          {data.notifications?.line?.enabled ? (
+                            <span className="text-emerald-700 font-bold">เปิดใช้งาน</span>
+                          ) : (
+                            <span className="text-slate-400">ปิด</span>
+                          )}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setData({
+                              ...data,
+                              notifications: {
+                                ...(data.notifications || {}),
+                                line: {
+                                  ...(data.notifications?.line || {}),
+                                  enabled: !data.notifications?.line?.enabled,
+                                },
+                              },
+                            });
+                          }}
+                          className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                            data.notifications?.line?.enabled ? 'bg-[#06C755]' : 'bg-slate-200'
+                          }`}
+                        >
+                          <span
+                            className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+                              data.notifications?.line?.enabled ? 'translate-x-5' : 'translate-x-0'
+                            }`}
+                          />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-medium text-slate-700 mb-1">
+                        LINE Notify Access Token
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="ระบุ LINE Notify Token หากต้องการให้แจ้งเตือนเข้ากลุ่ม LINE"
+                        value={data.notifications?.line?.notifyToken || ''}
+                        onChange={(e) =>
+                          setData({
+                            ...data,
+                            notifications: {
+                              ...(data.notifications || {}),
+                              line: {
+                                ...(data.notifications?.line || {}),
+                                notifyToken: e.target.value,
+                              },
+                            },
+                          })
+                        }
+                        className="w-full px-3 py-1.5 border border-slate-300 rounded-lg text-xs bg-white text-slate-900 font-mono"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -2909,6 +3582,41 @@ export default function AdminPage() {
                   onChange={(e) => setData({ ...data, company: { ...data.company, lineId: e.target.value } })}
                   className="w-full px-3 py-2 border border-slate-200 rounded-xl"
                 />
+              </div>
+              <div>
+                <label className="block font-medium text-[#0f172a] mb-1">ลิงก์เพิ่มเพื่อน LINE (Direct URL / lin.ee)</label>
+                <input
+                  type="text"
+                  placeholder="https://line.me/R/ti/p/@goldenriver"
+                  value={data.company?.lineUrl || ''}
+                  onChange={(e) => setData({ ...data, company: { ...data.company, lineUrl: e.target.value } })}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-xl"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block font-medium text-[#0f172a] mb-1">รูป QR Code LINE Official</label>
+                <div className="flex items-center gap-3">
+                  <div className="w-14 h-14 p-1 border border-slate-200 rounded-lg bg-white shrink-0 flex items-center justify-center">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={data.company?.lineQrCode || '/images/line-qr-code.svg'} alt="" className="w-full h-full object-contain" />
+                  </div>
+                  <input
+                    type="text"
+                    value={data.company?.lineQrCode || ''}
+                    onChange={(e) => setData({ ...data, company: { ...data.company, lineQrCode: e.target.value } })}
+                    placeholder="/images/line-qr-code.svg"
+                    className="flex-1 px-3 py-2 border border-slate-200 rounded-xl"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => lineQrFileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium shrink-0 flex items-center gap-1 border border-slate-300 cursor-pointer"
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>อัปโหลด QR</span>
+                  </button>
+                </div>
               </div>
               <div>
                 <label className="block font-medium text-[#0f172a] mb-1">อีเมลทางการ (Email)</label>

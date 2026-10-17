@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { sendInquiryNotification, sendLineNotify } from '@/lib/mailer';
 
 const dataFilePath = path.join(process.cwd(), 'src', 'data', 'siteData.json');
 
@@ -45,6 +46,22 @@ export async function POST(req: Request) {
     }
     currentData.inquiries.unshift(newInquiry);
     writeData(currentData);
+
+    // Trigger Email Notification (if configured & enabled)
+    const emailConfig = currentData.notifications?.email;
+    if (emailConfig && emailConfig.enabled) {
+      sendInquiryNotification(newInquiry, emailConfig).catch((err) => {
+        console.error('Email notification error:', err.message);
+      });
+    }
+
+    // Trigger LINE Notification (if configured & enabled)
+    const lineConfig = currentData.notifications?.line;
+    if (lineConfig && lineConfig.enabled && lineConfig.notifyToken) {
+      sendLineNotify(newInquiry, lineConfig.notifyToken).catch((err) => {
+        console.error('LINE notification error:', err.message);
+      });
+    }
 
     return NextResponse.json({ success: true, inquiry: newInquiry });
   } catch (error: any) {

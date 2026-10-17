@@ -35,7 +35,8 @@ export default function ContactSection({ company, prefilledService }: ContactSec
 
   const rawLineId = company.lineId || '@goldenriver';
   const lineId = rawLineId.startsWith('@') ? rawLineId : `@${rawLineId}`;
-  const lineUrl = `https://line.me/R/ti/p/${lineId}`;
+  const lineUrl = (company as any).lineUrl || (lineId.startsWith('http') ? lineId : `https://line.me/R/ti/p/${lineId}`);
+  const lineQrCode = (company as any).lineQrCode || '/images/line-qr-code.svg';
   const cleanPhone = company.phone ? company.phone.replace(/\s+/g, '') : '020963579';
   const displayPhone = company.phoneDisplay || company.phone || '02-096-3579';
 
@@ -223,10 +224,16 @@ export default function ContactSection({ company, prefilledService }: ContactSec
               <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-7">
                 {/* QR Code Container with Frame & Center Logo */}
                 <div className="relative shrink-0 flex flex-col items-center">
-                  <div className="w-44 h-44 sm:w-48 sm:h-48 bg-white p-3 rounded-2xl shadow-md border-2 border-[#06C755]/40 flex items-center justify-center relative group">
+                  <a
+                    href={lineUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-44 h-44 sm:w-48 sm:h-48 bg-white p-3 rounded-2xl shadow-md border-2 border-[#06C755]/40 flex items-center justify-center relative group cursor-pointer hover:border-[#06C755] transition-all hover:scale-[1.02]"
+                    title="คลิกเพื่อเพิ่มเพื่อนใน LINE ทันที"
+                  >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src="/images/line-qr-code.svg"
+                      src={lineQrCode}
                       alt="LINE QR Code ขอใบเสนอราคา"
                       className="w-full h-full object-contain"
                     />
@@ -238,7 +245,7 @@ export default function ContactSection({ company, prefilledService }: ContactSec
                         </svg>
                       </div>
                     </div>
-                  </div>
+                  </a>
                   <span className="text-[11px] text-slate-500 font-medium mt-2">
                     เปิดกล้องมือถือสแกนได้ทันที
                   </span>

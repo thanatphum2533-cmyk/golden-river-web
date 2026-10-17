@@ -12,6 +12,8 @@
     "address": "677/1 ถนนพระราม 4 แขวงรองเมือง เขตปทุมวัน กรุงเทพมหานคร 10330",
     "workingHours": "จันทร์ - เสาร์: 08:30 - 17:30 น.",
     "lineId": "@goldenriver",
+    "lineUrl": "https://line.me/R/ti/p/@goldenriver",
+    "lineQrCode": "/images/line-qr-code.svg",
     "logoUrl": "/GR.svg",
     "stats": [
       {
@@ -899,5 +901,22 @@
         }
       ]
     }
-  ]
+  ],
+  "notifications": {
+    "email": {
+      "enabled": false,
+      "recipientEmails": "goldenriverservice@gmail.com",
+      "senderName": "GR Group Web Notification",
+      "subject": "[คำขอใบเสนอราคาใหม่] คุณ {name} - โครงการ {projectName}",
+      "smtpHost": "smtp.gmail.com",
+      "smtpPort": 587,
+      "smtpSecure": false,
+      "smtpUser": "",
+      "smtpPass": ""
+    },
+    "line": {
+      "enabled": false,
+      "notifyToken": ""
+    }
+  }
 }
