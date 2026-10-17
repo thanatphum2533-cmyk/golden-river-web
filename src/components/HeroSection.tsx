@@ -227,24 +227,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
           </>
         )}
 
-        {/* Sansiri Slide Counter Indicator (01 / 02) */}
-        <div className="absolute bottom-36 sm:bottom-24 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
-          <span>0{currentSlide + 1}</span>
-          <span className="text-white/40">/</span>
-          <span className="text-white/60">0{slides.length}</span>
-          <div className="flex items-center gap-1.5 ml-1">
-            {slides.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentSlide(idx)}
-                className={'h-1.5 rounded-full transition-all duration-300 cursor-pointer ' + (
-                  currentSlide === idx ? 'w-4 bg-white' : 'w-1.5 bg-white/40'
-                )}
-                aria-label={'Slide ' + (idx + 1)}
-              />
-            ))}
-          </div>
-        </div>
+
 
         {/* ========================================================= */}
         {/* SANSIRI-STYLE LUXURY SEARCH & SERVICE DOCK                */}
