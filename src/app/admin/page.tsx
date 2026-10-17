@@ -7,7 +7,7 @@ import {
   Sparkles, MoveHorizontal, Award, ArrowLeft, CheckCircle2, Plus, Trash2,
   Save, Lock, ExternalLink, Upload, Image as ImageIcon, Loader2, Users,
   Calendar, Building2, Phone, Mail, MapPin, Clock, FileText, CheckSquare,
-  X, Star, Eye
+  X, Star, Eye, Menu, ChevronRight, RotateCcw
 } from 'lucide-react';
 import initialData from '@/data/siteData.json';
 
@@ -29,6 +29,7 @@ export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [pinError, setPinError] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('inquiries');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [data, setData] = useState<any>(initialData);
   const [inquiries, setInquiries] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -575,6 +576,35 @@ export default function AdminPage() {
     }
   };
 
+  const handleResetDefaultClients = () => {
+    if (confirm('ต้องการรีเซ็ตรายชื่อโลโก้กลับเป็น 20 แบรนด์ชั้นนำตามมาตรฐานใช่หรือไม่?')) {
+      const defaultClients = [
+        { id: 'noble', name: 'Noble Development', role: 'คอนโดมิเนียม & บ้านเดี่ยว', image: '/images/logos/noble.svg' },
+        { id: 'theroom', name: 'The Room', role: 'คอนโดมิเนียมระดับพรีเมียม โดย Land & Houses', image: '/images/logos/theroom.svg' },
+        { id: 'ideo', name: 'IDEO Condominium', role: 'คอนโดมิเนียมติดรถไฟฟ้า', image: '/images/logos/ideo.svg' },
+        { id: 'wyndham', name: 'WYNDHAM Hotels & Resorts', role: 'โรงแรมและที่พักอาศัยมาตรฐานสากล', image: '/images/logos/wyndham.svg' },
+        { id: 'singha', name: 'SINGHA ESTATE', role: 'อสังหาริมทรัพย์ระดับลักชัวรี', image: '/images/logos/singha.svg' },
+        { id: 'sansiri-1', name: 'แสนสิริ (Sansiri)', role: 'ผู้นำอสังหาริมทรัพย์ไทย', image: '/images/logos/sansiri.svg' },
+        { id: 'lh', name: 'LAND & HOUSES', role: 'บ้านเดี่ยวและคอนโดมิเนียมชั้นนำ', image: '/images/logos/lh.svg' },
+        { id: 'origin', name: 'ORIGIN Property', role: 'คอนโดมิเนียมและบ้านคุณภาพ', image: '/images/logos/origin.svg' },
+        { id: 'ananda', name: 'ANANDA Development', role: 'คอนโดมิเนียมใจกลางเมือง', image: '/images/logos/ananda.svg' },
+        { id: 'scasset', name: 'SC ASSET', role: 'บ้านหรูและคอนโดมิเนียมคุณภาพ', image: '/images/logos/scasset.svg' },
+        { id: 'cmc', name: 'CMC GROUP', role: 'เจ้าพระยามหานคร', image: '/images/logos/cmc.svg' },
+        { id: 'major', name: 'MAJOR Development', role: 'คอนโดมิเนียมเลี้ยงสัตว์ได้ (Pet-Friendly)', image: '/images/logos/major.svg' },
+        { id: 'frasers', name: 'FRASERS Property', role: 'อสังหาริมทรัพย์เพื่อการพาณิชย์และที่อยู่อาศัย', image: '/images/logos/frasers.svg' },
+        { id: 'aspace', name: 'a space CONDO ME', role: 'คอนโดมิเนียมสำหรับคนรุ่นใหม่', image: '/images/logos/aspace.svg' },
+        { id: 'sansiri-2', name: 'แสนสิริ (Sansiri)', role: 'โครงการบ้านและคอนโดมิเนียม', image: '/images/logos/sansiri.svg' },
+        { id: 'ap', name: 'AP THAILAND', role: 'Empower Living ทุกพื้นที่ชีวิต', image: '/images/logos/ap.svg' },
+        { id: 'supalai', name: 'SUPALAI', role: 'ศุภาลัย สร้างสรรค์คุณภาพชีวิต', image: '/images/logos/supalai.svg' },
+        { id: 'pruksa', name: 'PRUKSA Holding', role: 'พฤกษา ใส่ใจเพื่อทั้งชีวิต', image: '/images/logos/pruksa.svg' },
+        { id: 'chewathai', name: 'CHEWATHAI', role: 'ชีวาทัย คอนโดมิเนียมและบ้านเดี่ยว', image: '/images/logos/chewathai.svg' },
+        { id: 'parkland', name: 'The Parkland', role: 'เดอะ พาร์คแลนด์ คอนโดมิเนียม', image: '/images/logos/parkland.svg' }
+      ];
+      setData({ ...data, clients: defaultClients });
+      alert('คืนค่า 20 แบรนด์ดังเรียบร้อยแล้ว! อย่าลืมกด "บันทึกการเปลี่ยนแปลงทั้งหมด"');
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#0d0a26] flex items-center justify-center p-4 relative overflow-hidden">
@@ -627,37 +657,82 @@ export default function AdminPage() {
     );
   }
 
+  const navGroups = [
+    {
+      title: 'ข้อมูลติดต่อ & คำขอ',
+      items: [
+        { id: 'inquiries' as TabType, label: 'คำขอราคา', icon: Inbox, count: inquiries.length },
+        { id: 'company' as TabType, label: 'ข้อมูลบริษัท & ติดต่อ', icon: Settings },
+      ]
+    },
+    {
+      title: 'หน้าแรก & บริการ',
+      items: [
+        { id: 'hero' as TabType, label: 'ส่วนหัวเว็บ & สถิติ', icon: Sparkles },
+        { id: 'services' as TabType, label: 'บริการหลัก (แม่บ้าน/สวน)', icon: Briefcase, count: data.services?.length },
+        { id: 'clients' as TabType, label: 'แบรนด์ลูกค้า (แถบเลื่อน)', icon: Building2, count: data.clients?.length },
+        { id: 'background' as TabType, label: 'ภาพพื้นหลังเว็บ', icon: ImageIcon },
+      ]
+    },
+    {
+      title: 'ผลงาน & การันตี',
+      items: [
+        { id: 'beforeAfter' as TabType, label: 'ผลงาน ก่อน-หลัง', icon: MoveHorizontal, count: data.beforeAfter?.items?.length },
+        { id: 'projects' as TabType, label: 'ผลงานโครงการ', icon: Building, count: data.projects?.length },
+        { id: 'guarantees' as TabType, label: 'มาตรฐาน & การรับประกัน', icon: Award },
+      ]
+    },
+    {
+      title: 'บทความ & เพื่อสังคม',
+      items: [
+        { id: 'articles' as TabType, label: 'คำแนะนำและบทความ', icon: BookOpen, count: data.articles?.length },
+        { id: 'csr' as TabType, label: 'กิจกรรม CSR เพื่อสังคม', icon: Heart, count: data.csr?.length },
+      ]
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-100/70 font-sans text-slate-800 flex flex-col">
       {/* Top Navbar */}
       <header className="bg-[#161141] text-white sticky top-0 z-40 border-b border-gold-500/30 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/10 border border-gold-400/40 flex items-center justify-center font-black text-gold-300">
+            {/* Hamburger Button for Mobile */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl bg-white/10 hover:bg-white/20 text-gold-300 transition-colors"
+              aria-label="เปิดเมนู"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+
+            <div className="w-10 h-10 rounded-xl bg-white/10 border border-gold-400/40 flex items-center justify-center font-black text-gold-300 shadow-inner">
               GR
             </div>
             <div>
               <h1 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
                 <span>ระบบจัดการเว็บไซต์ GR Group</span>
               </h1>
-              <p className="text-[11px] text-slate-300">แก้ไขข้อมูลหน้าบ้านได้ทุกส่วน ไม่ต้องแก้โค้ด</p>
+              <p className="text-[11px] text-slate-300 hidden sm:block">แก้ไขข้อมูลหน้าบ้านได้ทุกส่วน ไม่ต้องแก้โค้ด</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/"
               target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gold-300 border border-gold-400/30 transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-semibold text-gold-300 border border-gold-400/30 transition-all"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>เปิดดูหน้าเว็บจริง</span>
+              <span className="hidden sm:inline">เปิดดูหน้าเว็บจริง</span>
+              <span className="sm:hidden">ดูเว็บ</span>
             </Link>
 
             <button
               onClick={handleSaveData}
               disabled={loading}
-              className="px-4 py-2 rounded-xl bg-[#765321] hover:bg-[#9b743a] text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
+              className="px-3.5 sm:px-5 py-2 rounded-xl bg-[#765321] hover:bg-[#9b743a] text-white text-xs font-bold shadow-md flex items-center gap-1.5 transition-all"
             >
               {loading ? (
                 <>
@@ -672,55 +747,143 @@ export default function AdminPage() {
               ) : (
                 <>
                   <Save className="w-4 h-4 text-gold-300" />
-                  <span>บันทึกการเปลี่ยนแปลงทั้งหมด</span>
+                  <span className="hidden sm:inline">บันทึกการเปลี่ยนแปลงทั้งหมด</span>
+                  <span className="sm:hidden">บันทึก</span>
                 </>
               )}
             </button>
           </div>
         </div>
-
-        {/* Tab Navigation Menu */}
-        <div className="bg-[#120d36] border-t border-white/10 overflow-x-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 py-1 text-xs">
-            <button onClick={() => setActiveTab('inquiries')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'inquiries' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Inbox className="w-3.5 h-3.5" /> คำขอราคา ({inquiries.length})
-            </button>
-            <button onClick={() => setActiveTab('hero')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'hero' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Sparkles className="w-3.5 h-3.5" /> ส่วนหัวเว็บ & สถิติ
-            </button>
-            <button onClick={() => setActiveTab('services')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'services' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Briefcase className="w-3.5 h-3.5" /> บริการหลัก
-            </button>
-            <button onClick={() => setActiveTab('beforeAfter')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'beforeAfter' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <MoveHorizontal className="w-3.5 h-3.5" /> ผลงาน ก่อน-หลัง
-            </button>
-            <button onClick={() => setActiveTab('projects')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'projects' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Building className="w-3.5 h-3.5" /> ผลงานโครงการ
-            </button>
-            <button onClick={() => setActiveTab('guarantees')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'guarantees' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Award className="w-3.5 h-3.5" /> มาตรฐาน & การรับประกัน
-            </button>
-            <button onClick={() => setActiveTab('clients')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'clients' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Building2 className="w-3.5 h-3.5" /> แบรนด์ลูกค้า
-            </button>
-            <button onClick={() => setActiveTab('csr')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'csr' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Heart className="w-3.5 h-3.5" /> กิจกรรม CSR
-            </button>
-            <button onClick={() => setActiveTab('articles')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'articles' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <BookOpen className="w-3.5 h-3.5" /> คำแนะนำและบทความ
-            </button>
-            <button onClick={() => setActiveTab('company')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'company' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <Settings className="w-3.5 h-3.5" /> ข้อมูลบริษัท & ติดต่อ
-            </button>
-            <button onClick={() => setActiveTab('background')} className={'flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ' + (activeTab === 'background' ? 'bg-[#161141] text-gold-300 shadow-xs border border-gold-400/30' : 'text-slate-300 hover:text-white')}>
-              <ImageIcon className="w-3.5 h-3.5" /> ภาพพื้นหลัง
-            </button>
-          </div>
-        </div>
       </header>
 
-      {/* Main Container */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Container with Left Sidebar */}
+      <div className="flex-1 flex flex-row relative w-full">
+        {/* ========================================================= */}
+        {/* LEFT SIDEBAR (DESKTOP)                                    */}
+        {/* ========================================================= */}
+        <aside className="hidden lg:flex flex-col w-64 xl:w-72 shrink-0 bg-[#120d36] text-white border-r border-gold-500/20 sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto p-4 space-y-6 select-none shadow-sm">
+          <div className="text-[11px] font-bold tracking-wider uppercase text-gold-400/80 px-2 pb-1 border-b border-white/10 flex items-center justify-between">
+            <span>เมนูระบบจัดการ</span>
+            <span className="text-[10px] bg-white/10 text-slate-300 px-2 py-0.5 rounded-full font-normal">11 หมวดหมู่</span>
+          </div>
+
+          <div className="space-y-5">
+            {navGroups.map((group, gIdx) => (
+              <div key={gIdx} className="space-y-1">
+                <div className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase px-2 mb-1.5">
+                  {group.title}
+                </div>
+                {group.items.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={
+                        'w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left group ' +
+                        (isActive
+                          ? 'bg-gradient-to-r from-[#1f1754] to-[#281e6a] text-gold-300 font-bold shadow-sm border-l-4 border-gold-400 pl-2.5'
+                          : 'text-slate-300 hover:text-white hover:bg-white/5')
+                      }
+                    >
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <Icon className={'w-4 h-4 shrink-0 transition-colors ' + (isActive ? 'text-gold-300' : 'text-slate-400 group-hover:text-gold-300')} />
+                        <span className="truncate">{item.label}</span>
+                      </div>
+                      {typeof item.count === 'number' && item.count > 0 && (
+                        <span
+                          className={
+                            'text-[10px] px-1.5 py-0.5 rounded-full font-bold shrink-0 ml-1.5 ' +
+                            (item.id === 'inquiries'
+                              ? 'bg-rose-500 text-white animate-pulse'
+                              : isActive
+                              ? 'bg-gold-400/20 text-gold-300 border border-gold-400/30'
+                              : 'bg-white/10 text-slate-400')
+                          }
+                        >
+                          {item.count}
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </aside>
+
+        {/* ========================================================= */}
+        {/* MOBILE MENU DRAWER (SLIDE-OVER)                           */}
+        {/* ========================================================= */}
+        {mobileMenuOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden">
+            <div
+              className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+            <aside className="fixed inset-y-0 left-0 w-72 bg-[#120d36] text-white shadow-2xl z-50 p-4 overflow-y-auto flex flex-col space-y-6">
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <div className="flex items-center gap-2 font-bold text-sm text-gold-300">
+                  <ShieldCheck className="w-5 h-5 text-gold-400" />
+                  <span>เมนูระบบจัดการ</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="space-y-5">
+                {navGroups.map((group, gIdx) => (
+                  <div key={gIdx} className="space-y-1">
+                    <div className="text-[10px] font-semibold tracking-wider text-slate-400 uppercase px-2 mb-1.5">
+                      {group.title}
+                    </div>
+                    {group.items.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = activeTab === item.id;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => {
+                            setActiveTab(item.id);
+                            setMobileMenuOpen(false);
+                          }}
+                          className={
+                            'w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-medium transition-all text-left ' +
+                            (isActive
+                              ? 'bg-[#1f1754] text-gold-300 font-bold border-l-4 border-gold-400 pl-2.5'
+                              : 'text-slate-300 hover:text-white hover:bg-white/5')
+                          }
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <Icon className={'w-4 h-4 shrink-0 ' + (isActive ? 'text-gold-300' : 'text-slate-400')} />
+                            <span className="truncate">{item.label}</span>
+                          </div>
+                          {typeof item.count === 'number' && item.count > 0 && (
+                            <span className={'text-[10px] px-1.5 py-0.5 rounded-full font-bold ' + (item.id === 'inquiries' ? 'bg-rose-500 text-white' : 'bg-white/10 text-slate-400')}>
+                              {item.count}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </aside>
+          </div>
+        )}
+
+        {/* ========================================================= */}
+        {/* MAIN CONTENT AREA (RIGHT SIDE)                            */}
+        {/* ========================================================= */}
+        <main className="flex-1 min-w-0 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <div className="max-w-5xl mx-auto">
 
         {/* ========================================================= */}
         {/* TAB 1: INQUIRIES */}
@@ -1795,11 +1958,22 @@ export default function AdminPage() {
 
             {/* Existing Clients List */}
             <div className="bg-white rounded-3xl border border-gold-200 shadow-xs p-6">
-              <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-base text-[#161141]">
-                  รายชื่อแบรนด์ทั้งหมดในแถบเลื่อน ({data.clients?.length || 0})
-                </h3>
-                <span className="text-slate-400 text-xs">สามารถแก้ไขชื่อ บทบาท หรือเปลี่ยนรูปภาพได้ทันที</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-3 border-b border-gold-100">
+                <div>
+                  <h3 className="font-bold text-base text-[#161141] flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-[#765321]" />
+                    <span>รายชื่อแบรนด์ทั้งหมดในแถบเลื่อน ({data.clients?.length || 0})</span>
+                  </h3>
+                  <span className="text-slate-500 text-xs">ระบบจะแบ่งแสดงผลเป็น 2 แถววิ่งวนลูปอัตโนมัติบนหน้าแรก</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetDefaultClients}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gold-100 hover:bg-gold-200 text-[#765321] text-xs font-bold transition-all border border-gold-300 self-start sm:self-auto cursor-pointer shadow-2xs"
+                >
+                  <RotateCcw className="w-3.5 h-3.5" />
+                  <span>คืนค่า 20 แบรนด์ดังเริ่มต้น</span>
+                </button>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -1813,15 +1987,15 @@ export default function AdminPage() {
                       <div className="flex items-center gap-3">
                         {/* Thumbnail & Change Photo */}
                         <div className="relative group shrink-0">
-                          <div className="w-12 h-12 rounded-xl overflow-hidden bg-white border border-gold-200 shadow-xs flex items-center justify-center">
+                          <div className="w-20 h-12 rounded-xl overflow-hidden bg-white border border-slate-200 shadow-xs flex items-center justify-center p-1.5">
                             {cl.image || cl.logo ? (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img
                                 src={cl.image || cl.logo}
                                 alt={cl.name}
-                                className="w-full h-full object-cover"
+                                className="max-h-full max-w-full object-contain"
                                 onError={(e) => {
-                                  (e.target as HTMLImageElement).src = '/images/garden.jpg';
+                                  (e.target as HTMLImageElement).src = '/GR.svg';
                                 }}
                               />
                             ) : (
@@ -2685,7 +2859,9 @@ export default function AdminPage() {
           </div>
         )}
 
-      </main>
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

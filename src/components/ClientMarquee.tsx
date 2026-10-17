@@ -2,42 +2,66 @@
 
 import React from 'react';
 
-interface ClientMarqueeProps {
-  clients?: Array<{ name: string; role?: string; image?: string; logo?: string }>;
+export interface ClientItem {
+  id?: string;
+  name: string;
+  role?: string;
+  image?: string;
+  logo?: string;
+  src?: string;
 }
 
+interface ClientMarqueeProps {
+  clients?: ClientItem[];
+}
+
+const defaultRow1: ClientItem[] = [
+  { name: 'Noble Development', src: '/images/logos/noble.svg' },
+  { name: 'The Room', src: '/images/logos/theroom.svg' },
+  { name: 'IDEO Condominium', src: '/images/logos/ideo.svg' },
+  { name: 'WYNDHAM Hotels & Resorts', src: '/images/logos/wyndham.svg' },
+  { name: 'SINGHA ESTATE', src: '/images/logos/singha.svg' },
+  { name: 'แสนสิริ (Sansiri)', src: '/images/logos/sansiri.svg' },
+  { name: 'LAND & HOUSES', src: '/images/logos/lh.svg' },
+  { name: 'ORIGIN Property', src: '/images/logos/origin.svg' },
+  { name: 'ANANDA Development', src: '/images/logos/ananda.svg' },
+  { name: 'SC ASSET', src: '/images/logos/scasset.svg' },
+];
+
+const defaultRow2: ClientItem[] = [
+  { name: 'CMC GROUP', src: '/images/logos/cmc.svg' },
+  { name: 'MAJOR Development', src: '/images/logos/major.svg' },
+  { name: 'FRASERS Property', src: '/images/logos/frasers.svg' },
+  { name: 'a space CONDO ME', src: '/images/logos/aspace.svg' },
+  { name: 'แสนสิริ (Sansiri)', src: '/images/logos/sansiri.svg' },
+  { name: 'AP THAILAND', src: '/images/logos/ap.svg' },
+  { name: 'SUPALAI', src: '/images/logos/supalai.svg' },
+  { name: 'PRUKSA Holding', src: '/images/logos/pruksa.svg' },
+  { name: 'CHEWATHAI', src: '/images/logos/chewathai.svg' },
+  { name: 'The Parkland', src: '/images/logos/parkland.svg' },
+];
+
 export default function ClientMarquee({ clients }: ClientMarqueeProps = {}) {
-  // Row 1: Premium High-Rise & Luxury Developers
-  const row1 = [
-    { name: 'Sansiri', src: '/images/logos/sansiri.svg' },
-    { name: 'Land & Houses', src: '/images/logos/lh.svg' },
-    { name: 'Origin Property', src: '/images/logos/origin.svg' },
-    { name: 'Ananda Development', src: '/images/logos/ananda.svg' },
-    { name: 'SC Asset', src: '/images/logos/scasset.svg' },
-    { name: 'Noble Development', src: '/images/logos/noble.svg' },
-    { name: 'The Room', src: '/images/logos/theroom.svg' },
-    { name: 'Ideo', src: '/images/logos/ideo.svg' },
-    { name: 'Wyndham Hotels & Resorts', src: '/images/logos/wyndham.svg' },
-    { name: 'Singha Estate', src: '/images/logos/singha.svg' },
-  ];
+  // If clients are provided from siteData.json, split evenly into Row 1 and Row 2
+  let row1 = defaultRow1;
+  let row2 = defaultRow2;
 
-  // Row 2: Renowned Developers & Community Projects
-  const row2 = [
-    { name: 'AP Thailand', src: '/images/logos/ap.svg' },
-    { name: 'Supalai', src: '/images/logos/supalai.svg' },
-    { name: 'Pruksa Holding', src: '/images/logos/pruksa.svg' },
-    { name: 'Chewathai', src: '/images/logos/chewathai.svg' },
-    { name: 'The Parkland', src: '/images/logos/parkland.svg' },
-    { name: 'CMC Group', src: '/images/logos/cmc.svg' },
-    { name: 'Major Development', src: '/images/logos/major.svg' },
-    { name: 'Frasers Property', src: '/images/logos/frasers.svg' },
-    { name: 'a space', src: '/images/logos/aspace.svg' },
-    { name: 'Sansiri', src: '/images/logos/sansiri.svg' },
-  ];
+  if (clients && clients.length > 0) {
+    const half = Math.ceil(clients.length / 2);
+    row1 = clients.slice(0, half).map(c => ({
+      name: c.name,
+      src: c.image || c.logo || c.src || '/images/logos/noble.svg'
+    }));
+    row2 = clients.slice(half).map(c => ({
+      name: c.name,
+      src: c.image || c.logo || c.src || '/images/logos/sansiri.svg'
+    }));
+    if (row2.length === 0) row2 = row1;
+  }
 
-  // Duplicate for seamless infinite marquee loop
-  const marqueeRow1 = [...row1, ...row1];
-  const marqueeRow2 = [...row2, ...row2];
+  // Duplicate for seamless infinite marquee loop (minimum 16 items for infinite seamless scroll)
+  const marqueeRow1 = [...row1, ...row1, ...row1];
+  const marqueeRow2 = [...row2, ...row2, ...row2];
 
   return (
     <section className="py-8 sm:py-10 bg-white/80 backdrop-blur-md border-y border-slate-200/80 overflow-hidden relative select-none w-full max-w-full">
@@ -63,13 +87,16 @@ export default function ClientMarquee({ clients }: ClientMarqueeProps = {}) {
                 alt={item.name}
                 className="max-h-11 sm:max-h-13 md:max-h-14 w-auto max-w-[160px] sm:max-w-[180px] object-contain transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/GR.svg';
+                }}
               />
             </div>
           ))}
         </div>
 
         {/* ========================================================= */}
-        {/* ROW 2: LARGE LOGOS SCROLLING RIGHT (OR OFFSET)           */}
+        {/* ROW 2: LARGE LOGOS SCROLLING RIGHT                       */}
         {/* ========================================================= */}
         <div className="flex gap-4 sm:gap-6 animate-marquee-reverse hover:[animation-play-state:paused] w-max">
           {marqueeRow2.map((item, idx) => (
@@ -84,6 +111,9 @@ export default function ClientMarquee({ clients }: ClientMarqueeProps = {}) {
                 alt={item.name}
                 className="max-h-11 sm:max-h-13 md:max-h-14 w-auto max-w-[160px] sm:max-w-[180px] object-contain transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/GR.svg';
+                }}
               />
             </div>
           ))}

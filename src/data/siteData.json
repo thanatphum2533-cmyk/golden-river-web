@@ -670,64 +670,124 @@
   },
   "clients": [
     {
-      "name": "Origin Property",
-      "role": "ดิ ออริจิ้น อี22 สเตชั่น",
-      "image": "/images/projects/The-Origin-E22-Station-DJI_0175-Enhanced-NR-768x575-1.jpg"
-    },
-    {
-      "name": "Land & Houses",
-      "role": "เดอะ รูม สุขุมวิท 69",
-      "image": "/images/projects/The-Room-สุขุมวิท-62.jpg"
-    },
-    {
-      "name": "Ananda Development",
-      "role": "เอ สเปซ มี สุขุมวิท 77",
-      "image": "/images/projects/1591353360794-01.jpg"
-    },
-    {
-      "name": "Chewathai",
-      "role": "ชีวาทัย เรสซิเดนซ์",
-      "image": "/images/projects/422073_08-16-2022-09-57-48_Thumbnail.jpg"
-    },
-    {
+      "id": "noble",
       "name": "Noble Development",
-      "role": "โนเบิล รีไฟน์ สุขุมวิท 26",
-      "image": "/images/projects/Noble-Refine.webp"
+      "role": "คอนโดมิเนียม & บ้านเดี่ยว",
+      "image": "/images/logos/noble.svg"
     },
     {
-      "name": "Wyndham Hotels & Resorts",
-      "role": "วินแดม การ์เด้น สุขุมวิท 42",
-      "image": "/images/projects/407818046.jpg"
+      "id": "theroom",
+      "name": "The Room",
+      "role": "คอนโดมิเนียมระดับพรีเมียม โดย Land & Houses",
+      "image": "/images/logos/theroom.svg"
     },
     {
+      "id": "ideo",
+      "name": "IDEO Condominium",
+      "role": "คอนโดมิเนียมติดรถไฟฟ้า",
+      "image": "/images/logos/ideo.svg"
+    },
+    {
+      "id": "wyndham",
+      "name": "WYNDHAM Hotels & Resorts",
+      "role": "โรงแรมและที่พักอาศัยมาตรฐานสากล",
+      "image": "/images/logos/wyndham.svg"
+    },
+    {
+      "id": "singha",
+      "name": "SINGHA ESTATE",
+      "role": "อสังหาริมทรัพย์ระดับลักชัวรี",
+      "image": "/images/logos/singha.svg"
+    },
+    {
+      "id": "sansiri-1",
+      "name": "แสนสิริ (Sansiri)",
+      "role": "ผู้นำอสังหาริมทรัพย์ไทย",
+      "image": "/images/logos/sansiri.svg"
+    },
+    {
+      "id": "lh",
+      "name": "LAND & HOUSES",
+      "role": "บ้านเดี่ยวและคอนโดมิเนียมชั้นนำ",
+      "image": "/images/logos/lh.svg"
+    },
+    {
+      "id": "origin",
+      "name": "ORIGIN Property",
+      "role": "คอนโดมิเนียมและบ้านคุณภาพ",
+      "image": "/images/logos/origin.svg"
+    },
+    {
+      "id": "ananda",
+      "name": "ANANDA Development",
+      "role": "คอนโดมิเนียมใจกลางเมือง",
+      "image": "/images/logos/ananda.svg"
+    },
+    {
+      "id": "scasset",
+      "name": "SC ASSET",
+      "role": "บ้านหรูและคอนโดมิเนียมคุณภาพ",
+      "image": "/images/logos/scasset.svg"
+    },
+    {
+      "id": "cmc",
+      "name": "CMC GROUP",
+      "role": "เจ้าพระยามหานคร",
+      "image": "/images/logos/cmc.svg"
+    },
+    {
+      "id": "major",
+      "name": "MAJOR Development",
+      "role": "คอนโดมิเนียมเลี้ยงสัตว์ได้ (Pet-Friendly)",
+      "image": "/images/logos/major.svg"
+    },
+    {
+      "id": "frasers",
+      "name": "FRASERS Property",
+      "role": "อสังหาริมทรัพย์เพื่อการพาณิชย์และที่อยู่อาศัย",
+      "image": "/images/logos/frasers.svg"
+    },
+    {
+      "id": "aspace",
+      "name": "a space CONDO ME",
+      "role": "คอนโดมิเนียมสำหรับคนรุ่นใหม่",
+      "image": "/images/logos/aspace.svg"
+    },
+    {
+      "id": "sansiri-2",
+      "name": "แสนสิริ (Sansiri)",
+      "role": "โครงการบ้านและคอนโดมิเนียม",
+      "image": "/images/logos/sansiri.svg"
+    },
+    {
+      "id": "ap",
+      "name": "AP THAILAND",
+      "role": "Empower Living ทุกพื้นที่ชีวิต",
+      "image": "/images/logos/ap.svg"
+    },
+    {
+      "id": "supalai",
+      "name": "SUPALAI",
+      "role": "ศุภาลัย สร้างสรรค์คุณภาพชีวิต",
+      "image": "/images/logos/supalai.svg"
+    },
+    {
+      "id": "pruksa",
+      "name": "PRUKSA Holding",
+      "role": "พฤกษา ใส่ใจเพื่อทั้งชีวิต",
+      "image": "/images/logos/pruksa.svg"
+    },
+    {
+      "id": "chewathai",
+      "name": "CHEWATHAI",
+      "role": "ชีวาทัย คอนโดมิเนียมและบ้านเดี่ยว",
+      "image": "/images/logos/chewathai.svg"
+    },
+    {
+      "id": "parkland",
       "name": "The Parkland",
-      "role": "พาร์คแลนด์ บางนา",
-      "image": "/images/projects/1652761018806-5b83a-6.png"
-    },
-    {
-      "name": "CMC Group",
-      "role": "ชาโตว์ อินทาวน์",
-      "image": "/images/projects/20180612-141513077-m1.jpg"
-    },
-    {
-      "name": "S52 Dindaeng",
-      "role": "อาคารสำนักงาน เอสฟิฟตี้ทู",
-      "image": "/images/projects/26350.jpg"
-    },
-    {
-      "name": "Urbitia",
-      "role": "เออร์บิเทีย ทองหล่อ",
-      "image": "/images/projects/a23a3ec7887a590217f775aa4b27f2c2.jpg"
-    },
-    {
-      "name": "The Clover",
-      "role": "เดอะ โคลเวอร์ ทองหล่อ",
-      "image": "/images/projects/คอนโด-เดอะ-โคลเวอร์-ทองหล่อ-THE-CLOVER-THONGLOR.jpg"
-    },
-    {
-      "name": "Pickadaily Bangkok",
-      "role": "คอมมูนิตี้มอลล์ อ่อนนุช",
-      "image": "/images/projects/5104b707-c937-4b73-a5b7-e767bcf6507e.jpg"
+      "role": "เดอะ พาร์คแลนด์ คอนโดมิเนียม",
+      "image": "/images/logos/parkland.svg"
     }
   ],
   "beforeAfter": {
