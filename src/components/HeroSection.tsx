@@ -232,18 +232,18 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
         {/* ========================================================= */}
         {/* SANSIRI-STYLE LUXURY SEARCH & SERVICE DOCK                */}
         {/* ========================================================= */}
-        <div id="QuickSearch" className="absolute bottom-3 sm:bottom-6 inset-x-0 z-20 px-3 sm:px-6 pointer-events-auto">
-          <div className="max-w-5xl mx-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl md:rounded-full p-2 sm:p-2.5 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-2 sm:gap-3">
+        <div id="QuickSearch" className="absolute bottom-4 sm:bottom-8 inset-x-0 z-20 px-3 sm:px-6 pointer-events-auto">
+          <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-2xl md:rounded-full p-2.5 sm:p-3.5 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-2.5 sm:gap-4">
             
             {/* Service Category Switchers (No Emojis) */}
-            <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-0.5 md:pb-0 scrollbar-none justify-center md:justify-start">
+            <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-0.5 md:pb-0 scrollbar-none justify-center md:justify-start">
               {slides.map((s, idx) => {
                 const isActive = currentSlide === idx;
                 return (
                   <button
                     key={s.id || idx}
                     onClick={() => setCurrentSlide(idx)}
-                    className={`flex items-center gap-1.5 px-3.5 sm:px-4 py-2 rounded-full text-xs font-semibold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
+                    className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap shrink-0 cursor-pointer ${
                       isActive
                         ? 'bg-[#0053b5] text-white shadow-md'
                         : 'text-slate-600 hover:text-[#0053b5] hover:bg-slate-100 border border-transparent'
@@ -251,12 +251,12 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
                   >
                     {idx === 0 ? (
                       <>
-                        <Building2 className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-[#0053b5]'}`} />
+                        <Building2 className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#0053b5]'}`} />
                         <span>งานแม่บ้านอาคาร</span>
                       </>
                     ) : idx === 1 ? (
                       <>
-                        <Trees className={`w-3.5 h-3.5 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
+                        <Trees className={`w-4 h-4 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
                         <span>งานดูแลสวน</span>
                       </>
                     ) : (
@@ -268,18 +268,18 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
             </div>
 
             {/* Minimalist Luxury Search Field */}
-            <form onSubmit={handleSearchSubmit} className="w-full md:flex-1 max-w-md relative flex items-center">
-              <Search className="absolute left-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+            <form onSubmit={handleSearchSubmit} className="w-full md:flex-1 max-w-lg relative flex items-center">
+              <Search className="absolute left-4 w-4 h-4 text-slate-400 pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="ค้นหาบริการ เช่น แม่บ้านคอนโด, ตัดแต่งสวน..."
-                className="w-full h-9 sm:h-11 pl-10 pr-16 text-xs sm:text-sm bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-full focus:outline-none focus:border-[#0053b5] text-slate-800 placeholder-slate-400 transition-all"
+                className="w-full h-11 sm:h-12 pl-11 pr-20 text-xs sm:text-sm bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 rounded-full focus:outline-none focus:border-[#0053b5] text-slate-800 placeholder-slate-400 transition-all font-medium"
               />
               <button
                 type="submit"
-                className="absolute right-1 px-3 py-1 rounded-full bg-slate-200/80 hover:bg-[#0053b5] hover:text-white text-slate-700 text-xs font-semibold transition-all cursor-pointer"
+                className="absolute right-1.5 px-4 py-1.5 sm:py-2 rounded-full bg-slate-200/90 hover:bg-[#0053b5] hover:text-white text-slate-700 text-xs sm:text-sm font-semibold transition-all cursor-pointer"
               >
                 ค้นหา
               </button>
@@ -288,10 +288,10 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
             {/* Direct Quotation CTA Button (No AI Sparkles) */}
             <a
               href="#contact"
-              className="w-full md:w-auto px-5 py-2 sm:py-2.5 rounded-full bg-gradient-to-r from-[#0053b5] to-[#003c82] hover:from-[#0062d6] hover:to-[#00479e] text-white text-xs sm:text-sm font-semibold tracking-wide flex items-center justify-center gap-1.5 shadow-md hover:shadow-lg transition-all active:scale-[0.98] shrink-0 cursor-pointer"
+              className="w-full md:w-auto px-6 sm:px-7 py-2.5 sm:py-3.5 rounded-full bg-gradient-to-r from-[#0053b5] to-[#003c82] hover:from-[#0062d6] hover:to-[#00479e] text-white text-xs sm:text-sm font-bold tracking-wide flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-[0.98] shrink-0 cursor-pointer"
             >
               <span>ขอใบเสนอราคา</span>
-              <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5" />
+              <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform group-hover:translate-x-0.5" />
             </a>
           </div>
         </div>
