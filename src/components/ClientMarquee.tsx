@@ -40,10 +40,9 @@ export default function ClientMarquee({ clients }: ClientMarqueeProps = {}) {
   const marqueeRow2 = [...row2, ...row2];
 
   return (
-    <section className="py-8 sm:py-10 bg-white/80 backdrop-blur-md border-y border-slate-200/80 overflow-hidden relative select-none">
-
+    <section className="py-8 sm:py-10 bg-white/80 backdrop-blur-md border-y border-slate-200/80 overflow-hidden relative select-none w-full max-w-full">
       {/* Marquee Container with Subtle Left/Right Fade Gradient */}
-      <div className="relative w-full space-y-4 sm:space-y-6">
+      <div className="relative w-full max-w-full overflow-hidden space-y-4 sm:space-y-6">
         {/* Left & Right Edge Vignette Fades */}
         <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />

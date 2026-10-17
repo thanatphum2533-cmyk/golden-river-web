@@ -167,7 +167,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
         </AnimatePresence>
 
         {/* Hero Overlay Content Container */}
-        <div className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center sm:justify-end pb-32 sm:pb-36 md:pb-40 pt-20 z-10">
+        <div className="relative max-w-7xl mx-auto h-full px-8 sm:px-10 lg:px-8 flex flex-col justify-center sm:justify-end pb-36 sm:pb-36 md:pb-40 pt-16 sm:pt-20 z-10">
           <div className="max-w-3xl mx-auto sm:mx-0 text-center sm:text-left">
             {/* Main Sansiri-Style Headline */}
             <motion.h1
@@ -175,7 +175,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, ease: 'easeOut' }}
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.15rem] font-bold text-white tracking-normal mb-4 drop-shadow-md whitespace-pre-line"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.15rem] font-bold text-white tracking-normal mb-3 sm:mb-4 drop-shadow-md whitespace-pre-line break-words"
               style={{ lineHeight: '1.55' }}
             >
               {activeSlide.title}
@@ -187,7 +187,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-              className="text-sm sm:text-base md:text-lg text-slate-200 font-normal leading-relaxed mb-4 max-w-2xl mx-auto sm:mx-0 drop-shadow-sm whitespace-pre-line [text-wrap:pretty]"
+              className="text-xs sm:text-base md:text-lg text-slate-200 font-normal leading-relaxed mb-4 max-w-2xl mx-auto sm:mx-0 drop-shadow-sm whitespace-pre-line [text-wrap:pretty] break-words"
             >
               {activeSlide.subtitle || company.description}
             </motion.p>

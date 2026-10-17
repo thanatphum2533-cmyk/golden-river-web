@@ -75,7 +75,7 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
           onMouseMove={handleMouseMove}
           onTouchMove={handleTouchMove}
           onClick={(e) => handleMove(e.clientX)}
-          className="relative aspect-[16/10] sm:aspect-[16/9] min-h-[380px] sm:min-h-[500px] lg:min-h-[580px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-ew-resize select-none bg-slate-900 group"
+          className="relative aspect-[16/10] sm:aspect-[16/9] w-full sm:min-h-[460px] lg:min-h-[560px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-ew-resize select-none bg-slate-900 group"
         >
           {/* AFTER IMAGE (Background) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -99,14 +99,14 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
 
           {/* BADGES */}
           {/* Before Label */}
-          <div className="absolute top-4 left-4 z-10 px-4 py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-xs sm:text-sm font-bold shadow-lg border border-white/20 pointer-events-none">
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/20 pointer-events-none max-w-[48%] truncate">
             {beforeLbl}
           </div>
 
           {/* After Label */}
-          <div className="absolute top-4 right-4 z-10 px-4 py-1.5 rounded-full bg-[#003168]/90 backdrop-blur-md text-white text-xs sm:text-sm font-bold shadow-lg border border-white/30 pointer-events-none flex items-center gap-1.5">
-            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-            <span>{afterLbl}</span>
+          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#003168]/90 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/30 pointer-events-none flex items-center gap-1.5 max-w-[48%] truncate">
+            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+            <span className="truncate">{afterLbl}</span>
           </div>
 
           {/* SLIDER HANDLE LINE */}
