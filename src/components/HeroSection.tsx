@@ -168,7 +168,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
 
         {/* Hero Overlay Content Container */}
         <div className="relative max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex flex-col justify-center sm:justify-end pb-32 sm:pb-36 md:pb-40 pt-20 z-10">
-          <div className="max-w-3xl text-left">
+          <div className="max-w-3xl mx-auto sm:mx-0 text-center sm:text-left">
             {/* Main Sansiri-Style Headline */}
             <motion.h1
               key={'title-' + currentSlide}
@@ -187,7 +187,7 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.1, ease: 'easeOut' }}
-              className="text-sm sm:text-base md:text-lg text-slate-200 font-normal leading-relaxed mb-4 max-w-2xl drop-shadow-sm whitespace-pre-line [text-wrap:pretty]"
+              className="text-sm sm:text-base md:text-lg text-slate-200 font-normal leading-relaxed mb-4 max-w-2xl mx-auto sm:mx-0 drop-shadow-sm whitespace-pre-line [text-wrap:pretty]"
             >
               {activeSlide.subtitle || company.description}
             </motion.p>
@@ -204,9 +204,9 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
                 setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
               }}
               aria-label="Previous Slide"
-              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/40 hover:bg-black/80 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-105 shadow-xl border border-white/20 cursor-pointer"
+              className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-13 sm:h-13 rounded-full bg-black/40 hover:bg-black/80 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-70 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-105 shadow-xl border border-white/20 cursor-pointer"
             >
-              <ChevronLeft className="w-6 h-6" />
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
             <button
               onClick={(e) => {
@@ -214,15 +214,15 @@ export default function HeroSection({ hero, company }: HeroSectionProps) {
                 setCurrentSlide((prev) => (prev + 1) % slides.length);
               }}
               aria-label="Next Slide"
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/40 hover:bg-black/80 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-80 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-105 shadow-xl border border-white/20 cursor-pointer"
+              className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-13 sm:h-13 rounded-full bg-black/40 hover:bg-black/80 backdrop-blur-md text-white flex items-center justify-center transition-all opacity-70 sm:opacity-0 sm:group-hover:opacity-100 hover:scale-105 shadow-xl border border-white/20 cursor-pointer"
             >
-              <ChevronRight className="w-6 h-6" />
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </>
         )}
 
         {/* Sansiri Slide Counter Indicator (01 / 03) */}
-        <div className="absolute bottom-28 sm:bottom-24 right-6 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
+        <div className="absolute bottom-28 sm:bottom-24 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 z-20 flex items-center gap-3 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 text-white text-xs font-semibold">
           <span>0{currentSlide + 1}</span>
           <span className="text-white/40">/</span>
           <span className="text-white/60">0{slides.length}</span>
