@@ -581,7 +581,10 @@ export default function AdminPage() {
   // Handlers for Hero Banner Slides
   const handleNewHeroSlideUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const url = await uploadFile(e.target.files[0]);
+      const file = e.target.files[0];
+      const preview = URL.createObjectURL(file);
+      setNewHeroSlide(prev => ({ ...prev, image: preview }));
+      const url = await uploadFile(file);
       if (url) {
         setNewHeroSlide(prev => ({ ...prev, image: url }));
       }
@@ -2070,19 +2073,23 @@ export default function AdminPage() {
                             className="hidden"
                             onChange={async (e) => {
                               if (e.target.files && e.target.files[0]) {
-                                const url = await uploadFile(e.target.files[0]);
-                                if (url) {
-                                  const currentSlides = [...(data.hero?.bannerSlides || [])];
+                                const file = e.target.files[0];
+                                const preview = URL.createObjectURL(file);
+                                setData((prev: any) => {
+                                  const currentSlides = [...(prev.hero?.bannerSlides || [])];
                                   if (!currentSlides[bIdx]) currentSlides[bIdx] = { ...slide };
-                                  currentSlides[bIdx].image = url;
-                                  currentSlides[bIdx].desktopImage = url;
-                                  currentSlides[bIdx].mobileImage = url;
-                                  setData({
-                                    ...data,
-                                    hero: {
-                                      ...(data.hero || {}),
-                                      bannerSlides: currentSlides
-                                    }
+                                  currentSlides[bIdx].image = preview;
+                                  return { ...prev, hero: { ...(prev.hero || {}), bannerSlides: currentSlides } };
+                                });
+                                const url = await uploadFile(file);
+                                if (url) {
+                                  setData((prev: any) => {
+                                    const currentSlides = [...(prev.hero?.bannerSlides || [])];
+                                    if (!currentSlides[bIdx]) currentSlides[bIdx] = { ...slide };
+                                    currentSlides[bIdx].image = url;
+                                    currentSlides[bIdx].desktopImage = url;
+                                    currentSlides[bIdx].mobileImage = url;
+                                    return { ...prev, hero: { ...(prev.hero || {}), bannerSlides: currentSlides } };
                                   });
                                 }
                               }
@@ -2329,12 +2336,21 @@ export default function AdminPage() {
                           <span>เปลี่ยนรูปบริการนี้</span>
                           <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
                             if (e.target.files && e.target.files[0]) {
-                              const url = await uploadFile(e.target.files[0]);
+                              const file = e.target.files[0];
+                              const preview = URL.createObjectURL(file);
+                              setData((prev: any) => {
+                                const updated = [...prev.services];
+                                updated[idx].image = preview;
+                                return { ...prev, services: updated };
+                              });
+                              const url = await uploadFile(file);
                               if (url) {
-                                const updated = [...data.services];
-                                updated[idx].image = url;
-                                setData({ ...data, services: updated });
-                                alert('อัปเดตรูปบริการเรียบร้อย!');
+                                setData((prev: any) => {
+                                  const updated = [...prev.services];
+                                  updated[idx].image = url;
+                                  return { ...prev, services: updated };
+                                });
+                                alert('อัปเดตรูปบริการเรียบร้อย! อย่าลืมกดปุ่มบันทึกข้อมูลที่มุมขวาบน');
                               }
                             }
                           }} />
@@ -2435,8 +2451,11 @@ export default function AdminPage() {
                 </div>
                 <input type="file" ref={beforeImgInputRef} accept="image/*" className="hidden" onChange={async (e) => {
                   if (e.target.files && e.target.files[0]) {
-                    const url = await uploadFile(e.target.files[0]);
-                    if (url) setData({ ...data, beforeAfter: { ...data.beforeAfter, beforeImage: url } });
+                    const file = e.target.files[0];
+                    const preview = URL.createObjectURL(file);
+                    setData((prev: any) => ({ ...prev, beforeAfter: { ...prev.beforeAfter, beforeImage: preview } }));
+                    const url = await uploadFile(file);
+                    if (url) setData((prev: any) => ({ ...prev, beforeAfter: { ...prev.beforeAfter, beforeImage: url } }));
                   }
                 }} />
                 <button type="button" onClick={() => beforeImgInputRef.current?.click()} className="w-full py-2 bg-[#0053b5] hover:bg-[#004293] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-colors">
@@ -2468,8 +2487,11 @@ export default function AdminPage() {
                 </div>
                 <input type="file" ref={afterImgInputRef} accept="image/*" className="hidden" onChange={async (e) => {
                   if (e.target.files && e.target.files[0]) {
-                    const url = await uploadFile(e.target.files[0]);
-                    if (url) setData({ ...data, beforeAfter: { ...data.beforeAfter, afterImage: url } });
+                    const file = e.target.files[0];
+                    const preview = URL.createObjectURL(file);
+                    setData((prev: any) => ({ ...prev, beforeAfter: { ...prev.beforeAfter, afterImage: preview } }));
+                    const url = await uploadFile(file);
+                    if (url) setData((prev: any) => ({ ...prev, beforeAfter: { ...prev.beforeAfter, afterImage: url } }));
                   }
                 }} />
                 <button type="button" onClick={() => afterImgInputRef.current?.click()} className="w-full py-2 bg-[#0f172a] hover:bg-[#0053b5] text-white rounded-xl font-semibold flex items-center justify-center gap-1.5 transition-colors">
