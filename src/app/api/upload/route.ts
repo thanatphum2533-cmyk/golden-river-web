@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { uploadImageToGithub } from '@/lib/githubSync';
 
 export async function POST(req: Request) {
   try {
@@ -23,27 +24,50 @@ export async function POST(req: Request) {
 
     // Limit to max 10 files per upload batch
     const limitedFiles = filesToProcess.slice(0, 10);
-
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
+    const hasGithubToken = Boolean(process.env.GITHUB_TOKEN);
+    const isVercel = Boolean(process.env.VERCEL || process.env.VERCEL_ENV);
     const savedUrls: string[] = [];
 
-    for (const file of limitedFiles) {
-      if (!file || typeof file.arrayBuffer !== 'function') continue;
-      const bytes = await file.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+    if (hasGithubToken) {
+      // Upload via GitHub API directly so it's committed to the repository
+      for (const file of limitedFiles) {
+        if (!file || typeof file.arrayBuffer !== 'function') continue;
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
 
-      const ext = path.extname(file.name) || '.jpg';
-      const timestamp = Date.now();
-      const randomSuffix = Math.random().toString(36).substring(2, 8);
-      const filename = `img-${timestamp}-${randomSuffix}${ext}`;
-      const targetFilePath = path.join(uploadsDir, filename);
+        const ext = path.extname(file.name) || '.jpg';
+        const timestamp = Date.now();
+        const randomSuffix = Math.random().toString(36).substring(2, 8);
+        const filename = `img-${timestamp}-${randomSuffix}${ext}`;
 
-      fs.writeFileSync(targetFilePath, buffer);
-      savedUrls.push(`/uploads/${filename}`);
+        const url = await uploadImageToGithub(filename, buffer);
+        savedUrls.push(url);
+      }
+    } else if (isVercel) {
+      return NextResponse.json({
+        error: 'ยังไม่ได้ตั้งค่า GITHUB_TOKEN ใน Vercel กรุณาตั้งค่า GITHUB_TOKEN เพื่อให้สามารถอัปโหลดรูปภาพจากระยะไกลได้ครับ'
+      }, { status: 400 });
+    } else {
+      // Local development file storage
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+
+      for (const file of limitedFiles) {
+        if (!file || typeof file.arrayBuffer !== 'function') continue;
+        const bytes = await file.arrayBuffer();
+        const buffer = Buffer.from(bytes);
+
+        const ext = path.extname(file.name) || '.jpg';
+        const timestamp = Date.now();
+        const randomSuffix = Math.random().toString(36).substring(2, 8);
+        const filename = `img-${timestamp}-${randomSuffix}${ext}`;
+        const targetFilePath = path.join(uploadsDir, filename);
+
+        fs.writeFileSync(targetFilePath, buffer);
+        savedUrls.push(`/uploads/${filename}`);
+      }
     }
 
     if (savedUrls.length === 0) {
@@ -57,12 +81,8 @@ export async function POST(req: Request) {
       count: savedUrls.length,
     });
   } catch (error: any) {
-    const isReadOnly = error.code === 'EROFS' || (error.message && error.message.includes('read-only'));
-    const message = isReadOnly
-      ? 'ระบบ Vercel เป็นแบบอ่านอย่างเดียว (ไม่มีฮาร์ดดิสก์เขียนไฟล์ถาวร) กรุณาอัปโหลดรูปผ่านเครื่องคอมพิวเตอร์นี้ (localhost:3000/admin) หรือผ่านลิงก์ Cloudflare Tunnel แล้วกด push_to_github.bat ครับ'
-      : 'เกิดข้อผิดพลาดในการบันทึกรูปภาพ: ' + (error.message || '');
     return NextResponse.json(
-      { error: message, details: error.message },
+      { error: 'เกิดข้อผิดพลาดในการบันทึกรูปภาพ: ' + (error.message || ''), details: error.message },
       { status: 500 }
     );
   }

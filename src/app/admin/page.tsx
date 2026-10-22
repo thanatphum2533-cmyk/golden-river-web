@@ -220,11 +220,15 @@ export default function AdminPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
+      const json = await res.json().catch(() => ({}));
       if (res.ok) {
         setSaveSuccess(true);
+        if (json.message) {
+          alert(json.message);
+        }
         setTimeout(() => setSaveSuccess(false), 3000);
       } else {
-        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+        alert(json.error || 'เกิดข้อผิดพลาดในการบันทึกข้อมูล');
       }
     } catch (e) {
       alert('บันทึกไม่สำเร็จ');
