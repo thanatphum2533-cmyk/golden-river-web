@@ -35,6 +35,15 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
+
+    // Prevent temporary blob: URLs from being saved
+    const rawBody = JSON.stringify(body);
+    if (rawBody.includes('"blob:')) {
+      return NextResponse.json({
+        error: 'ตรวจพบ URL รูปภาพเป็นแบบชั่วคราว (blob) กรุณารอสักครู่ให้อัปโหลดเสร็จแล้วกดบันทึกใหม่'
+      }, { status: 400 });
+    }
+
     const currentData = readData();
     const updatedData = { ...currentData, ...body };
 

@@ -213,6 +213,15 @@ export default function AdminPage() {
 
   // Save all changes to server
   const handleSaveData = async () => {
+    if (uploading) {
+      alert('กำลังอัปโหลดรูปภาพอยู่ กรุณารอสักครู่ให้อัปโหลดเสร็จสมบูรณ์ก่อนกดบันทึกครับ');
+      return;
+    }
+    const dataStr = JSON.stringify(data);
+    if (dataStr.includes('"blob:')) {
+      alert('ระบบตรวจพบว่ารูปภาพยังอัปโหลดไม่เสร็จ กรุณารอสักครู่แล้วกดบันทึกใหม่อีกครั้งครับ');
+      return;
+    }
     setLoading(true);
     try {
       const res = await fetch('/api/data', {
