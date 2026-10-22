@@ -795,7 +795,7 @@
     "subtitle": "เลื่อนแถบเปรียบเทียบตรงกลาง เพื่อสัมผัสความเปลี่ยนแปลงของภูมิทัศน์ที่ได้รับการฟื้นฟูโดยทีมงานมืออาชีพ",
     "beforeImage": "/images/garden-before.jpg",
     "beforeLabel": "⚠️ ก่อนเข้าดูแล (Before)",
-    "afterImage": "/images/garden-after.jpg",
+    "afterImage": "blob:https://golden-river-web.vercel.app/ce042ff7-bbf8-4e11-924b-9b310b594214",
     "afterLabel": "หลังดูแลโดย GR Group (After)",
     "features": [
       {
