@@ -46,7 +46,7 @@ export default function ProjectsSection({ projects, onSelectForQuote }: Projects
       : projects.filter((p) => p.category === selectedCategory);
 
   return (
-    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/40 backdrop-blur-xs border-y border-slate-200">
+    <section id="projects" className="py-20 px-4 sm:px-6 lg:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto">
         {/* Header and Filter */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

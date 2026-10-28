@@ -112,7 +112,7 @@ export default function ArticlesSection({ articles = [], csrList = [] }: Article
   const totalCount = articles.length + csrList.length;
 
   return (
-    <section id="articles" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/60 backdrop-blur-md border-t border-slate-200/80">
+    <section id="articles" className="py-20 px-4 sm:px-6 lg:px-8 bg-transparent">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">
@@ -132,7 +132,7 @@ export default function ArticlesSection({ articles = [], csrList = [] }: Article
             className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
               activeTab === 'all'
                 ? 'bg-[#0053b5] text-white shadow-md'
-                : 'bg-white/85 text-slate-600 hover:text-[#0053b5] border border-slate-200 hover:bg-slate-50'
+                : 'bg-white/95 text-slate-700 hover:text-[#0053b5] border border-slate-200 hover:bg-white shadow-xs'
             }`}
           >
             ทั้งหมด ({totalCount})
@@ -143,7 +143,7 @@ export default function ArticlesSection({ articles = [], csrList = [] }: Article
             className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
               activeTab === 'articles'
                 ? 'bg-[#0053b5] text-white shadow-md'
-                : 'bg-white/85 text-slate-600 hover:text-[#0053b5] border border-slate-200 hover:bg-slate-50'
+                : 'bg-white/95 text-slate-700 hover:text-[#0053b5] border border-slate-200 hover:bg-white shadow-xs'
             }`}
           >
             คำแนะนำและสาระน่ารู้ ({articles.length})
@@ -154,7 +154,7 @@ export default function ArticlesSection({ articles = [], csrList = [] }: Article
             className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all cursor-pointer whitespace-nowrap shadow-xs ${
               activeTab === 'csr'
                 ? 'bg-[#0053b5] text-white shadow-md'
-                : 'bg-white/85 text-slate-600 hover:text-[#0053b5] border border-slate-200 hover:bg-slate-50'
+                : 'bg-white/95 text-slate-700 hover:text-[#0053b5] border border-slate-200 hover:bg-white shadow-xs'
             }`}
           >
             กิจกรรมเพื่อสังคม ({csrList.length})
