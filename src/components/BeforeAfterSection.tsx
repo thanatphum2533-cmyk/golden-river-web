@@ -34,7 +34,7 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
     { title: 'ฉีดพ่นน้ำยาฆ่าเชื้อโรคและเชื้อรา', desc: 'ยกระดับสุขอนามัย คืนความสะอาดปลอดภัยและสุขภาพที่ดีให้ทุกคนในบ้าน' }
   ];
 
-  const handleMove = useCallback((clientX: number) => {
+  const updatePosition = useCallback((clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
@@ -42,16 +42,25 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
     setSliderPosition(percentage);
   }, []);
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (e.touches.length > 0) {
-      handleMove(e.touches[0].clientX);
+  const handlePointerDown = (e: React.PointerEvent) => {
+    setIsDragging(true);
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {}
+    updatePosition(e.clientX);
+  };
+
+  const handlePointerMove = (e: React.PointerEvent) => {
+    if (isDragging) {
+      updatePosition(e.clientX);
     }
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging) {
-      handleMove(e.clientX);
-    }
+  const handlePointerUp = (e: React.PointerEvent) => {
+    setIsDragging(false);
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    } catch {}
   };
 
   return (
@@ -65,32 +74,32 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
         </p>
       </div>
 
-      {/* Interactive Slider Container (Extra Wide & Large Showcase) */}
+      {/* Interactive Slider Container with Pointer Capture & Touch-none */}
       <div className="w-full max-w-6xl mx-auto">
         <div
           ref={containerRef}
-          onMouseDown={() => setIsDragging(true)}
-          onMouseUp={() => setIsDragging(false)}
-          onMouseLeave={() => setIsDragging(false)}
-          onMouseMove={handleMouseMove}
-          onTouchMove={handleTouchMove}
-          onClick={(e) => handleMove(e.clientX)}
-          className="relative aspect-[16/10] sm:aspect-[16/9] w-full sm:min-h-[460px] lg:min-h-[560px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-ew-resize select-none bg-slate-900 group"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={handlePointerUp}
+          onPointerCancel={handlePointerUp}
+          className="relative aspect-[16/10] sm:aspect-[16/9] w-full sm:min-h-[460px] lg:min-h-[560px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-ew-resize select-none bg-slate-900 group touch-none"
         >
           {/* AFTER IMAGE (Background) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={afterImg}
             alt={afterLbl}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+            draggable={false}
           />
 
-          {/* BEFORE IMAGE (Clipped with inset clip-path for 100% pixel-perfect alignment) */}
+          {/* BEFORE IMAGE (Clipped with inset clip-path) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={beforeImg}
             alt={beforeLbl}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
+            draggable={false}
             style={{
               clipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
               WebkitClipPath: `inset(0 ${100 - sliderPosition}% 0 0)`,
@@ -99,28 +108,28 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
 
           {/* BADGES */}
           {/* Before Label */}
-          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/20 pointer-events-none max-w-[48%] truncate">
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/20 pointer-events-none max-w-[48%] truncate select-none">
             {beforeLbl}
           </div>
 
           {/* After Label */}
-          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#003168]/90 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/30 pointer-events-none flex items-center gap-1.5 max-w-[48%] truncate">
+          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#003168]/90 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/30 pointer-events-none flex items-center gap-1.5 max-w-[48%] truncate select-none">
             <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
             <span className="truncate">{afterLbl}</span>
           </div>
 
           {/* SLIDER HANDLE LINE */}
           <div
-            className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_12px_rgba(0,0,0,0.6)] z-20 pointer-events-none"
+            className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_14px_rgba(0,0,0,0.7)] z-20 pointer-events-none"
             style={{ left: `${sliderPosition}%` }}
           >
-            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-11 h-11 rounded-full bg-[#0053b5] border-2 border-white text-white shadow-2xl flex items-center justify-center pointer-events-auto cursor-grab active:cursor-grabbing hover:scale-110 transition-transform">
-              <MoveHorizontal className="w-5 h-5 text-white" />
+            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-[#0053b5] border-2 border-white text-white shadow-2xl flex items-center justify-center cursor-ew-resize hover:scale-110 active:scale-95 transition-transform pointer-events-none">
+              <MoveHorizontal className="w-5 h-5 text-white animate-pulse" />
             </div>
           </div>
 
           {/* Hint Overlay */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-semibold shadow-md pointer-events-none">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-semibold shadow-md pointer-events-none select-none">
             ← เลื่อนซ้าย-ขวา เพื่อเปรียบเทียบผลลัพธ์ →
           </div>
         </div>
