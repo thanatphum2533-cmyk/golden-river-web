@@ -112,7 +112,7 @@ export default function ArticlesSection({ articles = [], csrList = [] }: Article
   const totalCount = articles.length + csrList.length;
 
   return (
-    <section id="articles" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/60 backdrop-blur-md border-t border-slate-200/80">
+    <section id="articles" className="py-20 px-4 sm:px-6 lg:px-8 bg-white/30 backdrop-blur-[4px] border-t border-slate-200/80">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-10">

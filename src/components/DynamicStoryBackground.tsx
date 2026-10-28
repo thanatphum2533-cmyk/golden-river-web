@@ -69,12 +69,12 @@ export default function DynamicStoryBackground({ backgroundScenes }: DynamicStor
   const y3 = useTransform(scrollYProgress, [0.42, 0.74], [30, -30]);
 
   // Scene 4: กิจกรรมจริงเพื่อสังคม & จิตอาสา (Real CSR & Activities) - 65% to 90%
-  const opacity4 = useTransform(scrollYProgress, [0.65, 0.74, 0.88, 0.96], [0, 1, 1, 0]);
+  const opacity4 = useTransform(scrollYProgress, [0.65, 0.74, 0.92, 0.98], [0, 1, 1, 0]);
   const scale4 = useTransform(scrollYProgress, [0.65, 0.96], [1.08, 1.02]);
   const y4 = useTransform(scrollYProgress, [0.65, 0.96], [30, -25]);
 
   // Scene 5: Royal Navy & Gold Outro - 88% to 100%
-  const opacity5 = useTransform(scrollYProgress, [0.88, 0.96, 1], [0, 1, 1]);
+  const opacity5 = useTransform(scrollYProgress, [0.92, 0.98, 1], [0, 1, 1]);
 
   return (
     <div className="fixed inset-0 pointer-events-none -z-20 overflow-hidden select-none">
@@ -135,7 +135,7 @@ export default function DynamicStoryBackground({ backgroundScenes }: DynamicStor
             className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.05]"
           />
           {/* Warm translucent overlay for CSR warmth */}
-          <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-slate-50/80 to-white/90 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/45 to-white/60 backdrop-blur-[1px]" />
         </motion.div>
 
         {/* SCENE 5: Royal Navy & Gold Outro */}
