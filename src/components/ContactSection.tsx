@@ -347,11 +347,11 @@ export default function ContactSection({ company, prefilledService }: ContactSec
             </div>
 
             {/* Collapsible Form Toggle */}
-            <div className="text-center pt-2">
+            <div className="text-center pt-3">
               <button
                 type="button"
                 onClick={() => setShowWebForm(!showWebForm)}
-                className="text-xs text-slate-400 hover:text-[#0053b5] font-medium transition-colors inline-flex items-center gap-1 cursor-pointer"
+                className="text-[14.5px] sm:text-[15px] text-slate-700 hover:text-[#003168] font-semibold transition-all inline-flex items-center gap-1.5 cursor-pointer py-1.5 px-4 rounded-lg hover:bg-slate-100 border border-slate-200/60 shadow-2xs bg-white/60"
               >
                 <span>
                   {showWebForm
