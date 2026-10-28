@@ -53,6 +53,14 @@ export const metadata: Metadata = {
     description: 'ผู้เชี่ยวชาญด้านบริการแม่บ้านทำความสะอาด และดูแลภูมิทัศน์สวนสำหรับคอนโดมิเนียมและโครงการชั้นนำ',
     images: ['https://www.grgroupth.com/images/og-cover.jpg'],
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   robots: {
     index: true,
     follow: true,
@@ -141,7 +149,9 @@ export default function RootLayout({
   return (
     <html lang="th" className="scroll-smooth">
       <head>
-        <link rel="icon" href="/GR.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/favicon.svg" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
