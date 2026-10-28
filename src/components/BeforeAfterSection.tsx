@@ -112,12 +112,12 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
   };
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="text-center max-w-3xl mx-auto mb-12">
-        <h2 className="text-2xl sm:text-4xl font-extrabold text-[#003168] tracking-tight">
+    <section className="py-12 sm:py-20 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+        <h2 className="text-xl sm:text-4xl font-extrabold text-[#003168] tracking-tight">
           {titleText}
         </h2>
-        <p className="text-sm sm:text-base text-slate-500 mt-2 font-normal leading-relaxed">
+        <p className="text-xs sm:text-base text-slate-500 mt-2 font-normal leading-relaxed">
           {subtitleText}
         </p>
       </div>
@@ -130,7 +130,7 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
-          className="relative aspect-[16/10] sm:aspect-[16/9] w-full sm:min-h-[460px] lg:min-h-[560px] rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-ew-resize select-none bg-slate-900 group touch-none"
+          className="relative aspect-[4/3] sm:aspect-[16/9] w-full sm:min-h-[460px] lg:min-h-[560px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-slate-200 cursor-ew-resize select-none bg-slate-900 group touch-none"
         >
           {/* AFTER IMAGE (Background) */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -156,14 +156,20 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
 
           {/* BADGES */}
           {/* Before Label */}
-          <div className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/20 pointer-events-none max-w-[48%] truncate select-none">
-            {beforeLbl}
+          <div className="absolute top-2.5 left-2.5 sm:top-4 sm:left-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-black/85 backdrop-blur-md text-white text-[10px] sm:text-sm font-bold shadow-lg border border-white/20 pointer-events-none max-w-[45%] flex items-center min-w-0 select-none">
+            <span className="truncate">
+              <span className="sm:hidden">⚠️ ก่อน (Before)</span>
+              <span className="hidden sm:inline">{beforeLbl}</span>
+            </span>
           </div>
 
           {/* After Label */}
-          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#003168]/90 backdrop-blur-md text-white text-[11px] sm:text-sm font-bold shadow-lg border border-white/30 pointer-events-none flex items-center gap-1.5 max-w-[48%] truncate select-none">
-            <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
-            <span className="truncate">{afterLbl}</span>
+          <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-10 px-2.5 py-1 sm:px-4 sm:py-1.5 rounded-full bg-[#003168]/90 backdrop-blur-md text-white text-[10px] sm:text-sm font-bold shadow-lg border border-white/30 pointer-events-none flex items-center gap-1 sm:gap-1.5 max-w-[45%] min-w-0 select-none">
+            <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-400 shrink-0" />
+            <span className="truncate">
+              <span className="sm:hidden">หลังดูแล (After)</span>
+              <span className="hidden sm:inline">{afterLbl}</span>
+            </span>
           </div>
 
           {/* SLIDER HANDLE LINE */}
@@ -171,13 +177,13 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
             className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_14px_rgba(0,0,0,0.7)] z-20 pointer-events-none"
             style={{ left: `${sliderPosition}%` }}
           >
-            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-[#0053b5] border-2 border-white text-white shadow-2xl flex items-center justify-center cursor-ew-resize hover:scale-110 active:scale-95 transition-transform pointer-events-none">
-              <MoveHorizontal className="w-5 h-5 text-white animate-pulse" />
+            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-[#0053b5] border-2 border-white text-white shadow-2xl flex items-center justify-center cursor-ew-resize hover:scale-110 active:scale-95 transition-transform pointer-events-none">
+              <MoveHorizontal className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-pulse" />
             </div>
           </div>
 
           {/* Interactive Hint & Auto-play control toggle */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 sm:gap-3 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-semibold shadow-lg border border-white/10 select-none">
+          <div className="absolute bottom-2.5 sm:bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-1.5 sm:gap-3 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-black/80 backdrop-blur-md text-white text-xs font-semibold shadow-lg border border-white/10 select-none max-w-[94%]">
             <button
               type="button"
               onClick={(e) => {
@@ -185,7 +191,7 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
                 setIsAutoPlay((prev) => !prev);
               }}
               onPointerDown={(e) => e.stopPropagation()}
-              className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer"
+              className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer shrink-0"
               title={isAutoPlay ? 'คลิกเพื่อหยุดเลื่อนอัตโนมัติ' : 'คลิกเพื่อเริ่มเลื่อนอัตโนมัติ'}
             >
               {isAutoPlay ? (
@@ -194,19 +200,19 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
                   </span>
-                  <span className="text-[11px] sm:text-xs">เลื่อนอัตโนมัติ</span>
-                  <Pause className="w-3 h-3 text-white/70 ml-0.5" />
+                  <span className="text-[10px] sm:text-xs">เลื่อนอัตโนมัติ</span>
+                  <Pause className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white/70 ml-0.5" />
                 </>
               ) : (
                 <>
                   <span className="inline-flex rounded-full h-2 w-2 bg-slate-400"></span>
-                  <span className="text-[11px] sm:text-xs text-slate-300">หยุดชั่วคราว</span>
-                  <Play className="w-3 h-3 text-emerald-400 ml-0.5 fill-emerald-400" />
+                  <span className="text-[10px] sm:text-xs text-slate-300">หยุดชั่วคราว</span>
+                  <Play className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-emerald-400 ml-0.5 fill-emerald-400" />
                 </>
               )}
             </button>
             <span className="text-white/30 text-xs">|</span>
-            <span className="text-[11px] sm:text-xs text-slate-300 font-normal">แตะหรือลากเพื่อเลื่อนเอง</span>
+            <span className="text-[10px] sm:text-xs text-slate-300 font-normal truncate">แตะหรือลากเพื่อเลื่อน</span>
           </div>
         </div>
 
