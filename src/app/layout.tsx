@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/images/garden.jpg',
+        url: 'https://www.grgroupth.com/images/og-cover.jpg',
         width: 1200,
         height: 630,
         alt: 'GR Group บริการแม่บ้านและดูแลสวนครบวงจร',
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GR Group | บริการแม่บ้านทำความสะอาด และดูแลภูมิทัศน์สวนครบวงจร',
     description: 'ผู้เชี่ยวชาญด้านบริการแม่บ้านทำความสะอาด และดูแลภูมิทัศน์สวนสำหรับคอนโดมิเนียมและโครงการชั้นนำ',
-    images: ['/images/garden.jpg'],
+    images: ['https://www.grgroupth.com/images/og-cover.jpg'],
   },
   robots: {
     index: true,
@@ -73,7 +73,7 @@ const jsonLd = {
   alternateName: ['Golden River Service', 'Golden River Service Center', 'GR Group'],
   url: 'https://www.grgroupth.com',
   logo: 'https://www.grgroupth.com/GR.svg',
-  image: 'https://www.grgroupth.com/images/garden.jpg',
+  image: 'https://www.grgroupth.com/images/og-cover.jpg',
   description: 'GR Group ผู้เชี่ยวชาญด้านบริการแม่บ้านประจำโครงการ คอนโดมิเนียม อาคารสำนักงาน บริการดูแลสวนและภูมิทัศน์ และบำรุงรักษาสระว่ายน้ำครบวงจร ได้รับความไว้วางใจกว่า 30+ โครงการชั้นนำ',
   telephone: '02-096-3579',
   email: 'goldenriverservice@gmail.com',
