@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useRef, useCallback } from 'react';
-import { MoveHorizontal, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { MoveHorizontal, CheckCircle2, Play, Pause } from 'lucide-react';
 
 interface BeforeAfterProps {
   beforeAfter?: {
@@ -20,6 +20,11 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
   const [sliderPosition, setSliderPosition] = useState(50);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
+  const isInteractingRef = useRef(false);
+  const phaseRef = useRef(0);
+  const idleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const badgeText = beforeAfter?.badge || 'Flood Restoration & Deep Cleaning';
   const titleText = beforeAfter?.title || 'เปรียบเทียบผลลัพธ์ ก่อน และ หลัง ทำความสะอาดบ้านน้ำท่วม';
@@ -34,15 +39,53 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
     { title: 'ฉีดพ่นน้ำยาฆ่าเชื้อโรคและเชื้อรา', desc: 'ยกระดับสุขอนามัย คืนความสะอาดปลอดภัยและสุขภาพที่ดีให้ทุกคนในบ้าน' }
   ];
 
+  // Auto-play animation using smooth sine oscillation (oscillates between 20% and 80%)
+  useEffect(() => {
+    let animId: number;
+    let lastTime: number | null = null;
+
+    const animate = (time: number) => {
+      if (lastTime === null) lastTime = time;
+      const delta = Math.min((time - lastTime) / 1000, 0.1);
+      lastTime = time;
+
+      if (isAutoPlay && !isInteractingRef.current) {
+        // Speed: ~0.85 rad/s (~7.4 seconds for a complete back-and-forth cycle)
+        phaseRef.current += delta * 0.85;
+        const newPos = 50 + 32 * Math.sin(phaseRef.current);
+        setSliderPosition(newPos);
+      }
+
+      animId = requestAnimationFrame(animate);
+    };
+
+    animId = requestAnimationFrame(animate);
+    return () => {
+      cancelAnimationFrame(animId);
+      if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+    };
+  }, [isAutoPlay]);
+
+  const syncPhaseWithPosition = (pos: number) => {
+    const ratio = Math.max(-1, Math.min(1, (pos - 50) / 32));
+    const currentPhaseMod = ((phaseRef.current % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    const movingLeft = currentPhaseMod > Math.PI / 2 && currentPhaseMod < (3 * Math.PI) / 2;
+    const baseAngle = Math.asin(ratio);
+    phaseRef.current = movingLeft ? Math.PI - baseAngle : baseAngle;
+  };
+
   const updatePosition = useCallback((clientX: number) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = clientX - rect.left;
     const percentage = Math.max(0, Math.min(100, (x / rect.width) * 100));
     setSliderPosition(percentage);
+    syncPhaseWithPosition(percentage);
   }, []);
 
   const handlePointerDown = (e: React.PointerEvent) => {
+    isInteractingRef.current = true;
+    if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
     setIsDragging(true);
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
@@ -61,6 +104,11 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
     try {
       e.currentTarget.releasePointerCapture(e.pointerId);
     } catch {}
+    // Resume auto-slide after 2.5 seconds of inactivity
+    if (idleTimeoutRef.current) clearTimeout(idleTimeoutRef.current);
+    idleTimeoutRef.current = setTimeout(() => {
+      isInteractingRef.current = false;
+    }, 2500);
   };
 
   return (
@@ -128,9 +176,37 @@ export default function BeforeAfterSection({ beforeAfter }: BeforeAfterProps) {
             </div>
           </div>
 
-          {/* Hint Overlay */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-semibold shadow-md pointer-events-none select-none">
-            ← เลื่อนซ้าย-ขวา เพื่อเปรียบเทียบผลลัพธ์ →
+          {/* Interactive Hint & Auto-play control toggle */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 sm:gap-3 px-3.5 sm:px-4 py-1.5 rounded-full bg-black/75 backdrop-blur-md text-white text-xs font-semibold shadow-lg border border-white/10 select-none">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsAutoPlay((prev) => !prev);
+              }}
+              onPointerDown={(e) => e.stopPropagation()}
+              className="flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold transition-colors cursor-pointer"
+              title={isAutoPlay ? 'คลิกเพื่อหยุดเลื่อนอัตโนมัติ' : 'คลิกเพื่อเริ่มเลื่อนอัตโนมัติ'}
+            >
+              {isAutoPlay ? (
+                <>
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+                  </span>
+                  <span className="text-[11px] sm:text-xs">เลื่อนอัตโนมัติ</span>
+                  <Pause className="w-3 h-3 text-white/70 ml-0.5" />
+                </>
+              ) : (
+                <>
+                  <span className="inline-flex rounded-full h-2 w-2 bg-slate-400"></span>
+                  <span className="text-[11px] sm:text-xs text-slate-300">หยุดชั่วคราว</span>
+                  <Play className="w-3 h-3 text-emerald-400 ml-0.5 fill-emerald-400" />
+                </>
+              )}
+            </button>
+            <span className="text-white/30 text-xs">|</span>
+            <span className="text-[11px] sm:text-xs text-slate-300 font-normal">แตะหรือลากเพื่อเลื่อนเอง</span>
           </div>
         </div>
 
