@@ -42,6 +42,63 @@ interface ArticlesSectionProps {
 
 type TabType = 'all' | 'articles' | 'csr';
 
+const THAI_MONTHS: Record<string, number> = {
+  'มกราคม': 0, 'ม.ค.': 0,
+  'กุมภาพันธ์': 1, 'ก.พ.': 1,
+  'มีนาคม': 2, 'มี.ค.': 2,
+  'เมษายน': 3, 'เม.ย.': 3,
+  'พฤษภาคม': 4, 'พ.ค.': 4,
+  'มิถุนายน': 5, 'มิ.ย.': 5,
+  'กรกฎาคม': 6, 'ก.ค.': 6,
+  'สิงหาคม': 7, 'ส.ค.': 7,
+  'กันยายน': 8, 'ก.ย.': 8,
+  'ตุลาคม': 9, 'ต.ค.': 9,
+  'พฤศจิกายน': 10, 'พ.ย.': 10,
+  'ธันวาคม': 11, 'ธ.ค.': 11
+};
+
+export function parseDateScore(item: any): number {
+  let scoreFromMeta = 0;
+  if (item.updatedAt) {
+    const t = new Date(item.updatedAt).getTime();
+    if (!isNaN(t)) scoreFromMeta = t;
+  } else if (item.createdAt) {
+    const t = new Date(item.createdAt).getTime();
+    if (!isNaN(t)) scoreFromMeta = t;
+  }
+
+  const dateStr = item.date || '';
+  const targetStr = dateStr.includes('-') ? dateStr.split('-').pop().trim() : dateStr;
+
+  let day = 1;
+  let month = 0;
+  let year = 1970;
+
+  for (const [mName, mIdx] of Object.entries(THAI_MONTHS)) {
+    if (targetStr.includes(mName)) {
+      month = mIdx;
+      break;
+    }
+  }
+
+  const numMatches = targetStr.match(/\d+/g) || [];
+  if (numMatches.length >= 2) {
+    day = parseInt(numMatches[0], 10);
+    let rawYear = parseInt(numMatches[numMatches.length - 1], 10);
+    if (rawYear > 2400) rawYear -= 543;
+    year = rawYear;
+  } else if (numMatches.length === 1) {
+    let rawYear = parseInt(numMatches[0], 10);
+    if (rawYear > 2400) rawYear -= 543;
+    year = rawYear;
+  }
+
+  const parsedDate = new Date(year, month, day).getTime();
+  const validParsed = isNaN(parsedDate) ? 0 : parsedDate;
+
+  return Math.max(scoreFromMeta, validParsed);
+}
+
 export default function ArticlesSection({ articles = [], csrList = [] }: ArticlesSectionProps) {
   const [activeTab, setActiveTab] = useState<TabType>('all');
   const [selectedArticle, setSelectedArticle] = useState<ArticleItem | null>(null);
@@ -90,24 +147,27 @@ export default function ArticlesSection({ articles = [], csrList = [] }: Article
     setActivePhotoIdx((prev) => (prev === activeArticlePhotos.length - 1 ? 0 : prev + 1));
   };
 
-  // Build unified items list
+  // Build unified items list sorted by date/time (newest first)
   type UnifiedItem = 
-    | { type: 'article'; data: ArticleItem; sortDate: string }
-    | { type: 'csr'; data: CsrItem; sortDate: string };
+    | { type: 'article'; data: ArticleItem; sortDate: string; score: number }
+    | { type: 'csr'; data: CsrItem; sortDate: string; score: number };
 
   const unifiedList: UnifiedItem[] = [];
 
   if (activeTab === 'all' || activeTab === 'articles') {
     articles.forEach((art) => {
-      unifiedList.push({ type: 'article', data: art, sortDate: art.date });
+      unifiedList.push({ type: 'article', data: art, sortDate: art.date, score: parseDateScore(art) });
     });
   }
 
   if (activeTab === 'all' || activeTab === 'csr') {
     csrList.forEach((c) => {
-      unifiedList.push({ type: 'csr', data: c, sortDate: c.date });
+      unifiedList.push({ type: 'csr', data: c, sortDate: c.date, score: parseDateScore(c) });
     });
   }
+
+  // เรียงลำดับตามวันเวลา (ใหม่สุดขึ้นก่อนเสมอ)
+  unifiedList.sort((a, b) => b.score - a.score);
 
   const totalCount = articles.length + csrList.length;
 

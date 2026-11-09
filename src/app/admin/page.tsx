@@ -444,7 +444,9 @@ export default function AdminPage() {
       desc: newCsr.desc || 'กิจกรรมส่งมอบสิ่งดีคืนสู่สังคมไทย โดย GR Group',
       image: gallery[0] || newCsr.image,
       images: gallery,
-      gallery: gallery
+      gallery: gallery,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     };
     setData({ ...data, csr: [item, ...(data.csr || [])] });
     setNewCsr({
@@ -570,7 +572,9 @@ export default function AdminPage() {
       image: cover,
       images: gallery,
       gallery: gallery,
-      tags: newArticle.tags.split(',').map(t => t.trim())
+      tags: newArticle.tags.split(',').map(t => t.trim()),
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
     };
     setData({ ...data, articles: [item, ...(data.articles || [])] });
     setNewArticle({
