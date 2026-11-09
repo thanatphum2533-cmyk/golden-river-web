@@ -96,7 +96,11 @@ export function parseDateScore(item: any): number {
   const parsedDate = new Date(year, month, day).getTime();
   const validParsed = isNaN(parsedDate) ? 0 : parsedDate;
 
-  return Math.max(scoreFromMeta, validParsed);
+  // เรียงตามวันที่ (วันที่ของกิจกรรม/บทความ) เป็นหลัก หากวันเดียวกันให้ใช้เวลาอัปเดต
+  if (validParsed > 0) {
+    return validParsed + (scoreFromMeta ? scoreFromMeta % 86400000 : 0);
+  }
+  return scoreFromMeta;
 }
 
 export default function ArticlesSection({ articles = [], csrList = [] }: ArticlesSectionProps) {
