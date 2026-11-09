@@ -117,15 +117,18 @@
         "แม่บ้านทำความสะอาด",
         "รักษาความสะอาด"
       ],
-      "image": "/images/projects/1591353360794-01.jpg",
+      "image": "/images/projects/proj-1-a-space-me-sukhumvit-77-real.jpg",
       "highlight": "คอนโด Low-Rise สไตล์รีสอร์ท พร้อมสวนร่มรื่นสิ่งอำนวยความสะดวกครบครัน 50 เมตร",
       "gallery": [
+        "/images/projects/proj-1-a-space-me-sukhumvit-77-real.jpg",
         "/images/projects/1591353360794-01.jpg",
         "/images/projects/494283385_990231969988180_239319317126806792_n-1.jpg",
         "/images/projects/514495395_1036411778703532_7724049985039522066_n.jpg",
         "/images/projects/519416700_1046471677697542_7602246436575552422_n.jpg",
         "/images/projects/523096106_1053787796965930_7082885187354508551_n.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B9%80%E0%B8%AD+%E0%B8%AA%E0%B9%80%E0%B8%9B%E0%B8%8B+%E0%B8%A1%E0%B8%B5+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+77+%E0%B8%96%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+77+(%E0%B8%AD%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%99%E0%B8%B8%E0%B8%8A)/@13.7135782,100.6334739,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/1591353360794-01.jpg"
     },
     {
       "id": "proj-2",
@@ -138,14 +141,17 @@
         "ดูแลสวนและต้นไม้ใหญ่",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/b38e2aab8d87f658c5aa4e584005f0ad.jpg",
+      "image": "/images/projects/proj-2-a-space-sukhumvit-77-real.jpg",
       "highlight": "โครงการขนาดใหญ่พร้อมพื้นที่สีเขียวส่วนกลางกว่า 4 ไร่สิ่งอำนวยความสะดวกครบครัน",
       "gallery": [
+        "/images/projects/proj-2-a-space-sukhumvit-77-real.jpg",
         "/images/projects/b38e2aab8d87f658c5aa4e584005f0ad.jpg",
         "/images/projects/535385022_1074060114938698_4412444529512300049_n.jpg",
         "/images/projects/535564194_1074059878272055_2471661537481696808_n.jpg",
         "/images/projects/537272696_1077785187899524_3600395331204648059_n.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B9%80%E0%B8%AD+%E0%B8%AA%E0%B9%80%E0%B8%9B%E0%B8%8B+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+77+%E0%B8%AD%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%99%E0%B8%B8%E0%B8%8A+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+77/@13.7135782,100.6334739,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/b38e2aab8d87f658c5aa4e584005f0ad.jpg"
     },
     {
       "id": "proj-3",
@@ -162,7 +168,8 @@
       "highlight": "พื้นที่สีเขียวขนาดใหญ่และต้นไม้ร่มรื่นตลอดแนวถนนภายในโครงการ",
       "gallery": [
         "/images/projects/1652761018806-5b83a-6.png"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%9E%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%84%E0%B9%81%E0%B8%A5%E0%B8%99%E0%B8%94%E0%B9%8C+%E0%B8%9A%E0%B8%B2%E0%B8%87%E0%B8%99%E0%B8%B2+%E0%B8%96%E0%B8%99%E0%B8%99%E0%B8%9A%E0%B8%B2%E0%B8%87%E0%B8%99%E0%B8%B2-%E0%B8%95%E0%B8%A3%E0%B8%B2%E0%B8%94/@13.6671014,100.6492487,18z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "id": "proj-4",
@@ -175,11 +182,14 @@
         "ดูแลสวน Rooftop Garden",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/a23a3ec7887a590217f775aa4b27f2c2.jpg",
+      "image": "/images/projects/proj-4-urbitia-thong-lo-real.jpg",
       "highlight": "คอนโด Low-Rise ระดับลักชัวรี โอบล้อมด้วยธรรมชาติใจกลางทองหล่อ",
       "gallery": [
+        "/images/projects/proj-4-urbitia-thong-lo-real.jpg",
         "/images/projects/a23a3ec7887a590217f775aa4b27f2c2.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/Urbitia+Sukhumvit+36+condominium/@13.7226008,100.5768864,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29f0068bff699:0x4c99c5b63b697b20!8m2!3d13.7226008!4d100.5768864!16s%2Fg%2F11mm80gn_h?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/a23a3ec7887a590217f775aa4b27f2c2.jpg"
     },
     {
       "id": "proj-5",
@@ -193,11 +203,14 @@
         "ตัดแต่งไม้ใหญ่",
         "จัดแต่งไม้พุ่ม"
       ],
-      "image": "/images/projects/Town9999-002-small.jpg",
+      "image": "/images/projects/proj-5-garden-square-sukhumvit-77-real.jpg",
       "highlight": "ทาวน์โฮมสไตล์อังกฤษสุดคลาสสิก พร้อมแนวไม้พุ่มและสวนยุโรปอันประณีต",
       "gallery": [
+        "/images/projects/proj-5-garden-square-sukhumvit-77-real.jpg",
         "/images/projects/Town9999-002-small.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%88%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%94%E0%B9%89%E0%B8%99%E0%B8%97%E0%B9%8C+%E0%B8%AA%E0%B9%81%E0%B8%84%E0%B8%A7%E0%B8%A3%E0%B9%8C+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+77/@13.7138469,100.6012179,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29f02a8fe5785:0x93a1ae8863dc3f4b!8m2!3d13.7138469!4d100.6012179!16s%2Fg%2F11k0t1n0p8?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/Town9999-002-small.jpg"
     },
     {
       "id": "proj-6",
@@ -210,11 +223,14 @@
         "ดูแลสวนและภูมิทัศน์",
         "ตัดแต่งต้นไม้ใหญ่"
       ],
-      "image": "/images/projects/600x600_7546_569.jpg",
+      "image": "/images/projects/proj-6-castle-hill-mansion-real.jpg",
       "highlight": "อาคารพักอาศัยระดับพรีเมียมพร้อมสวนหย่อมและบรรยากาศอันเงียบสงบ",
       "gallery": [
+        "/images/projects/proj-6-castle-hill-mansion-real.jpg",
         "/images/projects/600x600_7546_569.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/Castle+Hill+Mansion/@13.7261343,100.5864158,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29fb1f9860e8f:0x8408fcb77d326669!8m2!3d13.7261343!4d100.5864158!16s%2Fg%2F11gh47gjhk?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/600x600_7546_569.jpg"
     },
     {
       "id": "proj-7",
@@ -228,11 +244,14 @@
         "แม่บ้านทำความสะอาด",
         "รักษาความสะอาด"
       ],
-      "image": "/images/projects/คอนโด-เดอะ-โคลเวอร์-ทองหล่อ-THE-CLOVER-THONGLOR.jpg",
+      "image": "/images/projects/proj-7-the-clover-thonglor-real.jpg",
       "highlight": "คอนโดใจกลางทองหล่อพร้อมสวนร่มรื่น สิ่งอำนวยความสะดวกครบครัน และซาวน่า",
       "gallery": [
+        "/images/projects/proj-7-the-clover-thonglor-real.jpg",
         "/images/projects/คอนโด-เดอะ-โคลเวอร์-ทองหล่อ-THE-CLOVER-THONGLOR.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/The+Clover+Thonglor+Residence/@13.7347711,100.584274,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29f2baa0d02a9:0x728ee74b3302ee29!8m2!3d13.7347711!4d100.584274!16s%2Fg%2F1hc4340f6?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/คอนโด-เดอะ-โคลเวอร์-ทองหล่อ-THE-CLOVER-THONGLOR.jpg"
     },
     {
       "id": "proj-8",
@@ -245,11 +264,14 @@
         "ดูแลสวนประจำโครงการ",
         "รักษาความสะอาด"
       ],
-      "image": "/images/projects/วีคอนโด.png",
+      "image": "/images/projects/proj-8-v-condo-ladkrabang-phase-a-real.jpg",
       "highlight": "โครงการขนาดใหญ่พร้อมสวนสีเขียวและสิ่งอำนวยความสะดวกครบครัน",
       "gallery": [
+        "/images/projects/proj-8-v-condo-ladkrabang-phase-a-real.jpg",
         "/images/projects/วีคอนโด.png"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%A7%E0%B8%B5+%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B9%82%E0%B8%94+%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B8%9A%E0%B8%B1%E0%B8%87+%E0%B9%80%E0%B8%9F%E0%B8%AA+A+%E0%B8%96%E0%B8%99%E0%B8%99%E0%B8%89%E0%B8%A5%E0%B8%AD%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B8%E0%B8%87+%E0%B8%95%E0%B8%B4%E0%B8%94%E0%B8%84%E0%B8%AD%E0%B8%A1%E0%B8%A1%E0%B8%B9%E0%B8%99%E0%B8%B4%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%A1%E0%B8%AD%E0%B8%A5%E0%B8%A5%E0%B9%8C/@13.7571957,100.7960058,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/วีคอนโด.png"
     },
     {
       "id": "proj-9",
@@ -262,11 +284,14 @@
         "ดูแลสวน Pocket Garden",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/Noble-Refine.webp",
+      "image": "/images/projects/proj-9-noble-refine-real.jpg",
       "highlight": "คอนโด High-Rise ดีไซน์โมเดิร์นใจกลางพร้อมพงษ์",
       "gallery": [
+        "/images/projects/proj-9-noble-refine-real.jpg",
         "/images/projects/Noble-Refine.webp"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/%E0%B9%82%E0%B8%99%E0%B9%80%E0%B8%9A%E0%B8%B4%E0%B8%A5+%E0%B8%A3%E0%B8%B5%E0%B9%84%E0%B8%9F%E0%B8%99%E0%B9%8C/@13.7282471,100.5711765,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29f013ca81b49:0x8760207682d3084!8m2!3d13.7282471!4d100.5711765!16s%2Fg%2F12ht4bspx?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/Noble-Refine.webp"
     },
     {
       "id": "proj-10",
@@ -280,11 +305,14 @@
         "ตกแต่งไม้กระถางประดับ",
         "ดูแลไม้พุ่ม"
       ],
-      "image": "/images/projects/5104b707-c937-4b73-a5b7-e767bcf6507e.jpg",
+      "image": "/images/projects/proj-10-pickadaily-bangkok-community-mall-real.jpg",
       "highlight": "คอมมูนิตี้มอลล์สไตล์อังกฤษ พร้อมพื้นที่สวนและไม้ประดับสร้างบรรยากาศสดชื่น",
       "gallery": [
+        "/images/projects/proj-10-pickadaily-bangkok-community-mall-real.jpg",
         "/images/projects/5104b707-c937-4b73-a5b7-e767bcf6507e.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/%E0%B8%9E%E0%B8%B4%E0%B8%84%E0%B8%84%E0%B8%B2%E0%B9%80%E0%B8%94%E0%B8%A5%E0%B8%A5%E0%B8%B5%E0%B9%88+%E0%B9%81%E0%B8%9A%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%84%E0%B9%87%E0%B8%AD%E0%B8%81/@13.7111155,100.6356844,17z/data=!3m1!4b1!4m6!3m5!1s0x311d603c1650bdbb:0x7476b60989522fb1!8m2!3d13.7111155!4d100.6356844!16s%2Fg%2F11b5phy0lg?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/5104b707-c937-4b73-a5b7-e767bcf6507e.jpg"
     },
     {
       "id": "proj-11",
@@ -297,11 +325,14 @@
         "จัดสวนภูมิทัศน์",
         "ดูแลสวนแนวราบและแนวตั้ง"
       ],
-      "image": "/images/projects/02-194.jpg",
+      "image": "/images/projects/proj-11-yard-49-sukhumvit-real.jpg",
       "highlight": "โครงการพื้นที่พาณิชย์และไลฟ์สไตล์ใจกลางสุขุมวิท",
       "gallery": [
+        "/images/projects/proj-11-yard-49-sukhumvit-real.jpg",
         "/images/projects/02-194.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/YARD+49/@13.7315186,100.575714,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29fa38d3fe739:0x96b32f792a531a7a!8m2!3d13.7315186!4d100.575714!16s%2Fg%2F11rd0jpg_9?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/02-194.jpg"
     },
     {
       "id": "proj-12",
@@ -314,11 +345,14 @@
         "ดูแลสวน Rooftop",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/The-Room-สุขุมวิท-62.jpg",
+      "image": "/images/projects/proj-12-the-room-sukhumvit-69-real.jpg",
       "highlight": "คอนโดระดับพรีเมียมจาก Land and Houses พร้อมสวนลอยฟ้า 360 องศา",
       "gallery": [
+        "/images/projects/proj-12-the-room-sukhumvit-69-real.jpg",
         "/images/projects/The-Room-สุขุมวิท-62.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0+%E0%B8%A3%E0%B8%B9%E0%B8%A1+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+69/@13.7145187,100.5929339,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29fbec864188f:0xaf8cc228967733f6!8m2!3d13.7145187!4d100.5929339!16s%2Fg%2F11b77bbr6r?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/The-Room-สุขุมวิท-62.jpg"
     },
     {
       "id": "proj-13",
@@ -335,7 +369,8 @@
       "highlight": "อาคารสำนักงานทันสมัยพร้อมพื้นที่สีเขียวสร้างความผ่อนคลายในการทำงาน",
       "gallery": [
         "/images/projects/26350.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%9A%E0%B8%A3%E0%B8%B4%E0%B8%A9%E0%B8%B1%E0%B8%97+%E0%B9%80%E0%B8%AD%E0%B8%AA%E0%B8%9F%E0%B8%B4%E0%B8%9F%E0%B8%95%E0%B8%B5%E0%B9%89%E0%B8%97%E0%B8%B9+%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B9%81%E0%B8%94%E0%B8%87+%E0%B8%88%E0%B8%B3%E0%B8%81%E0%B8%B1%E0%B8%94+%E0%B8%94%E0%B8%B4%E0%B8%99%E0%B9%81%E0%B8%94%E0%B8%87/@13.7043325,100.5723967,12z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "id": "proj-14",
@@ -348,11 +383,14 @@
         "ดูแลสวนและต้นไม้ใหญ่",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/Thana-Astra-สาทร-จันทร์.jpg",
+      "image": "/images/projects/proj-14-thana-astra-sathorn-chan-real.jpg",
       "highlight": "คอนโดมิเนียมสไตล์โมเดิร์นลักชัวรีใจกลางย่านสาทร-จันทน์",
       "gallery": [
+        "/images/projects/proj-14-thana-astra-sathorn-chan-real.jpg",
         "/images/projects/Thana-Astra-สาทร-จันทร์.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/Thana+Astra+Sathorn-Chan/@13.7036738,100.5213529,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2992e2d4349e5:0x8812468f67fe8481!8m2!3d13.7036738!4d100.5213529!16s%2Fg%2F11nm2tz1x9?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/Thana-Astra-สาทร-จันทร์.jpg"
     },
     {
       "id": "proj-15",
@@ -370,7 +408,8 @@
       "highlight": "โรงแรมและเรสซิเดนซ์มาตรฐานสากล พร้อมการดูแลภูมิทัศน์ระดับพรีเมียม",
       "gallery": [
         "/images/projects/407818046.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%A7%E0%B8%B4%E0%B8%99%E0%B9%81%E0%B8%94%E0%B8%A1+%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%94%E0%B9%89%E0%B8%99+%E0%B9%81%E0%B8%9A%E0%B8%87%E0%B8%84%E0%B8%AD%E0%B8%81+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+42+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+42+%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89+BTS+%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%A1%E0%B8%B1%E0%B8%A2/@13.7218978,100.5758375,15z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "id": "proj-16",
@@ -383,11 +422,14 @@
         "ดูแลสวนส่วนกลาง",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/422073_08-16-2022-09-57-48_Thumbnail.jpg",
+      "image": "/images/projects/proj-16-chateau-in-town-sukhumvit-64-1-real.jpg",
       "highlight": "คอนโดเพื่อการอยู่อาศัยที่เงียบสงบพร้อมสิ่งอำนวยความสะดวกครบครัน",
       "gallery": [
+        "/images/projects/proj-16-chateau-in-town-sukhumvit-64-1-real.jpg",
         "/images/projects/422073_08-16-2022-09-57-48_Thumbnail.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%8A%E0%B8%B2%E0%B9%82%E0%B8%95%E0%B8%A7%E0%B9%8C+%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%A7%E0%B8%99%E0%B9%8C+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+64%2F1+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+64%2F1+%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89+BTS+%E0%B8%9B%E0%B8%B8%E0%B8%93%E0%B8%93%E0%B8%A7%E0%B8%B4%E0%B8%96%E0%B8%B5/@13.6913722,100.6046435,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/422073_08-16-2022-09-57-48_Thumbnail.jpg"
     },
     {
       "id": "proj-17",
@@ -404,7 +446,8 @@
       "highlight": "คอนโด High-Rise วิวแม่น้ำเจ้าพระยาและพื้นที่ส่วนกลางขนาดใหญ่",
       "gallery": [
         "/images/projects/The-Origin-E22-Station-DJI_0175-Enhanced-NR-768x575-1.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%94%E0%B8%B4+%E0%B8%AD%E0%B8%AD%E0%B8%A3%E0%B8%B4%E0%B8%88%E0%B8%B4%E0%B9%89%E0%B8%99+%E0%B8%AD%E0%B8%B522+%E0%B8%AA%E0%B9%80%E0%B8%95%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99+%E0%B8%96%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+%E0%B8%95%E0%B8%B4%E0%B8%94+BTS+%E0%B8%AA%E0%B8%B2%E0%B8%A2%E0%B8%A5%E0%B8%A7%E0%B8%94/@13.5767882,100.604536,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D"
     },
     {
       "id": "proj-18",
@@ -417,11 +460,14 @@
         "ดูแลสวนหย่อม",
         "รักษาความสะอาด"
       ],
-      "image": "/images/projects/20180612-141513077-m1.jpg",
+      "image": "/images/projects/proj-18-the-maple-at-ratchada-19-real.jpg",
       "highlight": "คอนโดใจกลางเมืองรัชดาภิเษก บรรยากาศร่มรื่นเป็นส่วนตัว",
       "gallery": [
+        "/images/projects/proj-18-the-maple-at-ratchada-19-real.jpg",
         "/images/projects/20180612-141513077-m1.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/The+Maple+@+Ratchada+19/@13.8016176,100.5716932,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29c4a7e563747:0x97bd30f67e2c07fa!8m2!3d13.8016176!4d100.5716932!16s%2Fg%2F1pp2tx0wp?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/20180612-141513077-m1.jpg"
     },
     {
       "id": "proj-19",
@@ -434,11 +480,14 @@
         "ดูแลสวนประจำโครงการ",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/514495395_1036411778703532_7724049985039522066_n.jpg",
+      "image": "/images/projects/proj-19-u-huamak-station-real.jpg",
       "highlight": "คอนโดมิเนียมใกล้สถานีรถไฟฟ้า สิ่งอำนวยความสะดวกครบครัน",
       "gallery": [
+        "/images/projects/proj-19-u-huamak-station-real.jpg",
         "/images/projects/514495395_1036411778703532_7724049985039522066_n.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%A2%E0%B8%B9+%E0%B9%81%E0%B8%AD%E0%B8%97+%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%81+%E0%B8%AA%E0%B9%80%E0%B8%95%E0%B8%8A%E0%B8%B1%E0%B9%88%E0%B8%99+%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%81+%E0%B8%A3%E0%B8%B2%E0%B8%A1%E0%B8%84%E0%B8%B3%E0%B9%81%E0%B8%AB%E0%B8%87/@13.7517843,100.636986,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/514495395_1036411778703532_7724049985039522066_n.jpg"
     },
     {
       "id": "proj-20",
@@ -451,11 +500,14 @@
         "ดูแลสวนส่วนกลาง",
         "แม่บ้านทำความสะอาด"
       ],
-      "image": "/images/projects/519416700_1046471677697542_7602246436575552422_n.jpg",
+      "image": "/images/projects/proj-20-zenith-place-sukhumvit-42-real.jpg",
       "highlight": "คอนโด Low-Rise ใจกลางเอกมัย บรรยากาศเงียบสงบร่มรื่น",
       "gallery": [
+        "/images/projects/proj-20-zenith-place-sukhumvit-42-real.jpg",
         "/images/projects/519416700_1046471677697542_7602246436575552422_n.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/search/%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B9%82%E0%B8%94+%E0%B8%8B%E0%B8%B5%E0%B8%93%E0%B8%B4%E0%B8%98+%E0%B9%80%E0%B8%9E%E0%B8%A5%E0%B8%AA+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+42+%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%B8%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%97+42+%E0%B9%83%E0%B8%81%E0%B8%A5%E0%B9%89+BTS+%E0%B9%80%E0%B8%AD%E0%B8%81%E0%B8%A1%E0%B8%B1%E0%B8%A2/@13.715058,100.589427,16z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/519416700_1046471677697542_7602246436575552422_n.jpg"
     },
     {
       "id": "proj-21",
@@ -468,14 +520,43 @@
         "จัดสวนหน้าร้าน",
         "ดูแลไม้กระถางประดับ"
       ],
-      "image": "/images/projects/523096106_1053787796965930_7082885187354508551_n.jpg",
+      "image": "/images/projects/proj-21-det-5-restaurant-bar-real.jpg",
       "highlight": "ร้านอาหารบรรยากาศอบอุ่นพร้อมการตกแต่งแมกไม้นานาพันธุ์สร้างความผ่อนคลาย",
       "gallery": [
+        "/images/projects/proj-21-det-5-restaurant-bar-real.jpg",
         "/images/projects/523096106_1053787796965930_7082885187354508551_n.jpg"
-      ]
+      ],
+      "mapUrl": "https://www.google.com/maps/place/DET+5/@13.7382094,100.5560283,17z/data=!3m1!4b1!4m6!3m5!1s0x30e29ee13ec02de3:0xf12a9f1564f08c3a!8m2!3d13.7382094!4d100.5560283!16s%2Fg%2F1tjs_cs4?entry=ttu&g_ep=EgoyMDI2MTAyMC4wIKXMDSoASAFQAw%3D%3D",
+      "originalImage": "/images/projects/523096106_1053787796965930_7082885187354508551_n.jpg"
     }
   ],
   "csr": [
+    {
+      "id": "csr-wat-chak-daeng",
+      "title": "GR Group ร่วมใจ 'เปลี่ยนขยะให้เป็นบุญ' สานต่อแนวคิดเพื่อสิ่งแวดล้อมและสังคมที่ยั่งยืน ณ วัดจากแดง",
+      "titleFull": "🌱 GR Group ร่วมใจ 'เปลี่ยนขยะให้เป็นบุญ' สานต่อแนวคิดเพื่อสิ่งแวดล้อมและสังคมที่ยั่งยืน ณ วัดจากแดง 💚",
+      "date": "7 พฤศจิกายน 2569",
+      "location": "วัดจากแดง อ.พระประแดง จ.สมุทรปราการ",
+      "category": "สิ่งแวดล้อมและสังคม",
+      "image": "/images/csr/csr-wat-chak-daeng-1.jpg",
+      "desc": "คณะผู้บริหารและพนักงานกลุ่มบริษัท GR Group (บริษัท สแตนดาร์ด บิลดิง เซอร์วิส จำกัด และ บริษัท โกลเด้นริเวอร์ เซอร์วิส จำกัด) ร่วมกิจกรรม CSR ณ วัดจากแดง ศูนย์เรียนรู้การจัดการขยะพลาสติกชั้นนำของไทย รวบรวมขวดพลาสติกมอบให้แก่วัดเพื่อรีไซเคิล และร่วมทำหมอนจากหลอดพลาสติกเพื่อส่งมอบช่วยเหลือผู้ป่วยติดเตียง",
+      "content": "🌱 GR Group ร่วมใจ \"เปลี่ยนขยะให้เป็นบุญ\" สานต่อแนวคิดเพื่อสิ่งแวดล้อมและสังคมที่ยั่งยืน ณ วัดจากแดง 💚\n\nเมื่อวันเสาร์ที่ 7 พฤศจิกายน 2569 ที่ผ่านมา คณะผู้บริหารและพนักงานกลุ่มบริษัท GR Group (บริษัท สแตนดาร์ด บิลดิง เซอร์วิส จำกัด และ บริษัท โกลเด้นริเวอร์ เซอร์วิส จำกัด) ได้ร่วมทำกิจกรรม CSR ณ วัดจากแดง อ.พระประแดง จ.สมุทรปราการ ศูนย์เรียนรู้การจัดการขยะพลาสติกชั้นนำของไทย\n\n• การส่งมอบขวดพลาสติกเพื่อรีไซเคิล: พวกเราได้ร่วมกันรวบรวมและนำขวดพลาสติกไปมอบให้แก่วัดเพื่อเข้าสู่กระบวนการรีไซเคิลและแปรรูปเป็นผลิตภัณฑ์ที่เป็นประโยชน์ เช่น การนำเส้นใยพลาสติกไปทอเป็นผ้าไตรจีวรพระสงฆ์\n\n• การอบรมและทำหมอนเพื่อผู้ป่วยติดเตียง: พร้อมทั้งเข้ารับการอบรมเรียนรู้การบริหารจัดการขยะอย่างถูกวิธี การแยกประเภทพลาสติก และร่วมทำ \"หมอนจากหลอดพลาสติก\" เพื่อนำไปส่งมอบช่วยเหลือผู้ป่วยติดเตียง\n\nGR Group ขอขอบคุณผู้ร่วมสนับสนุนขวดพลาสติกและพนักงานทุกคนที่ร่วมเป็นส่วนหนึ่งในพลังเล็กๆ ที่สร้างคุณค่าอันยิ่งใหญ่ ทั้งต่อสิ่งแวดล้อมและสังคมไทย\n\n\"Sharing Smiles, Creating Happiness for Society\" 💚✨\n\n#GRGroup #StandardBuildingService #GoldenRiverService #CSR #วัดจากแดง #เปลี่ยนขยะเป็นบุญ #CSRเพื่อสังคม #สิ่งแวดล้อมและสังคมยั่งยืน",
+      "gallery": [
+        "/images/csr/csr-wat-chak-daeng-1.jpg",
+        "/images/csr/csr-wat-chak-daeng-2.jpg",
+        "/images/csr/csr-wat-chak-daeng-3.jpg",
+        "/images/csr/csr-wat-chak-daeng-4.jpg",
+        "/images/csr/csr-wat-chak-daeng-5.jpg"
+      ],
+      "images": [
+        "/images/csr/csr-wat-chak-daeng-1.jpg",
+        "/images/csr/csr-wat-chak-daeng-2.jpg",
+        "/images/csr/csr-wat-chak-daeng-3.jpg",
+        "/images/csr/csr-wat-chak-daeng-4.jpg",
+        "/images/csr/csr-wat-chak-daeng-5.jpg"
+      ],
+      "facebookUrl": "https://www.facebook.com/Goldenriverservice/posts/1445323847812321/"
+    },
     {
       "id": "csr-1",
       "title": "กิจกรรมครูอาสาร่วมกับมูลนิธิโรงเรียนวันเสาร์",
